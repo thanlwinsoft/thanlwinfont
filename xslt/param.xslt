@@ -10,8 +10,10 @@
 <xsl:param name="preGuard" select="20" />
 <xsl:param name="postGuard" select="20"/>
 <xsl:param name="thickness" select="50"/>
+<xsl:param name="cubicCircleFactor" select=".5"/>
 <xsl:param name="waXOuterRadius" select="200"/>
 <xsl:param name="waYOuterRadius" select="200"/>
+<xsl:param name="myCutAngle" select="25 * 3.141592654 div 180"/>
 <xsl:param name="waXInnerRadius" select="$waXOuterRadius - $thickness"/>
 <xsl:param name="waYInnerRadius" select="$waYOuterRadius - $thickness"/>
 
@@ -23,10 +25,10 @@
 </xsl:attribute-set>
 
 <xsl:attribute-set name="pathAttribs">
-	<!-- to assist viewing -->
+	<!-- to assist viewing
     <xsl:attribute name="stroke">blue</xsl:attribute>
-    <xsl:attribute name="stroke-width">5</xsl:attribute>
-    <xsl:attribute name="fill">none</xsl:attribute>
+    <xsl:attribute name="stroke-width">5</xsl:attribute> -->
+    <xsl:attribute name="fill">fill="currentColor"</xsl:attribute>
 </xsl:attribute-set>
 
 </xsl:stylesheet>
