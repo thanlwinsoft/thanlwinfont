@@ -25,52 +25,58 @@
 
 <xsl:template match="svg:g">
 	<xsl:copy use-attribute-sets="gAttribs">
-	<xsl:call-template name="u1001"/>
+	<xsl:call-template name="u1027"/>
 	</xsl:copy>
 </xsl:template>
 
-<xsl:template name="u1001">
+<xsl:template name="u1027">
 	<xsl:message terminate="no"><xsl:value-of select="$cutOuterDy"/></xsl:message>
     <xsl:element name="path" use-attribute-sets="pathAttribs">
     <xsl:attribute name="d">
     <xsl:call-template name="Move">
-        <xsl:with-param name="x" select="$preGuard+$waXOuterRadius - $cutOuterDx"/>
-        <xsl:with-param name="y" select="$cutOuterDy + $waYOuterRadius"/>
+        <xsl:with-param name="x" select="$preGuard+$waXOuterRadius + $loopOuterDx"/>
+        <xsl:with-param name="y" select="$loopOuterDy + $waYOuterRadius"/>
     </xsl:call-template>
     <xsl:call-template name="arc">
         <xsl:with-param name="rx" select="$waXOuterRadius"/>
         <xsl:with-param name="ry" select="$waYOuterRadius"/>
         <xsl:with-param name="axisRotation" select="0"/>
         <xsl:with-param name="large" select="1"/>
-        <xsl:with-param name="clockwise" select="0"/>
-        <xsl:with-param name="x" select="$cutOuterDx - $loopOuterDx"/>
-        <xsl:with-param name="y" select="- $cutOuterDy - $loopOuterDy"/>
+        <xsl:with-param name="clockwise" select="1"/>
+        <xsl:with-param name="x" select="0"/>
+        <xsl:with-param name="y" select="- 2 * $loopOuterDy"/>
     </xsl:call-template>
     <xsl:call-template name="arc">
         <xsl:with-param name="rx" select="$waXOuterRadius"/>
         <xsl:with-param name="ry" select="$waYOuterRadius"/>
         <xsl:with-param name="axisRotation" select="0"/>
         <xsl:with-param name="large" select="0"/>
-        <xsl:with-param name="clockwise" select="0"/>
-        <xsl:with-param name="x" select="$loopOuterDx + $loopIntersectDx"/>
+        <xsl:with-param name="clockwise" select="1"/>
+        <xsl:with-param name="x" select="-$loopOuterDx - $loopIntersectDx"/>
         <xsl:with-param name="y" select="0"/>
     </xsl:call-template>
     <xsl:call-template name="arc">
         <xsl:with-param name="rx" select="$waXInnerRadius"/>
         <xsl:with-param name="ry" select="$waYInnerRadius"/>
         <xsl:with-param name="axisRotation" select="0"/>
-        <xsl:with-param name="large" select="1"/>
+        <xsl:with-param name="large" select="0"/>
+        <xsl:with-param name="clockwise" select="0"/>
+        <xsl:with-param name="x" select="0"/>
+        <xsl:with-param name="y" select="2 * $loopOuterDy"/>
+    </xsl:call-template>
+	<xsl:call-template name="arc">
+        <xsl:with-param name="rx" select="$waXOuterRadius"/>
+        <xsl:with-param name="ry" select="$waYOuterRadius"/>
+        <xsl:with-param name="axisRotation" select="0"/>
+        <xsl:with-param name="large" select="0"/>
         <xsl:with-param name="clockwise" select="1"/>
-        <xsl:with-param name="x" select="- $cutInnerDx - $loopIntersectDx"/>
-        <xsl:with-param name="y" select="$cutInnerDy + $loopOuterDy"/>
+        <xsl:with-param name="x" select="$loopOuterDx + $loopIntersectDx"/>
+        <xsl:with-param name="y" select="0"/>
     </xsl:call-template>
-    <xsl:call-template name="inner2outer">
-    	<xsl:with-param name="cx" select="$cutOuterDx"/>
-    	<xsl:with-param name="cy" select="-$cutOuterDy"/>
-    </xsl:call-template>
+    
     <xsl:call-template name="end"/>
     <xsl:call-template name="Move">
-        <xsl:with-param name="x" select="$preGuard+$waXOuterRadius - $loopIntersectDx"/>
+        <xsl:with-param name="x" select="$preGuard+$waXOuterRadius + $loopIntersectDx"/>
         <xsl:with-param name="y" select="$loopOuterDy"/>
     </xsl:call-template>
     <xsl:call-template name="arc">
@@ -78,8 +84,8 @@
         <xsl:with-param name="ry" select="$waYInnerRadius"/>
         <xsl:with-param name="axisRotation" select="0"/>
         <xsl:with-param name="large" select="0"/>
-        <xsl:with-param name="clockwise" select="1"/>
-        <xsl:with-param name="x" select="$loopIntersectDx + $loopInnerIntersectDx"/>
+        <xsl:with-param name="clockwise" select="0"/>
+        <xsl:with-param name="x" select="-$loopIntersectDx - $loopInnerIntersectDx"/>
         <xsl:with-param name="y" select="$loopOuterDy - $loopInnerIntersectDy"/>
     </xsl:call-template>
     <xsl:call-template name="arc">
@@ -87,21 +93,35 @@
         <xsl:with-param name="ry" select="$waYInnerRadius"/>
         <xsl:with-param name="axisRotation" select="0"/>
         <xsl:with-param name="large" select="0"/>
-        <xsl:with-param name="clockwise" select="1"/>
-        <xsl:with-param name="x" select="- $loopIntersectDx - $loopInnerIntersectDx"/>
+        <xsl:with-param name="clockwise" select="0"/>
+        <xsl:with-param name="x" select="$loopIntersectDx +$loopInnerIntersectDx"/>
         <xsl:with-param name="y" select="- $loopOuterDy + $loopInnerIntersectDy"/>
     </xsl:call-template>
+    <xsl:call-template name="end"/>
+    <xsl:call-template name="Move">
+        <xsl:with-param name="x" select="$preGuard+$waXOuterRadius + $loopIntersectDx"/>
+        <xsl:with-param name="y" select="2 * $waYOuterRadius - $loopOuterDy"/>
+    </xsl:call-template>
+    <xsl:call-template name="arc">
+        <xsl:with-param name="rx" select="$waXInnerRadius"/>
+        <xsl:with-param name="ry" select="$waYInnerRadius"/>
+        <xsl:with-param name="axisRotation" select="0"/>
+        <xsl:with-param name="large" select="0"/>
+        <xsl:with-param name="clockwise" select="0"/>
+        <xsl:with-param name="x" select="-$loopIntersectDx - $loopInnerIntersectDx"/>
+        <xsl:with-param name="y" select="- $loopOuterDy + $loopInnerIntersectDy"/>
+    </xsl:call-template>
+    <xsl:call-template name="arc">
+        <xsl:with-param name="rx" select="$waXInnerRadius"/>
+        <xsl:with-param name="ry" select="$waYInnerRadius"/>
+        <xsl:with-param name="axisRotation" select="0"/>
+        <xsl:with-param name="large" select="0"/>
+        <xsl:with-param name="clockwise" select="0"/>
+        <xsl:with-param name="x" select="$loopIntersectDx +$loopInnerIntersectDx"/>
+        <xsl:with-param name="y" select="$loopOuterDy - $loopInnerIntersectDy"/>
+    </xsl:call-template>
     <!--
-    <xsl:call-template name="outer2inner">
-    	<xsl:with-param name="cx" select="$cutOuterDx"/>
-    	<xsl:with-param name="cy" select="$cutOuterDy"/>
-    </xsl:call-template>
-
     
-    <xsl:call-template name="inner2outer">
-    	<xsl:with-param name="cx" select="$cutOuterDx"/>
-    	<xsl:with-param name="cy" select="-$cutOuterDy"/>
-    </xsl:call-template>
     -->
     <xsl:call-template name="end"/>
     </xsl:attribute>

@@ -13,7 +13,9 @@
 <xsl:param name="cubicCircleFactor" select=".5"/>
 <xsl:param name="waXOuterRadius" select="200"/>
 <xsl:param name="waYOuterRadius" select="200"/>
-<xsl:param name="myCutAngle" select="25 * 3.141592654 div 180"/>
+<xsl:param name="pi" select="3.141592654"/>
+<xsl:param name="myCutAngle" select="25 * $pi div 180"/>
+<xsl:param name="loopCutAngle" select="30 * $pi div 180"/>
 <xsl:param name="waXInnerRadius" select="$waXOuterRadius - $thickness"/>
 <xsl:param name="waYInnerRadius" select="$waYOuterRadius - $thickness"/>
 

@@ -73,7 +73,7 @@
 	<xsl:text>l</xsl:text>
 	<xsl:value-of select="$cx * ($thickness div $waXOuterRadius)"/>
 	<xsl:text>,</xsl:text>
-	<xsl:value-of select="$cy * ($thickness div $waXOuterRadius)"/>
+	<xsl:value-of select="$cy * ($thickness div $waYOuterRadius)"/>
 </xsl:template>
 
 <xsl:template name="inner2outer">
