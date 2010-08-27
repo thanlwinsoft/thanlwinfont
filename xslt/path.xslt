@@ -86,6 +86,68 @@
 	<xsl:value-of select="- $cy * ($thickness div $waXOuterRadius)"/>
 </xsl:template>
 
+<xsl:template name="inner2outerHook">
+	<xsl:param name="cx"/>
+	<xsl:param name="cy"/>
+	<xsl:param name="clockwise" select="1"/>
+	<xsl:param name="dxSign" select="-1 * $cx div math:abs($cx)"/>
+	<xsl:param name="dySign" select="-1 * $cy div math:abs($cy)"/>
+	<xsl:message terminate="no"><xsl:value-of select="$hookOuterRadius"/></xsl:message>
+	<xsl:call-template name="arc">
+		<xsl:with-param name="rx" select="$hookOuterRadius"/>
+		<xsl:with-param name="ry" select="$hookOuterRadius"/>
+		<xsl:with-param name="axisRotation" select="0"/>
+		<xsl:with-param name="large" select="1"/>
+		<xsl:with-param name="clockwise" select="$clockwise"/>
+		<xsl:with-param name="x" select="$dxSign * 2 * $hookOuterRadius * math:sin($hookStartAngle)"/>
+		<xsl:with-param name="y" select="$dySign * 2 * $hookOuterRadius * math:cos($hookStartAngle)"/>
+	</xsl:call-template>
+	<xsl:text>l</xsl:text>
+	<xsl:value-of select="-$dxSign * $thickness * math:sin($hookStartAngle)"/><xsl:text>,</xsl:text>
+	<xsl:value-of select="-$dySign * $thickness * math:cos($hookStartAngle)"/>
+	<xsl:call-template name="arc">
+		<xsl:with-param name="rx" select="$hookInnerRadius"/>
+		<xsl:with-param name="ry" select="$hookInnerRadius"/>
+		<xsl:with-param name="axisRotation" select="0"/>
+		<xsl:with-param name="large" select="1"/>
+		<xsl:with-param name="clockwise" select="1-$clockwise"/>
+		<xsl:with-param name="x" select="-$dxSign * 2 * $hookInnerRadius * math:sin($hookStartAngle)"/>
+		<xsl:with-param name="y" select="-$dySign * 2 * $hookInnerRadius * math:cos($hookStartAngle)"/>
+	</xsl:call-template>
+	
+</xsl:template>
+
+<xsl:template name="outer2innerHook">
+	<xsl:param name="cx"/>
+	<xsl:param name="cy"/>
+	<xsl:param name="clockwise" select="1"/>
+	<xsl:param name="dxSign" select="-1 * $cx div math:abs($cx)"/>
+	<xsl:param name="dySign" select="-1 * $cy div math:abs($cy)"/>
+	<xsl:message terminate="no"><xsl:value-of select="$hookOuterRadius"/></xsl:message>
+	<xsl:call-template name="arc">
+		<xsl:with-param name="rx" select="$hookInnerRadius"/>
+		<xsl:with-param name="ry" select="$hookInnerRadius"/>
+		<xsl:with-param name="axisRotation" select="0"/>
+		<xsl:with-param name="large" select="1"/>
+		<xsl:with-param name="clockwise" select="$clockwise"/>
+		<xsl:with-param name="x" select="$dxSign * 2 * $hookInnerRadius * math:sin($hookStartAngle)"/>
+		<xsl:with-param name="y" select="$dySign * 2 * $hookInnerRadius * math:cos($hookStartAngle)"/>
+	</xsl:call-template>
+	<xsl:text>l</xsl:text>
+	<xsl:value-of select="$dxSign * $thickness * math:sin($hookStartAngle)"/><xsl:text>,</xsl:text>
+	<xsl:value-of select="$dySign * $thickness * math:cos($hookStartAngle)"/>
+	<xsl:call-template name="arc">
+		<xsl:with-param name="rx" select="$hookOuterRadius"/>
+		<xsl:with-param name="ry" select="$hookOuterRadius"/>
+		<xsl:with-param name="axisRotation" select="0"/>
+		<xsl:with-param name="large" select="1"/>
+		<xsl:with-param name="clockwise" select="1-$clockwise"/>
+		<xsl:with-param name="x" select="-$dxSign * 2 * $hookOuterRadius * math:sin($hookStartAngle)"/>
+		<xsl:with-param name="y" select="-$dySign * 2 * $hookOuterRadius * math:cos($hookStartAngle)"/>
+	</xsl:call-template>
+	
+</xsl:template>
+
 <xsl:template name="end"><xsl:text>z</xsl:text></xsl:template>
 
 <!-- Default copy template -->
