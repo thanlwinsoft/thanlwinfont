@@ -73,20 +73,43 @@
         <xsl:with-param name="axisRotation" select="0"/>
         <xsl:with-param name="large" select="0"/>
         <xsl:with-param name="clockwise" select="1"/>
-        <xsl:with-param name="x" select="-2 * $hookOuterRadius * math:cos($hookStartAngle)"/>
-        <xsl:with-param name="y" select="-2 * $hookOuterRadius * math:sin($hookStartAngle)"/>
+        <xsl:with-param name="x" select="-$hookOuterRadius * (1 + math:cos($hookStartAngle))"/>
+        <xsl:with-param name="y" select="-$hookOuterRadius * math:sin($hookStartAngle)"/>
     </xsl:call-template>
-    <xsl:text>l</xsl:text><xsl:value-of select="($hookInnerRadius + $hookOuterRadius) * math:cos($hookStartAngle)"/>
-    <xsl:text>,</xsl:text><xsl:value-of select="- ($hookInnerRadius + $hookOuterRadius) * math:cos($hookStartAngle) div math:tan($hookStartAngle)"/>
-    <xsl:call-template name="arc">
-        <xsl:with-param name="rx" select="$waXOuterRadius"/>
-        <xsl:with-param name="ry" select="$waYOuterRadius"/>
-        <xsl:with-param name="axisRotation" select="0"/>
-        <xsl:with-param name="large" select="0"/>
-        <xsl:with-param name="clockwise" select="1"/>
-        <xsl:with-param name="x" select="2 * $hookOuterDx"/>
+    <xsl:variable name="loopHeight" select="$thickness"/>
+    
+    <xsl:call-template name="corner">
+		<xsl:with-param name="x" select="0"/>
+        <xsl:with-param name="y" select="-$descent + $loopHeight"/>
+		<xsl:with-param name="r" select="$cornerOuterRadius"/>
+		<xsl:with-param name="nextX" select="$waXOuterRadius "/>
+        <xsl:with-param name="nextY" select="0"/>
+	</xsl:call-template>
+	<xsl:call-template name="corner">
+		<xsl:with-param name="x" select="$waXOuterRadius"/>
         <xsl:with-param name="y" select="0"/>
-    </xsl:call-template>
+		<xsl:with-param name="r" select="$cornerOuterRadius"/>
+		<xsl:with-param name="nextX" select="0"/>
+        <xsl:with-param name="nextY" select="$cornerOuterRadius"/>
+	</xsl:call-template>
+    <xsl:text>l</xsl:text><xsl:value-of select="-$thickness"/><xsl:text>,0</xsl:text>
+	
+	<xsl:call-template name="corner">
+		<xsl:with-param name="x" select="0"/>
+        <xsl:with-param name="y" select="-$cornerInnerRadius"/>
+		<xsl:with-param name="r" select="$cornerInnerRadius"/>
+		<xsl:with-param name="nextX" select="-$waXOuterRadius + $thickness"/>
+        <xsl:with-param name="nextY" select="0"/>
+	</xsl:call-template>
+	<xsl:call-template name="corner">
+		<xsl:with-param name="x" select="- $waXOuterRadius + $thickness"/>
+        <xsl:with-param name="y" select="0"/>
+		<xsl:with-param name="r" select="$cornerInnerRadius"/>
+		<xsl:with-param name="nextX" select="0"/>
+        <xsl:with-param name="nextY" select="$descent - $loopHeight - $thickness"/>
+	</xsl:call-template>
+    
+	
     <xsl:call-template name="arc">
         <xsl:with-param name="rx" select="$hookInnerRadius"/>
         <xsl:with-param name="ry" select="$hookInnerRadius"/>
@@ -94,53 +117,7 @@
         <xsl:with-param name="large" select="0"/>
         <xsl:with-param name="clockwise" select="0"/>
         <xsl:with-param name="x" select="$hookInnerRadius * (1 + math:cos($hookStartAngle))"/>
-        <xsl:with-param name="y" select="-$hookInnerRadius * math:sin($hookStartAngle)"/>
-    </xsl:call-template>
-    <xsl:call-template name="corner">
-		<xsl:with-param name="x" select="0"/>
-        <xsl:with-param name="y" select="-$cornerOuterRadius - $thickness"/>
-		<xsl:with-param name="r" select="$cornerOuterRadius"/>
-		<xsl:with-param name="nextX" select="$cornerOuterRadius"/>
-        <xsl:with-param name="nextY" select="0"/>
-	</xsl:call-template>
-	<xsl:text>l0,</xsl:text><xsl:value-of select="$thickness"/>
-	<xsl:call-template name="corner">
-		<xsl:with-param name="x" select="-$cornerInnerRadius"/>
-        <xsl:with-param name="y" select="0"/>
-		<xsl:with-param name="r" select="$cornerInnerRadius"/>
-		<xsl:with-param name="nextX" select="0"/>
-        <xsl:with-param name="nextY" select="$cornerInnerRadius + $thickness"/>
-	</xsl:call-template>
-	<xsl:call-template name="arc">
-        <xsl:with-param name="rx" select="$hookOuterRadius"/>
-        <xsl:with-param name="ry" select="$hookOuterRadius"/>
-        <xsl:with-param name="axisRotation" select="0"/>
-        <xsl:with-param name="large" select="0"/>
-        <xsl:with-param name="clockwise" select="1"/>
-        <xsl:with-param name="x" select="-$hookOuterRadius * (1 + math:cos($hookStartAngle))"/>
-        <xsl:with-param name="y" select="$hookOuterRadius * math:sin($hookStartAngle)"/>
-    </xsl:call-template>
-    
-    <xsl:call-template name="arc">
-        <xsl:with-param name="rx" select="$waXInnerRadius"/>
-        <xsl:with-param name="ry" select="$waYInnerRadius"/>
-        <xsl:with-param name="axisRotation" select="0"/>
-        <xsl:with-param name="large" select="0"/>
-        <xsl:with-param name="clockwise" select="0"/>
-        <xsl:with-param name="x" select="-2 * $hookInnerDx"/>
-        <xsl:with-param name="y" select="0"/>
-    </xsl:call-template>
-    <xsl:text>l</xsl:text><xsl:value-of select="-($hookInnerRadius + $hookOuterRadius) * math:cos($hookStartAngle)"/>
-    <xsl:text>,</xsl:text><xsl:value-of select="($hookInnerRadius + $hookOuterRadius) * math:cos($hookStartAngle) div math:tan($hookStartAngle)"/>
-
-    <xsl:call-template name="arc">
-        <xsl:with-param name="rx" select="$hookInnerRadius"/>
-        <xsl:with-param name="ry" select="$hookInnerRadius"/>
-        <xsl:with-param name="axisRotation" select="0"/>
-        <xsl:with-param name="large" select="0"/>
-        <xsl:with-param name="clockwise" select="0"/>
-        <xsl:with-param name="x" select="2 * $hookInnerRadius * math:cos($hookStartAngle)"/>
-        <xsl:with-param name="y" select="2 * $hookInnerRadius * math:sin($hookStartAngle)"/>
+        <xsl:with-param name="y" select="$hookInnerRadius * math:sin($hookStartAngle)"/>
     </xsl:call-template>
     <xsl:call-template name="arc">
         <xsl:with-param name="rx" select="$waXOuterRadius"/>
