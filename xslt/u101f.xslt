@@ -7,6 +7,8 @@
 <xsl:include href="param.xslt"/>
 <xsl:include href="path.xslt"/>
 
+<xsl:variable name="advance" select="$wideConsWidth"/>
+<xsl:variable name="overlap" select="0"/>
 <xsl:variable name="intersectAngle"
 	select="math:acos(($waXOuterRadius - .5 * $thickness) div $waXOuterRadius)"/>
 
@@ -18,11 +20,11 @@
 
 <xsl:template match="svg:g">
 	<xsl:copy use-attribute-sets="gAttribs">
-	<xsl:call-template name="u1000"/>
+	<xsl:call-template name="u101f"/>
 	</xsl:copy>
 </xsl:template>
 
-<xsl:template name="u1000">
+<xsl:template name="u101f">
     <xsl:element name="path" use-attribute-sets="pathAttribs">
     <xsl:attribute name="d">
     <xsl:call-template name="Move">

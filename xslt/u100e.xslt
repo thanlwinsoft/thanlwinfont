@@ -7,6 +7,9 @@
 <xsl:include href="param.xslt"/>
 <xsl:include href="path.xslt"/>
 
+<xsl:variable name="advance" select="$narrowConsWidth"/>
+<xsl:variable name="overlap" select="0"/>
+
 <xsl:variable name="hookOuterDx" select="math:sin($hookStartAngle) * $waYOuterRadius"/>
 <xsl:variable name="hookOuterDy" select="math:cos($hookStartAngle) * $waYOuterRadius"/>
 <xsl:variable name="hookInnerDx" select="math:sin($hookStartAngle) * $waYInnerRadius"/>

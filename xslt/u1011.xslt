@@ -16,11 +16,11 @@
 
 <xsl:template match="svg:g">
 	<xsl:copy use-attribute-sets="gAttribs">
-	<xsl:call-template name="u1010"/>
+	<xsl:call-template name="u1011"/>
 	</xsl:copy>
 </xsl:template>
 
-<xsl:template name="u1010">
+<xsl:template name="u1011">
     <xsl:element name="path" use-attribute-sets="pathAttribs">
     <xsl:attribute name="d">
     <xsl:call-template name="Move">
@@ -33,21 +33,8 @@
         <xsl:with-param name="axisRotation" select="0"/>
         <xsl:with-param name="large" select="1"/>
         <xsl:with-param name="clockwise" select="0"/>
-        <xsl:with-param name="x" select="$waXOuterRadius - .5 *$thickness"/>
-        <xsl:with-param name="y" select="- $intersectDy - $waYOuterRadius"/>
-    </xsl:call-template>
-    <xsl:call-template name="outer2inner">
-    	<xsl:with-param name="cx" select="0"/>
-    	<xsl:with-param name="cy" select="$waYOuterRadius"/>
-    </xsl:call-template>
-    <xsl:call-template name="arc">
-        <xsl:with-param name="rx" select="$waXInnerRadius"/>
-        <xsl:with-param name="ry" select="$waYInnerRadius"/>
-        <xsl:with-param name="axisRotation" select="0"/>
-        <xsl:with-param name="large" select="1"/>
-        <xsl:with-param name="clockwise" select="1"/>
-        <xsl:with-param name="x" select="-$waXInnerRadius"/>
-        <xsl:with-param name="y" select="$waYInnerRadius"/>
+        <xsl:with-param name="x" select="0"/>
+        <xsl:with-param name="y" select="- 2 * $intersectDy"/>
     </xsl:call-template>
     <xsl:call-template name="arc">
         <xsl:with-param name="rx" select="$waXOuterRadius"/>
@@ -55,8 +42,8 @@
         <xsl:with-param name="axisRotation" select="0"/>
         <xsl:with-param name="large" select="1"/>
         <xsl:with-param name="clockwise" select="0"/>
-        <xsl:with-param name="x" select="- .5 * $thickness"/>
-        <xsl:with-param name="y" select="$intersectDy"/>
+        <xsl:with-param name="x" select="0"/>
+        <xsl:with-param name="y" select="2 * $intersectDy"/>
     </xsl:call-template>
 	<xsl:call-template name="move">
         <xsl:with-param name="x" select="- .5 * $thickness"/>
@@ -75,7 +62,16 @@
         <xsl:with-param name="x" select="$thickness"/>
         <xsl:with-param name="y" select="1"/>
     </xsl:call-template>
-    
+	<xsl:call-template name="arc">
+        <xsl:with-param name="rx" select="$waXInnerRadius"/>
+        <xsl:with-param name="ry" select="$waYInnerRadius"/>
+        <xsl:with-param name="axisRotation" select="0"/>
+        <xsl:with-param name="large" select="1"/>
+        <xsl:with-param name="clockwise" select="1"/>
+        <xsl:with-param name="x" select="0"/>
+        <xsl:with-param name="y" select="1"/>
+    </xsl:call-template>
+
     </xsl:attribute>
     </xsl:element>
 </xsl:template>

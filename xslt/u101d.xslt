@@ -6,6 +6,9 @@
 <xsl:include href="param.xslt"/>
 <xsl:include href="path.xslt"/>
 
+<xsl:variable name="advance" select="$narrowConsWidth"/>
+<xsl:variable name="overlap" select="0"/>
+
 <xsl:template match="svg:g">
 	<xsl:copy use-attribute-sets="gAttribs">
 	<xsl:call-template name="u101d"/>
@@ -13,11 +16,13 @@
 </xsl:template>
 
 <xsl:template name="u101d">
+	<xsl:param name="xOffset" select="0"/>
+	<xsl:param name="yOffset" select="0"/>
     <xsl:element name="path" use-attribute-sets="pathAttribs">
     <xsl:attribute name="d">
     <xsl:call-template name="Move">
-        <xsl:with-param name="x" select="$preGuard+$waXOuterRadius"/>
-        <xsl:with-param name="y" select="0"/>
+        <xsl:with-param name="x" select="$xOffset + $preGuard+$waXOuterRadius"/>
+        <xsl:with-param name="y" select="$yOffset"/>
     </xsl:call-template>
     <!--
     <xsl:call-template name="cubic">

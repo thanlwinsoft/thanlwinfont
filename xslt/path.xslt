@@ -148,6 +148,157 @@
 	
 </xsl:template>
 
+
+<xsl:template name="corner">
+	<xsl:param name="x"/>
+	<xsl:param name="y"/>
+	<xsl:param name="r"/>
+	<xsl:param name="nextX"/>
+	<xsl:param name="nextY"/>
+	<xsl:param name="straight" select="0"/>
+	<xsl:choose>
+	<xsl:when test="$straight">
+	<xsl:text>l</xsl:text><xsl:value-of select="$x"/><xsl:text>,</xsl:text>
+	<xsl:value-of select="$y"/>
+	<xsl:text>l</xsl:text><xsl:value-of select="$nextX"/><xsl:text>,</xsl:text>
+	<xsl:value-of select="$nextY"/>
+	</xsl:when>
+	<xsl:otherwise>
+	<xsl:variable name="angleBefore">
+		<xsl:choose>
+			<xsl:when test="$x = 0 and $y &lt; 0">
+				<xsl:value-of select=".5 * $pi"/>
+			</xsl:when>
+			<xsl:when test="$x = 0 and $y &gt;= 0">
+				<xsl:value-of select="-.5 * $pi"/>
+			</xsl:when>
+			<xsl:when test="$x &gt; 0 and $y &gt;= 0">
+				<xsl:value-of select="-$pi + math:atan($y div $x)"/>			
+			</xsl:when>
+			<xsl:when test="$x &gt;= 0 and $y &lt; 0">
+				<xsl:value-of select="$pi + math:atan($y div $x)"/>			
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="math:atan($y div $x)"/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:variable>
+	<xsl:variable name="angleAfter">
+		<xsl:choose>
+			<xsl:when test="$nextX = 0 and $nextY &lt; 0">
+				<xsl:value-of select="-.5 * $pi"/>
+			</xsl:when>
+			<xsl:when test="$nextX = 0 and $nextY &gt; 0">
+				<xsl:value-of select=".5 * $pi"/>
+			</xsl:when>
+			<xsl:when test="$nextX &lt; 0 and $nextY &gt;= 0">
+				<xsl:value-of select="$pi + math:atan($nextY div $nextX)"/>			
+			</xsl:when>
+			<xsl:when test="$nextX &lt; 0 and $nextY &lt; 0">
+				<xsl:value-of select="-$pi + math:atan($nextY div $nextX)"/>			
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of  select="math:atan($nextY div $nextX)"/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:variable>
+	<!-- keep in range -pi to pi -->
+	<xsl:variable name="deltaAngle">
+		<xsl:choose>
+		<xsl:when test="$angleAfter - $angleBefore &lt; - $pi">
+			<xsl:value-of select="$angleAfter - $angleBefore + 2 * $pi"/>
+		</xsl:when>
+		<xsl:when test="$angleAfter - $angleBefore &gt; $pi">
+			<xsl:value-of select="$angleAfter - $angleBefore - 2 * $pi"/>
+		</xsl:when>
+		<xsl:when test="$angleAfter - $angleBefore &gt; $pi">
+			<xsl:value-of select="$angleAfter - $angleBefore - $pi"/>
+		</xsl:when>
+		<xsl:when test="$angleAfter - $angleBefore &lt; 0 and $angleBefore &lt; 0 and $angleAfter &lt; 0">
+			<xsl:value-of select="$angleAfter - $angleBefore + $pi"/>
+		</xsl:when>
+		<xsl:otherwise>
+			<xsl:value-of select="$angleAfter - $angleBefore"/>
+		</xsl:otherwise>
+		</xsl:choose>
+	</xsl:variable>
+	<xsl:variable name="bisectAngle" select=".5*$deltaAngle"/>
+	<xsl:variable name="cornerDir">
+		<xsl:choose>
+			<xsl:when test="($angleBefore &gt;= 0 and $angleBefore &lt;= $pi) and ($angleAfter &lt; $angleBefore and $angleAfter &gt; $angleBefore - $pi)">1</xsl:when>
+			<xsl:when test="($angleBefore &lt;= 0 and $angleBefore &gt;= -$pi) and (($angleAfter &lt; $angleBefore) or ($angleAfter &gt; $angleBefore + $pi))">1</xsl:when>
+			<!-- 
+			<xsl:when test="$angleBefore &gt; 0 and $angleAfter &lt; 0 and ($angleAfter - $angleBefore &lt; 0)">1</xsl:when>
+			<xsl:when test="$angleBefore &gt; 0 and $angleAfter &gt; 0 and ($angleAfter - $angleBefore &gt; 0)">0</xsl:when>
+			<xsl:when test="$angleBefore &lt; 0 and $angleAfter &gt; 0 and ($angleAfter - $angleBefore &lt; 0)">0</xsl:when>
+			<xsl:when test="$angleBefore &lt; 0 and $angleAfter &gt; 0 and ($angleAfter - $angleBefore &gt; 0)">1</xsl:when>
+			-->
+			<xsl:otherwise>0</xsl:otherwise>
+		</xsl:choose>
+	</xsl:variable>
+	<xsl:variable name="large">
+		<xsl:value-of select="0"/>
+	</xsl:variable>
+	<xsl:variable name="dl" select="$r div math:tan($bisectAngle)"/>
+	<xsl:variable name="dxBefore" select="$dl * math:cos($angleBefore)"/>
+	<xsl:variable name="dxAfter" select="$dl * math:cos($angleAfter)"/>
+	<xsl:variable name="dyBefore" select="$dl * math:sin($angleBefore)"/>
+	<xsl:variable name="dyAfter" select="$dl * math:sin($angleAfter)"/>
+	<xsl:variable name="signXBefore">
+		<xsl:choose>
+		<xsl:when test="math:abs($x - $dxBefore) > math:abs($x)">-1</xsl:when>
+		<xsl:otherwise>1</xsl:otherwise>
+		</xsl:choose>
+	</xsl:variable>
+	<xsl:variable name="signXAfter">
+		<xsl:choose>
+		<xsl:when test="math:abs($nextX - $dxAfter) > math:abs($nextX)">-1</xsl:when>
+		<xsl:otherwise>1</xsl:otherwise>
+		</xsl:choose>
+	</xsl:variable>
+	<xsl:variable name="signYBefore">
+		<xsl:choose>
+		<xsl:when test="math:abs($y - $dyBefore) > math:abs($y)">-1</xsl:when>
+		<xsl:otherwise>1</xsl:otherwise>
+		</xsl:choose>
+	</xsl:variable>
+	<xsl:variable name="signYAfter">
+		<xsl:choose>
+		<xsl:when test="math:abs($nextY - $dyAfter) > math:abs($nextY)">-1</xsl:when>
+		<xsl:otherwise>1</xsl:otherwise>
+		</xsl:choose>
+	</xsl:variable>
+	<xsl:text>l</xsl:text>
+	<xsl:value-of select="$x - $signXBefore * $dxBefore"/><xsl:text>,</xsl:text>
+	<xsl:value-of select="$y - $signYBefore * $dyBefore"/>
+	<xsl:call-template name="arc">
+        <xsl:with-param name="rx" select="$r"/>
+        <xsl:with-param name="ry" select="$r"/>
+        <xsl:with-param name="axisRotation" select="0"/>
+        <xsl:with-param name="large" select="$large"/>
+        <xsl:with-param name="clockwise" select="$cornerDir"/>
+        <xsl:with-param name="x" select="$signXBefore * $dxBefore +$signXAfter * $dxAfter"/>
+        <xsl:with-param name="y" select="$signYBefore * $dyBefore + $signYAfter * $dyAfter"/>
+    </xsl:call-template>
+    <xsl:text>l</xsl:text>
+	<xsl:value-of select="$nextX - $signXAfter * $dxAfter "/><xsl:text>,</xsl:text>
+	<xsl:value-of select="$nextY - $signYAfter * $dyAfter "/>
+	<!--
+	<xsl:message>aBefore<xsl:value-of select="$angleBefore div $pi"/>pi</xsl:message>
+	<xsl:message>aAfter<xsl:value-of select="$angleAfter div $pi"/>pi</xsl:message>
+	<xsl:message>cornerDir<xsl:value-of select="$cornerDir"/></xsl:message>
+	<xsl:message>cornerAngle<xsl:value-of select="$deltaAngle div $pi"/>pi</xsl:message>
+	<xsl:message>bisectAngle<xsl:value-of select="$bisectAngle div $pi"/>pi</xsl:message>
+	<xsl:message>dl<xsl:value-of select="$dl"/></xsl:message>
+	<xsl:message>dxBefore<xsl:value-of select="$dxBefore"/></xsl:message>
+	<xsl:message>dyBefore<xsl:value-of select="$dyBefore"/></xsl:message>
+	<xsl:message>dxAfter<xsl:value-of select="$dxAfter"/></xsl:message>
+	<xsl:message>dyAfter<xsl:value-of select="$dyAfter"/></xsl:message>
+	-->
+	</xsl:otherwise>
+	</xsl:choose>
+</xsl:template>
+
 <xsl:template name="end"><xsl:text>z</xsl:text></xsl:template>
 
 <!-- Default copy template -->
