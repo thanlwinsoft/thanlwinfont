@@ -6,8 +6,8 @@
 
 <xsl:param name="emWidth" select="1000"/>
 <xsl:param name="emHeight" select="1000"/>
-<xsl:param name="ascent" select="700"/>
-<xsl:param name="descent" select="300"/>
+<xsl:param name="ascent" select="650"/>
+<xsl:param name="descent" select="350"/>
 <xsl:param name="baseline" select="750"/>
 <xsl:param name="preGuard" select="20" />
 <xsl:param name="postGuard" select="20"/>
@@ -15,6 +15,7 @@
 <xsl:param name="cubicCircleFactor" select=".5"/>
 <xsl:param name="waXOuterRadius" select="200"/>
 <xsl:param name="waYOuterRadius" select="200"/>
+
 <xsl:param name="pi" select="3.141592654"/>
 <xsl:param name="myCutAngle" select="25 * $pi div 180"/>
 <xsl:param name="loopCutAngle" select="30 * $pi div 180"/>
@@ -36,9 +37,17 @@
 <xsl:param name="zaOuterTailRadius" select="$thickness + $zaInnerTailRadius"/>
 <xsl:param name="narrowConsWidth" select="$preGuard + $postGuard + 2 * $waXOuterRadius"/>
 <xsl:param name="wideConsWidth" select="$preGuard + $postGuard + 4 * $waXOuterRadius - $thickness"/>
+<xsl:param name="thaGyiWidth" select="$preGuard + $postGuard + 6 * $waXOuterRadius - 2 * $thickness"/>
 
 <xsl:param name="yayitDepth" select=".5*$descent"/>
+<xsl:param name="upperScale" select=".5"/>
 <xsl:param name="medialScale" select=".75"/>
+<xsl:param name="medialPad" select="25"/>
+<xsl:param name="upperPad" select="25"/>
+
+<xsl:param name="dotThickness" select="$thickness * $upperScale"/>
+<xsl:param name="dotInnerRadius" select="$dotThickness"/>
+<xsl:param name="dotOuterRadius" select="$dotInnerRadius + $dotThickness"/>
 
 <xsl:template match="svg:svg">
 	<xsl:copy>
@@ -69,6 +78,15 @@
 	</xsl:attribute>
 </xsl:attribute-set>
 
+<xsl:attribute-set name="gUpperAttribs">
+	<xsl:attribute name="transform">
+		<xsl:text>matrix(</xsl:text><xsl:value-of select="$upperScale"/>
+		<xsl:text> 0 0 </xsl:text>
+		<xsl:value-of select="-$upperScale"/><xsl:text> </xsl:text>
+		<xsl:value-of select="0"/><xsl:text> </xsl:text>
+		<xsl:value-of select="$ascent"/><xsl:text>)</xsl:text>
+	</xsl:attribute>
+</xsl:attribute-set>
 
 <xsl:attribute-set name="pathAttribs">
 	<!-- to assist viewing -->

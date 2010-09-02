@@ -26,11 +26,13 @@
 </xsl:template>
 
 <xsl:template name="u1013">
+	<xsl:param name="xOffset" select="0"/>
+	<xsl:param name="yOffset" select="0"/>
     <xsl:element name="path" use-attribute-sets="pathAttribs">
     <xsl:attribute name="d">
     <xsl:call-template name="Move">
-        <xsl:with-param name="x" select="$preGuard+$waXOuterRadius"/>
-        <xsl:with-param name="y" select="0"/>
+        <xsl:with-param name="x" select="$xOffset + $preGuard+$waXOuterRadius"/>
+        <xsl:with-param name="y" select="$yOffset"/>
     </xsl:call-template>
 	<xsl:call-template name="arc">
         <xsl:with-param name="rx" select="$waXOuterRadius"/>
@@ -43,8 +45,8 @@
     </xsl:call-template>
     <xsl:call-template name="end"/>
 	<xsl:call-template name="Move">
-        <xsl:with-param name="x" select="$preGuard+$waXOuterRadius - $dxOuter"/>
-        <xsl:with-param name="y" select="$waYOuterRadius - $dyOuter"/>
+        <xsl:with-param name="x" select="$xOffset + $preGuard+$waXOuterRadius - $dxOuter"/>
+        <xsl:with-param name="y" select="$yOffset + $waYOuterRadius - $dyOuter"/>
     </xsl:call-template>
     <xsl:call-template name="arc">
         <xsl:with-param name="rx" select="$waXInnerRadius"/>
@@ -67,8 +69,8 @@
     <xsl:call-template name="end"/>
     
     <xsl:call-template name="Move">
-        <xsl:with-param name="x" select="$preGuard+$waXOuterRadius - $dxInner"/>
-        <xsl:with-param name="y" select="$waYOuterRadius - $dyInner"/>
+        <xsl:with-param name="x" select="$xOffset + $preGuard+$waXOuterRadius - $dxInner"/>
+        <xsl:with-param name="y" select="$yOffset + $waYOuterRadius - $dyInner"/>
     </xsl:call-template>
     <xsl:call-template name="arc">
         <xsl:with-param name="rx" select="$waXInnerRadius"/>

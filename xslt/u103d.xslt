@@ -16,7 +16,7 @@
 	<xsl:copy use-attribute-sets="gMedialAttribs">
 	<xsl:call-template name="u101d">
 		<xsl:with-param name="xOffset" select="-$narrowConsWidth -$preGuard -$postGuard"/>
-		<xsl:with-param name="yOffset" select="-2*$waYOuterRadius"/>
+		<xsl:with-param name="yOffset" select="-2*$waYOuterRadius - $medialPad div $medialScale"/>
 	</xsl:call-template>
 	</xsl:copy>
 </xsl:template>
