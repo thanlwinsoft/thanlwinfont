@@ -103,6 +103,26 @@ class MyanmarSvgFont(SvgFont.SvgFont):
 				glyph.addPosSub("reorder", [glyphName, "u1031"])
 			else:
 				self.log.info(_("{0} not found").format(svgFile))
+
+			svgFile = "svg/u1004_u103a_u1039_u{0:x}.svg".format(codePoint)
+			glyphName = "u{0:x}".format(codePoint)
+			reorderedGlyphName = "u1004_u103a_u1039_u{0:x}".format(codePoint)			
+			if os.access(svgFile, os.R_OK):
+				glyph = self.importGlyph(svgFile, reorderedGlyphName, -1)
+				glyph.glyphclass = "baseligature"
+				glyph.addPosSub("reorder", ["u1004", "u103a", "u1039", glyphName])
+			else:
+				self.log.info(_("{0} not found").format(svgFile))
+
+			svgFile = "svg/u1004_u103a_u1039_u{0:x}_u1031.svg".format(codePoint)
+			glyphName = "u{0:x}".format(codePoint)
+			reorderedGlyphName = "u1004_u103a_u1039_u{0:x}_u1031".format(codePoint)			
+			if os.access(svgFile, os.R_OK):
+				glyph = self.importGlyph(svgFile, reorderedGlyphName, -1)
+				glyph.glyphclass = "baseligature"
+				glyph.addPosSub("reorder", ["u1004", "u103a", "u1039", glyphName, "u1031"])
+			else:
+				self.log.info(_("{0} not found").format(svgFile))
 		
 			svgFile = "svg/u{0:x}_u103c_u1031.svg".format(codePoint)
 			glyphName = "u{0:x}".format(codePoint)
@@ -113,10 +133,50 @@ class MyanmarSvgFont(SvgFont.SvgFont):
 				glyph.addPosSub("reorder", [glyphName, "u103c", "u1031"])
 			else:
 				self.log.info(_("{0} not found").format(svgFile))
+				
+			svgFile = "svg/u{0:x}_u103c_u103d.svg".format(codePoint)
+			glyphName = "u{0:x}".format(codePoint)
+			reorderedGlyphName = "u{0:x}_u103c_u103d".format(codePoint)			
+			if os.access(svgFile, os.R_OK):
+				glyph = self.importGlyph(svgFile, reorderedGlyphName, -1)
+				glyph.glyphclass = "baseligature"
+				glyph.addPosSub("reorder", [glyphName, "u103c", "u103d"])
+			else:
+				self.log.info(_("{0} not found").format(svgFile))
+
+			svgFile = "svg/u{0:x}_u103c_u103e.svg".format(codePoint)
+			glyphName = "u{0:x}".format(codePoint)
+			reorderedGlyphName = "u{0:x}_u103c_u103e".format(codePoint)			
+			if os.access(svgFile, os.R_OK):
+				glyph = self.importGlyph(svgFile, reorderedGlyphName, -1)
+				glyph.glyphclass = "baseligature"
+				glyph.addPosSub("reorder", [glyphName, "u103c", "u103e"])
+			else:
+				self.log.info(_("{0} not found").format(svgFile))
+			
+			svgFile = "svg/u{0:x}_u103c_u102f.svg".format(codePoint)
+			glyphName = "u{0:x}".format(codePoint)
+			reorderedGlyphName = "u{0:x}_u103c_u102f".format(codePoint)			
+			if os.access(svgFile, os.R_OK):
+				glyph = self.importGlyph(svgFile, reorderedGlyphName, -1)
+				glyph.glyphclass = "baseligature"
+				glyph.addPosSub("reorder", [glyphName, "u103c", "u102f"])
+			else:
+				self.log.info(_("{0} not found").format(svgFile))
+			
+			svgFile = "svg/u{0:x}_u103c_u102d_u102f.svg".format(codePoint)
+			reorderedGlyphName = "u{0:x}_u103c_u102d_u102f".format(codePoint)			
+			if os.access(svgFile, os.R_OK):
+				glyph = self.importGlyph(svgFile, reorderedGlyphName, -1)
+				glyph.glyphclass = "baseligature"
+				glyph.addPosSub("reorder", [glyphName, "u103c", "u102d", "u102f"])
+			else:
+				self.log.info(_("{0} not found").format(svgFile))
+
 			for j in range(len(upperVowels)):
 				vowel = upperVowels[j]
-				svgFile = "svg/u{0:x}_u103c_u{1:x}.svg".format(codePoint, vowel)
 				glyphName = "u{0:x}".format(codePoint)
+				svgFile = "svg/u{0:x}_u103c_u{1:x}.svg".format(codePoint, vowel)
 				reorderedGlyphName = "u{0:x}_u103c_u{1:x}".format(codePoint, vowel)			
 				if os.access(svgFile, os.R_OK):
 					glyph = self.importGlyph(svgFile, reorderedGlyphName, -1)
@@ -124,4 +184,32 @@ class MyanmarSvgFont(SvgFont.SvgFont):
 					glyph.addPosSub("reorder", [glyphName, "u103c", "u{0:x}".format(vowel)])
 				else:
 					self.log.info(_("{0} not found").format(svgFile))
+				
+				svgFile = "svg/u{0:x}_u103c_u103d_u{1:x}.svg".format(codePoint, vowel)
+				reorderedGlyphName = "u{0:x}_u103c_u103d_u{1:x}".format(codePoint, vowel)			
+				if os.access(svgFile, os.R_OK):
+					glyph = self.importGlyph(svgFile, reorderedGlyphName, -1)
+					glyph.glyphclass = "baseligature"
+					glyph.addPosSub("reorder", [glyphName, "u103c", "u103d", "u{0:x}".format(vowel)])
+				else:
+					self.log.info(_("{0} not found").format(svgFile))
+				
+				svgFile = "svg/u{0:x}_u103c_u103e_u{1:x}.svg".format(codePoint, vowel)
+				reorderedGlyphName = "u{0:x}_u103c_u103e_u{1:x}".format(codePoint, vowel)			
+				if os.access(svgFile, os.R_OK):
+					glyph = self.importGlyph(svgFile, reorderedGlyphName, -1)
+					glyph.glyphclass = "baseligature"
+					glyph.addPosSub("reorder", [glyphName, "u103c", "u103e", "u{0:x}".format(vowel)])
+				else:
+					self.log.info(_("{0} not found").format(svgFile))
+				
+				svgFile = "svg/u{0:x}_u103c_u102f_u{1:x}.svg".format(codePoint, vowel)
+				reorderedGlyphName = "u{0:x}_u103c_u102f_u{1:x}".format(codePoint, vowel)			
+				if os.access(svgFile, os.R_OK):
+					glyph = self.importGlyph(svgFile, reorderedGlyphName, -1)
+					glyph.glyphclass = "baseligature"
+					glyph.addPosSub("reorder", [glyphName, "u103c", "u102f", "u{0:x}".format(vowel)])
+				else:
+					self.log.info(_("{0} not found").format(svgFile))
+
 

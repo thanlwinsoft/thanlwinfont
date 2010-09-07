@@ -40,6 +40,7 @@ wideCons:=u1000 u1003 u1006 u100f u1010 u1011 u1018 u101a u101c u101e u1021
 otherCons:=u1008 u1009 u100a u100b u100c u100d u101b u1020
 medialCons:= $(wideCons) $(narrowCons)
 allCons:=$(wideCons) $(narrowCons) $(otherCons)
+takesKinzi:=u1000 u1001 u1002 u1003 u1018 u101c u101e
 
 upperVowel:=u102d u102e u1032
 
@@ -48,7 +49,7 @@ font: thanlwin.sfd
 thanlwin.sfd : svg $(wildcard python/*.py) $(wildcard svg/*.svg)
 	python/thanlwinfont.py xslt/param.xslt "ThanLwin" thanlwin
 
-svg: $(subst xslt,svg,$(wildcard xslt/u*.xslt) $(tests)) medials ereorder yayit
+svg: $(subst xslt,svg,$(wildcard xslt/u*.xslt) $(tests)) medials ereorder yayit kinzi
 
 medials : $(patsubst %, svg/u1039_%.svg, $(medialCons)) $(patsubst %, svg/u1039_%_u102f.svg, $(medialCons)) $(patsubst %, svg/u1039_%_u102d_u102f.svg, $(medialCons)) $(patsubst %, svg/u1039_%_u1030.svg, $(medialCons))
 
@@ -66,7 +67,7 @@ $(foreach cons,$(wideCons),$(eval $(call eVowelYayit,$(cons),u103c_wide)))
 
 $(foreach cons,$(narrowCons),$(eval $(call eVowelYayit,$(cons),u103c_narrow)))
 
-yayit: $(patsubst %, svg/%_u103c.svg, $(wideCons) $(narrowCons)) $(patsubst %, svg/%_u103c_u102d.svg, $(wideCons) $(narrowCons)) $(patsubst %, svg/%_u103c_u102e.svg, $(wideCons) $(narrowCons)) $(patsubst %, svg/%_u103c_u1032.svg, $(wideCons) $(narrowCons))
+yayit: $(patsubst %, svg/%_u103c.svg, $(wideCons) $(narrowCons)) $(patsubst %, svg/%_u103c_u102d.svg, $(wideCons) $(narrowCons)) $(patsubst %, svg/%_u103c_u102e.svg, $(wideCons) $(narrowCons)) $(patsubst %, svg/%_u103c_u1032.svg, $(wideCons) $(narrowCons)) $(patsubst %, svg/%_u103c_u103d.svg, $(wideCons) $(narrowCons)) $(patsubst %, svg/%_u103c_u103d_u102d.svg, $(wideCons) $(narrowCons)) $(patsubst %, svg/%_u103c_u103d_u102e.svg, $(wideCons) $(narrowCons)) $(patsubst %, svg/%_u103c_u103d_u1032.svg, $(wideCons) $(narrowCons)) $(patsubst %, svg/%_u103c_u103e.svg, $(wideCons) $(narrowCons)) $(patsubst %, svg/%_u103c_u103e_u102d.svg, $(wideCons) $(narrowCons)) $(patsubst %, svg/%_u103c_u103e_u102e.svg, $(wideCons) $(narrowCons)) $(patsubst %, svg/%_u103c_u103e_u1032.svg, $(wideCons) $(narrowCons)) $(patsubst %, svg/%_u103c_u102f.svg, $(wideCons) $(narrowCons)) $(patsubst %, svg/%_u103c_u102d_u102f.svg, $(wideCons) $(narrowCons))
 
 define yayitCons
 svg/$(1)_u103c.svg : xslt/$(1).xslt xslt/$(2).xslt xslt/yayitCons.xslt Makefile xslt/param.xslt
@@ -92,6 +93,71 @@ $(foreach vowel,$(upperVowel),$(foreach cons,$(wideCons),$(eval $(call yayitCons
 
 $(foreach vowel,$(upperVowel),$(foreach cons,$(narrowCons),$(eval $(call yayitConsUpperVowel,$(cons),u103c_narrow_upper,$(vowel)))))
 
+define yayitConsMedial
+svg/$(1)_u103c_$(2).svg : xslt/$(1).xslt xslt/$(3).xslt xslt/yayitCons.xslt Makefile xslt/param.xslt
+	mkdir -p tmp
+	xsltproc -o tmp/$(1)_u103c_$(2).xslt --stringparam yayit $(3) --stringparam base $(1)  xslt/yayitCons.xslt blank.svg
+	xsltproc -o $$@  tmp/$(1)_u103c_$(2).xslt blank.svg
+endef
+
+$(foreach cons,$(wideCons),$(eval $(call yayitConsMedial,$(cons),u103d,u103c_wide_u103d)))
+
+$(foreach cons,$(narrowCons),$(eval $(call yayitConsMedial,$(cons),u103d,u103c_narrow_u103d)))
+
+$(foreach cons,$(wideCons),$(eval $(call yayitConsMedial,$(cons),u103e,u103c_wide_u103e)))
+
+$(foreach cons,$(narrowCons),$(eval $(call yayitConsMedial,$(cons),u103e,u103c_narrow_u103e)))
+
+$(foreach cons,$(wideCons),$(eval $(call yayitConsMedial,$(cons),u102f,u103c_wide_u102f)))
+
+$(foreach cons,$(narrowCons),$(eval $(call yayitConsMedial,$(cons),u102f,u103c_narrow_u102f)))
+
+
+define yayitConsUpperVowelMedial
+svg/$(1)_u103c_$(3)_$(4).svg : xslt/$(1).xslt xslt/$(2).xslt xslt/$(4).xslt xslt/yayitConsUpperVowel.xslt Makefile xslt/param.xslt
+	mkdir -p tmp
+	xsltproc -o tmp/$(1)_u103c_$(3)_$(4).xslt --stringparam yayit $(2) --stringparam base $(1) --stringparam upperVowel $(4) xslt/yayitConsUpperVowel.xslt blank.svg
+	xsltproc -o $$@  tmp/$(1)_u103c_$(3)_$(4).xslt blank.svg
+endef
+
+$(foreach vowel,$(upperVowel),$(foreach cons,$(wideCons),$(eval $(call yayitConsUpperVowelMedial,$(cons),u103c_wide_upper_u103d,u103d,$(vowel)))))
+
+$(foreach vowel,$(upperVowel),$(foreach cons,$(narrowCons),$(eval $(call yayitConsUpperVowelMedial,$(cons),u103c_narrow_upper_u103d,u103d,$(vowel)))))
+
+$(foreach vowel,$(upperVowel),$(foreach cons,$(wideCons),$(eval $(call yayitConsUpperVowelMedial,$(cons),u103c_wide_upper_u103e,u103e,$(vowel)))))
+
+$(foreach vowel,$(upperVowel),$(foreach cons,$(narrowCons),$(eval $(call yayitConsUpperVowelMedial,$(cons),u103c_narrow_upper_u103e,u103e,$(vowel)))))
+
+define yayitConsOVowel
+svg/$(1)_u103c_u102d_u102f.svg : xslt/$(1).xslt xslt/$(2).xslt xslt/u102d.xslt xslt/yayitConsUpperVowel.xslt Makefile xslt/param.xslt
+	mkdir -p tmp
+	xsltproc -o tmp/$(1)_u103c_u102d_u102f.xslt --stringparam yayit $(2) --stringparam base $(1) --stringparam upperVowel u102d xslt/yayitConsUpperVowel.xslt blank.svg
+	xsltproc -o $$@  tmp/$(1)_u103c_u102d_u102f.xslt blank.svg
+endef
+
+$(foreach cons,$(wideCons),$(eval $(call yayitConsOVowel,$(cons),u103c_wide_upper_u102f)))
+
+$(foreach cons,$(narrowCons),$(eval $(call yayitConsOVowel,$(cons),u103c_narrow_upper_u102f)))
+
+kinzi: $(patsubst %, svg/u1004_u103a_u1039_%_u1031.svg, $(takesKinzi)) $(patsubst %, svg/u1004_u103a_u1039_%.svg, $(takesKinzi))
+
+define consKinzi
+svg/u1004_u103a_u1039_$(1).svg : xslt/$(1).xslt xslt/consKinzi.xslt Makefile xslt/param.xslt xslt/u1004_u103a_u1039.xslt
+	mkdir -p tmp
+	xsltproc -o tmp/u1004_u103a_u1039_$(1).xslt --stringparam base $(1)  xslt/consKinzi.xslt blank.svg
+	xsltproc -o $$@  tmp/u1004_u103a_u1039_$(1).xslt blank.svg
+endef
+
+$(foreach cons,$(takesKinzi),$(eval $(call consKinzi,$(cons))))
+
+define eVowelConsKinzi
+svg/u1004_u103a_u1039_$(1)_u1031.svg : xslt/$(1).xslt xslt/u1031.xslt xslt/eVowelConsKinzi.xslt Makefile xslt/param.xslt  xslt/u1004_u103a_u1039.xslt
+	mkdir -p tmp
+	xsltproc -o tmp/u1004_u103a_u1039_$(1)_u1031.xslt --stringparam base $(1)  xslt/eVowelConsKinzi.xslt blank.svg
+	xsltproc -o $$@  tmp/u1004_u103a_u1039_$(1)_u1031.xslt blank.svg
+endef
+
+$(foreach cons,$(takesKinzi),$(eval $(call eVowelConsKinzi,$(cons))))
 
 # Special cases
 

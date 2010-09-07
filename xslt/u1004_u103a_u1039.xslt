@@ -7,17 +7,17 @@
 <xsl:include href="param.xslt"/>
 <xsl:include href="path.xslt"/>
 
-<xsl:variable name="advance" select="$wideConsWidth"/>
+<xsl:variable name="advance" select="1"/>
 <xsl:variable name="overlap" select="0"/>
 	
 
 <xsl:template match="svg:g">
 	<xsl:copy use-attribute-sets="gAttribs">
-	<xsl:call-template name="kinzi"/>
+	<xsl:call-template name="u1004_u103a_u1039"/>
 	</xsl:copy>
 </xsl:template>
 
-<xsl:template name="kinzi">
+<xsl:template name="u1004_u103a_u1039">
 	<xsl:param name="xOffset" select="0"/>
 	<xsl:param name="yOffset" select="0"/>
     <xsl:element name="path" use-attribute-sets="pathAttribs">
@@ -34,7 +34,7 @@
 	select="math:acos(($kinziOuterRadius - .5 * $kinziThickness) div $kinziOuterRadius)"/>
 	<xsl:variable name="intersectDx" select="$kinziOuterRadius * math:sin($intersectAngle)"/>
     <xsl:call-template name="Move">
-        <xsl:with-param name="x" select="$xOffset + $preGuard+ $waXOuterRadius + $cutOuterDx"/>
+        <xsl:with-param name="x" select="$xOffset - $postGuard - $waXOuterRadius + $cutOuterDx"/>
         <xsl:with-param name="y" select="$yOffset + 2 * $waYOuterRadius + $upperPad + $kinziOuterRadius - $cutOuterDy "/>
     </xsl:call-template>
 	<xsl:call-template name="arc">
@@ -92,7 +92,7 @@
         <xsl:with-param name="x" select="0"/>
         <xsl:with-param name="y" select="-2 * $cutInnerDy "/>
     </xsl:call-template>
-    
+    <xsl:call-template name="end"/>
     </xsl:attribute>
     </xsl:element>
 </xsl:template>
