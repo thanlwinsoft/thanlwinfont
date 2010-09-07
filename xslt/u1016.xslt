@@ -6,6 +6,7 @@
 
 <xsl:include href="param.xslt"/>
 <xsl:include href="path.xslt"/>
+<xsl:variable name="isWide" select="0"/>
 
 <xsl:variable name="advance" select="$narrowConsWidth"/>
 <xsl:variable name="overlap" select="0"/>
@@ -32,12 +33,14 @@
 </xsl:template>
 
 <xsl:template name="u1016">
+	<xsl:param name="xOffset" select="0"/>
+	<xsl:param name="yOffset" select="0"/>
 	<xsl:message terminate="no"><xsl:value-of select="$cutOuterDy"/></xsl:message>
     <xsl:element name="path" use-attribute-sets="pathAttribs">
     <xsl:attribute name="d">
     <xsl:call-template name="Move">
-        <xsl:with-param name="x" select="$preGuard+$waXOuterRadius - $cutOuterDx"/>
-        <xsl:with-param name="y" select="$cutOuterDy + $waYOuterRadius"/>
+        <xsl:with-param name="x" select="$xOffset + $preGuard+$waXOuterRadius - $cutOuterDx"/>
+        <xsl:with-param name="y" select="$yOffset + $cutOuterDy + $waYOuterRadius"/>
     </xsl:call-template>
     <xsl:call-template name="arc">
         <xsl:with-param name="rx" select="$waXOuterRadius"/>
@@ -74,8 +77,8 @@
     </xsl:call-template>
     <xsl:call-template name="end"/>
     <xsl:call-template name="Move">
-        <xsl:with-param name="x" select="$preGuard+$waXOuterRadius + $loopOuterDx"/>
-        <xsl:with-param name="y" select="$waYOuterRadius + $loopIntersectDy"/>
+        <xsl:with-param name="x" select="$xOffset + $preGuard+$waXOuterRadius + $loopOuterDx"/>
+        <xsl:with-param name="y" select="$yOffset + $waYOuterRadius + $loopIntersectDy"/>
     </xsl:call-template>
     <xsl:call-template name="arc">
         <xsl:with-param name="rx" select="$waXInnerRadius"/>

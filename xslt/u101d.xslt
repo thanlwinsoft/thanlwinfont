@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	xmlns:svg="http://www.w3.org/2000/svg"
-	xmlns="http://www.w3.org/2000/svg">
+	xmlns="http://www.w3.org/2000/svg"
+	xmlns:math="http://exslt.org/math">
 
 <xsl:include href="param.xslt"/>
 <xsl:include href="path.xslt"/>
@@ -104,6 +105,7 @@
         <xsl:with-param name="x" select="-1"/>
         <xsl:with-param name="y" select="0"/>
     </xsl:call-template>
+    <xsl:call-template name="end"/>
 	<xsl:call-template name="move">
         <xsl:with-param name="x" select="0"/>
         <xsl:with-param name="y" select="$thickness"/>

@@ -94,27 +94,7 @@
         <xsl:with-param name="x" select="$thickness"/>
         <xsl:with-param name="y" select="$thickness"/>
     </xsl:call-template>
-    <!--
-    <xsl:call-template name="arc">
-        <xsl:with-param name="rx" select="$thickness "/>
-        <xsl:with-param name="ry" select="$thickness"/>
-        <xsl:with-param name="axisRotation" select="0"/>
-        <xsl:with-param name="large" select="1"/>
-        <xsl:with-param name="clockwise" select="0"/>
-        <xsl:with-param name="x" select="0"/>
-        <xsl:with-param name="y" select="-1"/>
-    </xsl:call-template>
-    <xsl:text>l</xsl:text><xsl:value-of select="-$thickness"/><xsl:text>,0</xsl:text>
-    <xsl:call-template name="arc">
-        <xsl:with-param name="rx" select="2 * $thickness "/>
-        <xsl:with-param name="ry" select="2 * $thickness"/>
-        <xsl:with-param name="axisRotation" select="0"/>
-        <xsl:with-param name="large" select="1"/>
-        <xsl:with-param name="clockwise" select="1"/>
-        <xsl:with-param name="x" select="0"/>
-        <xsl:with-param name="y" select="1"/>
-    </xsl:call-template>
-    -->
+    <xsl:call-template name="end"/>
     </xsl:attribute>
     </xsl:element>
 </xsl:template>

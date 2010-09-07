@@ -8,11 +8,11 @@
 <xsl:include href="path.xslt"/>
 <xsl:variable name="advance" select="$wideConsWidth"/>
 <xsl:variable name="overlap" select="0"/>
-
+<xsl:variable name="isWide" select="0"/>
 
 <xsl:template match="svg:g">
 	<xsl:copy use-attribute-sets="gAttribs">
-	<xsl:call-template name="u1014"/>
+	<xsl:call-template name="u1014_alt"/>
 	</xsl:copy>
 </xsl:template>
 
@@ -21,7 +21,7 @@
 <xsl:variable name="naTopOuterRadius" select="$naOuterRadius - .5 * $thickness"/>
 <xsl:variable name="naTopInnerRadius" select="$naTopOuterRadius - $thickness"/>
 
-<xsl:template name="u1014">
+<xsl:template name="u1014_alt">
 	<xsl:param name="xOffset" select="0"/>
 	<xsl:param name="yOffset" select="0"/>
 

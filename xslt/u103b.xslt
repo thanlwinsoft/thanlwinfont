@@ -6,14 +6,14 @@
 <xsl:include href="param.xslt"/>
 <xsl:include href="path.xslt"/>
 
-<xsl:variable name="yayitOuterDx" select="math:sin($yayitJoinAngle) * $waYOuterRadius"/>
-<xsl:variable name="yayitOuterDy" select="(1 - math:cos($yayitJoinAngle)) * $waYOuterRadius"/>
-<xsl:variable name="yayitInnerDx" select="math:sin($yayitJoinAngle) * $waYInnerRadius"/>
-<xsl:variable name="yayitInnerDy" select="$waYOuterRadius - math:cos($yayitJoinAngle) * $waYInnerRadius"/>
-<xsl:variable name="yayitJoinHeight" select=".5*($yayitInnerDy + $yayitOuterDy)"/>
-<xsl:variable name="yayitWidth" select="$waXOuterRadius + $thickness"/>
+<xsl:variable name="yapinOuterDx" select="math:sin($yapinJoinAngle) * $waYOuterRadius"/>
+<xsl:variable name="yapinOuterDy" select="(1 - math:cos($yapinJoinAngle)) * $waYOuterRadius"/>
+<xsl:variable name="yapinInnerDx" select="math:sin($yapinJoinAngle) * $waYInnerRadius"/>
+<xsl:variable name="yapinInnerDy" select="$waYOuterRadius - math:cos($yapinJoinAngle) * $waYInnerRadius"/>
+<xsl:variable name="yapinJoinHeight" select=".5*($yapinInnerDy + $yapinOuterDy)"/>
+<xsl:variable name="yapinWidth" select="$waXOuterRadius + $thickness"/>
 <!--
-<xsl:variable name="overlap" select="-$yayitOuterDx - $preGuard"/>
+<xsl:variable name="overlap" select="-$yapinOuterDx - $preGuard"/>
 -->
 <xsl:variable name="overlap" select="0"/>
 <xsl:variable name="advance" select="$waXOuterRadius + $postGuard"/>
@@ -27,42 +27,45 @@
 
 <xsl:template name="u103b">
 	<xsl:param name="xOffset" select="0"/>
+	<xsl:param name="yOffset" select="0"/>
     <xsl:element name="path" use-attribute-sets="pathAttribs">
     <xsl:attribute name="d">
     <xsl:call-template name="Move">
-        <xsl:with-param name="x" select="$xOffset -$waXOuterRadius +$yayitInnerDx - $postGuard"/>
-        <xsl:with-param name="y" select="$yayitJoinHeight"/>
+        <xsl:with-param name="x" select="$xOffset -$waXOuterRadius +$yapinInnerDx - $postGuard"/>
+        <xsl:with-param name="y" select="$yOffset + $yapinJoinHeight"/>
     </xsl:call-template>
 	<xsl:call-template name="corner">
 		<xsl:with-param name="x" select="0"/>
-        <xsl:with-param name="y" select="-$yayitJoinHeight - $yayitDepth"/>
+        <xsl:with-param name="y" select="-$yapinJoinHeight - $yapinDepth"/>
 		<xsl:with-param name="r" select="$cornerInnerRadius"/>
-		<xsl:with-param name="nextX" select=".5*$yayitWidth"/>
-        <xsl:with-param name="nextY" select=".5*(- $descent + $yayitDepth)"/>
+		<xsl:with-param name="nextX" select=".5*$yapinWidth"/>
+        <xsl:with-param name="nextY" select=".5*(- $descent + $yapinDepth)"/>
 	</xsl:call-template>
 	<xsl:call-template name="corner">
-		<xsl:with-param name="x" select=".5*$yayitWidth"/>
-        <xsl:with-param name="y" select=".5*(- $descent + $yayitDepth)"/>
+		<xsl:with-param name="x" select=".5*$yapinWidth"/>
+        <xsl:with-param name="y" select=".5*(- $descent + $yapinDepth)"/>
 		<xsl:with-param name="r" select="$cornerInnerRadius"/>
 		<xsl:with-param name="nextX" select="0"/>
         <xsl:with-param name="nextY" select="$descent + 2 * $waYOuterRadius"/>
 	</xsl:call-template>
 	<xsl:text>l</xsl:text><xsl:value-of select="-$thickness"/><xsl:text>,0</xsl:text>
-	<xsl:variable name="slantAngle" select="math:atan(($descent - $yayitDepth) div $waXOuterRadius)"/>
+	<xsl:variable name="slantAngle" select="math:atan(($descent - $yapinDepth) div $waXOuterRadius)"/>
 	<xsl:call-template name="corner">
 		<xsl:with-param name="x" select="0"/>
         <xsl:with-param name="y" select="-$descent - (2 * $waYOuterRadius)+$thickness * (1 div math:cos($slantAngle) + math:tan($slantAngle))"/>
 		<xsl:with-param name="r" select="$cornerInnerRadius"/>
-		<xsl:with-param name="nextX" select="-.5*($yayitWidth) + $thickness"/>
-        <xsl:with-param name="nextY" select=".5*($descent - $yayitDepth) - $thickness * math:tan($slantAngle)"/>
+		<xsl:with-param name="nextX" select="-.5*($yapinWidth) + $thickness"/>
+        <xsl:with-param name="nextY" select=".5*($descent - $yapinDepth) - $thickness * math:tan($slantAngle)"/>
 	</xsl:call-template>
 	<xsl:call-template name="corner">
-		<xsl:with-param name="x" select="-.5*($yayitWidth) + $thickness"/>
-        <xsl:with-param name="y" select=".5*($descent - $yayitDepth) - $thickness * math:tan($slantAngle)"/>
+		<xsl:with-param name="x" select="-.5*($yapinWidth) + $thickness"/>
+        <xsl:with-param name="y" select=".5*($descent - $yapinDepth) - $thickness * math:tan($slantAngle)"/>
 		<xsl:with-param name="r" select="$cornerInnerRadius"/>
 		<xsl:with-param name="nextX" select="0"/>
-        <xsl:with-param name="nextY" select="$yayitJoinHeight + $yayitDepth - $thickness div math:cos($slantAngle) + $thickness * math:tan($slantAngle)"/>
+        <xsl:with-param name="nextY" select="$yapinJoinHeight + $yapinDepth - $thickness div math:cos($slantAngle) + $thickness * math:tan($slantAngle)"/>
 	</xsl:call-template>
+	<xsl:text>l</xsl:text><xsl:value-of select="-$thickness"/><xsl:text>,0</xsl:text>
+	<xsl:call-template name="end"/>
     </xsl:attribute>
     </xsl:element>
 </xsl:template>

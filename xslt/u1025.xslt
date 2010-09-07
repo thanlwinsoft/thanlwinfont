@@ -108,7 +108,6 @@
     	<xsl:with-param name="cy" select="-$cutOuterDy"/>
     </xsl:call-template>
     
-	-->
     <xsl:call-template name="end"/>
     </xsl:attribute>
     </xsl:element>

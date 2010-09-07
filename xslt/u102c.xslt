@@ -26,11 +26,12 @@
 
 <xsl:template name="u102c">
 	<xsl:param name="xOffset" select="0"/>
+	<xsl:param name="yOffset" select="0"/>
     <xsl:element name="path" use-attribute-sets="pathAttribs">
     <xsl:attribute name="d">
     <xsl:call-template name="Move">
         <xsl:with-param name="x" select="$xOffset - $postGuard - 0.5 * $thickness"/>
-        <xsl:with-param name="y" select="$waYOuterRadius + $intersectDy "/>
+        <xsl:with-param name="y" select="$yOffset + $waYOuterRadius + $intersectDy "/>
     </xsl:call-template>
 	<xsl:call-template name="arc">
         <xsl:with-param name="rx" select="$waXOuterRadius"/>

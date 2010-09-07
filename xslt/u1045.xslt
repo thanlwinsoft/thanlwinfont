@@ -83,6 +83,7 @@
         <xsl:with-param name="x" select="0"/>
         <xsl:with-param name="y" select="1"/>
     </xsl:call-template>
+    <xsl:call-template name="end"/>
     <!--
     -->
     </xsl:attribute>

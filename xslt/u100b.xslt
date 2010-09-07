@@ -9,6 +9,7 @@
 
 <xsl:variable name="advance" select="$narrowConsWidth"/>
 <xsl:variable name="overlap" select="0"/>
+<xsl:variable name="isWide" select="0"/>
 
 <xsl:variable name="cutOuterDx" select="math:cos($myCutAngle) * $waYOuterRadius"/>
 <xsl:variable name="cutOuterDy" select="math:sin($myCutAngle) * $waYOuterRadius"/>
@@ -23,11 +24,11 @@
 
 <xsl:template match="svg:g">
 	<xsl:copy use-attribute-sets="gAttribs">
-	<xsl:call-template name="u100c"/>
+	<xsl:call-template name="u100b"/>
 	</xsl:copy>
 </xsl:template>
 
-<xsl:template name="u100c">
+<xsl:template name="u100b">
 	<xsl:param name="xOffset" select="0"/>
 	<xsl:message terminate="no"><xsl:value-of select="$cutOuterDy"/></xsl:message>
     <xsl:element name="path" use-attribute-sets="pathAttribs">

@@ -9,6 +9,8 @@
 
 <xsl:variable name="advance" select="$narrowConsWidth"/>
 <xsl:variable name="overlap" select="0"/>
+<xsl:variable name="isWide" select="0"/>
+
 
 <xsl:variable name="hookOuterDx" select="math:sin($hookStartAngle) * $waYOuterRadius"/>
 <xsl:variable name="hookOuterDy" select="math:cos($hookStartAngle) * $waYOuterRadius"/>
@@ -27,12 +29,15 @@
 </xsl:template>
 
 <xsl:template name="u100e">
+	<xsl:param name="xOffset" select="0"/>
+	<xsl:param name="yOffset" select="0"/>
+
 	<xsl:message terminate="no"><xsl:value-of select="$cutOuterDy"/></xsl:message>
     <xsl:element name="path" use-attribute-sets="pathAttribs">
     <xsl:attribute name="d">
     <xsl:call-template name="Move">
-        <xsl:with-param name="x" select="$preGuard+$waXOuterRadius + $cutOuterDx"/>
-        <xsl:with-param name="y" select="$cutOuterDy + $waYOuterRadius"/>
+        <xsl:with-param name="x" select="$xOffset + $preGuard+$waXOuterRadius + $cutOuterDx"/>
+        <xsl:with-param name="y" select="$yOffset + $cutOuterDy + $waYOuterRadius"/>
     </xsl:call-template>
     <xsl:call-template name="arc">
         <xsl:with-param name="rx" select="$waXOuterRadius"/>

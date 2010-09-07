@@ -20,7 +20,7 @@
 <xsl:variable name="loopInnerDx" select="math:sin($loopCutAngle) * $waXInnerRadius"/>
 <xsl:variable name="loopInnerDy" select="math:cos($loopCutAngle) * $waYInnerRadius"/>
 
-
+<!-- let loop intersect vertically above outer loop end -->
 <xsl:variable name="loopIntersectAngle" select="math:asin($loopOuterDx div $waXInnerRadius)"/>
 <xsl:variable name="loopIntersectDy" select="math:cos($loopIntersectAngle) * $waYInnerRadius"/>
 <xsl:variable name="loopIntersectInternalAngle" select="2 * $loopIntersectAngle - $loopCutAngle"/>
@@ -29,17 +29,19 @@
 
 <xsl:template match="svg:g">
 	<xsl:copy use-attribute-sets="gAttribs">
-	<xsl:call-template name="u1001"/>
+	<xsl:call-template name="u1048"/>
 	</xsl:copy>
 </xsl:template>
 
-<xsl:template name="u1001">
+<xsl:template name="u1048">
+	<xsl:param name="xOffset" select="0"/>
+	<xsl:param name="yOffset" select="0"/>
 	<xsl:message terminate="no"><xsl:value-of select="$cutOuterDy"/></xsl:message>
     <xsl:element name="path" use-attribute-sets="pathAttribs">
     <xsl:attribute name="d">
     <xsl:call-template name="Move">
-        <xsl:with-param name="x" select="$preGuard+$waXOuterRadius - $loopOuterDx"/>
-        <xsl:with-param name="y" select="$waYOuterRadius - $loopOuterDy"/>
+        <xsl:with-param name="x" select="$xOffset + $preGuard+$waXOuterRadius - $loopOuterDx"/>
+        <xsl:with-param name="y" select="$yOffset + $waYOuterRadius - $loopOuterDy"/>
     </xsl:call-template>
     <xsl:call-template name="arc">
         <xsl:with-param name="rx" select="$waXOuterRadius"/>
@@ -60,20 +62,45 @@
         <xsl:with-param name="axisRotation" select="0"/>
         <xsl:with-param name="large" select="1"/>
         <xsl:with-param name="clockwise" select="1"/>
-        <xsl:with-param name="x" select="- $cutInnerDx - $loopInnerDx"/>
+        <xsl:with-param name="x" select="- $cutInnerDx - $loopOuterDx"/>
         <xsl:with-param name="y" select="$cutInnerDy + $loopIntersectDy "/>
     </xsl:call-template>
     <xsl:call-template name="arc">
         <xsl:with-param name="rx" select="$waXOuterRadius"/>
         <xsl:with-param name="ry" select="$waYOuterRadius"/>
         <xsl:with-param name="axisRotation" select="0"/>
-        <xsl:with-param name="large" select="1"/>
-        <xsl:with-param name="clockwise" select="1"/>
-        <xsl:with-param name="x" select="- $cutInnerDx - $loopInnerDx"/>
-        <xsl:with-param name="y" select="$cutInnerDy + $loopIntersectDy "/>
+        <xsl:with-param name="large" select="0"/>
+        <xsl:with-param name="clockwise" select="0"/>
+        <xsl:with-param name="x" select="0"/>
+        <xsl:with-param name="y" select="-$loopOuterDy - $loopIntersectDy "/>
     </xsl:call-template>
-    
     <xsl:call-template name="end"/>
+
+	<xsl:call-template name="Move">
+        <xsl:with-param name="x" select="$xOffset + $preGuard+$waXOuterRadius - $loopOuterDx"/>
+        <xsl:with-param name="y" select="$yOffset + $waYOuterRadius - $loopIntersectDy"/>
+    </xsl:call-template>
+    <xsl:call-template name="arc">
+        <xsl:with-param name="rx" select="$waXInnerRadius"/>
+        <xsl:with-param name="ry" select="$waYInnerRadius"/>
+        <xsl:with-param name="axisRotation" select="0"/>
+        <xsl:with-param name="large" select="0"/>
+        <xsl:with-param name="clockwise" select="1"/>
+        <xsl:with-param name="x" select="$loopOuterDx - $loopInnerIntersectDx"/>
+        <xsl:with-param name="y" select="$loopIntersectDy + $loopInnerIntersectDy"/>
+    </xsl:call-template>
+
+    <xsl:call-template name="arc">
+        <xsl:with-param name="rx" select="$waXInnerRadius"/>
+        <xsl:with-param name="ry" select="$waYInnerRadius"/>
+        <xsl:with-param name="axisRotation" select="0"/>
+        <xsl:with-param name="large" select="0"/>
+        <xsl:with-param name="clockwise" select="1"/>
+        <xsl:with-param name="x" select="-$loopOuterDx + $loopInnerIntersectDx"/>
+        <xsl:with-param name="y" select="-$loopIntersectDy - $loopInnerIntersectDy"/>
+    </xsl:call-template>
+    <xsl:call-template name="end"/>
+    
     </xsl:attribute>
     </xsl:element>
 </xsl:template>

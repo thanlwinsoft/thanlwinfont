@@ -23,7 +23,7 @@
     <xsl:attribute name="d">
     <xsl:call-template name="Move">
         <xsl:with-param name="x" select="$xOffset - $waXInnerRadius - $postGuard - 2 * $thickness"/>
-        <xsl:with-param name="y" select="- $medialPad"/>
+        <xsl:with-param name="y" select="$yOffset - $medialPad"/>
     </xsl:call-template>
 	
 	<xsl:text>l0,</xsl:text><xsl:value-of select="$medialPad - $descent"/>

@@ -8,11 +8,11 @@
 <xsl:include href="path.xslt"/>
 <xsl:variable name="advance" select="$wideConsWidth"/>
 <xsl:variable name="overlap" select="0"/>
-
+<xsl:variable name="isWide" select="1"/>
 
 <xsl:template match="svg:g">
 	<xsl:copy use-attribute-sets="gAttribs">
-	<xsl:call-template name="u1012"/>
+	<xsl:call-template name="u1021"/>
 	</xsl:copy>
 </xsl:template>
 
@@ -32,7 +32,7 @@
 <xsl:variable name="loopInnerDiameter" select="$waXInnerRadius * math:sqrt(2) - 2 * $thickness"/>
 <xsl:variable name="loopInnerDelta" select="$loopInnerDiameter div math:sqrt(2)"/>
 
-<xsl:template name="u1012">
+<xsl:template name="u1021">
 	<xsl:param name="xOffset" select="0"/>
 	<xsl:param name="yOffset" select="0"/>
 
@@ -83,7 +83,7 @@
     <xsl:call-template name="end"/>
     <xsl:call-template name="Move">
         <xsl:with-param name="x" select="$xOffset + $preGuard + 2 * $waXOuterRadius - $thickness"/>
-        <xsl:with-param name="y" select="$waYOuterRadius + $daYInnerRadius + 0.5 * $thickness"/>
+        <xsl:with-param name="y" select="$yOffset + $waYOuterRadius + $daYInnerRadius + 0.5 * $thickness"/>
     </xsl:call-template>
     <xsl:call-template name="arc">
         <xsl:with-param name="rx" select="$waXOuterRadius"/>

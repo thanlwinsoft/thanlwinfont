@@ -96,7 +96,7 @@
         <xsl:with-param name="x" select="$waXOuterRadius - 0.5 * $thickness"/>
         <xsl:with-param name="y" select="$waYOuterRadius + $intersectDy"/>
     </xsl:call-template>
-
+    <xsl:call-template name="end"/>
     
     </xsl:attribute>
     </xsl:element>

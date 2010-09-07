@@ -9,6 +9,18 @@
 
 <xsl:variable name="advance" select="$narrowConsWidth"/>
 <xsl:variable name="overlap" select="0"/>
+
+
+<xsl:template match="svg:g">
+	<xsl:copy use-attribute-sets="gAttribs">
+	<xsl:call-template name="u1031"/>
+	</xsl:copy>
+</xsl:template>
+
+<xsl:template name="u1031">
+	<xsl:param name="xOffset" select="0"/>
+	<xsl:param name="yOffset" select="0"/>
+
 <xsl:variable name="cutOuterDx" select="math:cos($myCutAngle) * $waYOuterRadius"/>
 <xsl:variable name="cutOuterDy" select="math:sin($myCutAngle) * $waYOuterRadius"/>
 <xsl:variable name="cutInnerDx" select="math:cos($myCutAngle) * $waYInnerRadius"/>
@@ -25,19 +37,12 @@
 <xsl:variable name="loopInnerIntersectDx" select="math:cos($loopIntersectInternalAngle) * $waXInnerRadius"/>
 <xsl:variable name="loopInnerIntersectDy" select="math:sin($loopIntersectInternalAngle) * $waXInnerRadius"/>
 
-<xsl:template match="svg:g">
-	<xsl:copy use-attribute-sets="gAttribs">
-	<xsl:call-template name="u1031"/>
-	</xsl:copy>
-</xsl:template>
-
-<xsl:template name="u1031">
 	<xsl:message terminate="no"><xsl:value-of select="$cutOuterDy"/></xsl:message>
     <xsl:element name="path" use-attribute-sets="pathAttribs">
     <xsl:attribute name="d">
     <xsl:call-template name="Move">
-        <xsl:with-param name="x" select="$preGuard+$waXOuterRadius + $cutOuterDx"/>
-        <xsl:with-param name="y" select="$cutOuterDy + $waYOuterRadius"/>
+        <xsl:with-param name="x" select="$xOffset + $preGuard+$waXOuterRadius + $cutOuterDx"/>
+        <xsl:with-param name="y" select="$yOffset + $cutOuterDy + $waYOuterRadius"/>
     </xsl:call-template>
     <xsl:call-template name="arc">
         <xsl:with-param name="rx" select="$waXOuterRadius"/>
@@ -73,8 +78,8 @@
     </xsl:call-template>
     <xsl:call-template name="end"/>
     <xsl:call-template name="Move">
-        <xsl:with-param name="x" select="$preGuard+$waXOuterRadius + $loopIntersectDx"/>
-        <xsl:with-param name="y" select="$loopOuterDy"/>
+        <xsl:with-param name="x" select="$xOffset + $preGuard+$waXOuterRadius + $loopIntersectDx"/>
+        <xsl:with-param name="y" select="$yOffset + $loopOuterDy"/>
     </xsl:call-template>
     <xsl:call-template name="arc">
         <xsl:with-param name="rx" select="$waXInnerRadius"/>

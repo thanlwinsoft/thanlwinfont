@@ -69,11 +69,13 @@
 <xsl:template name="outer2inner">
 	<xsl:param name="cx" select="0"/>
 	<xsl:param name="cy" select="0"/>
+	<xsl:param name="t" select="$thickness"/>
+	<xsl:variable name="r" select="math:sqrt($cx * $cx + $cy * $cy)"/>
 	<!-- for now, just do a simple line -->
 	<xsl:text>l</xsl:text>
-	<xsl:value-of select="$cx * ($thickness div $waXOuterRadius)"/>
+	<xsl:value-of select="$cx * ($t div $r)"/>
 	<xsl:text>,</xsl:text>
-	<xsl:value-of select="$cy * ($thickness div $waYOuterRadius)"/>
+	<xsl:value-of select="$cy * ($t div $r)"/>
 </xsl:template>
 
 <xsl:template name="inner2outer">

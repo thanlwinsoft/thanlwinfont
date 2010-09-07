@@ -18,25 +18,26 @@
 <xsl:template name="u1034">
 	<xsl:param name="xOffset" select="0"/>
 	<xsl:param name="yOffset" select="0"/>
+	<xsl:variable name="lineSide" select="2 * $waXOuterRadius * $upperScale"/>
     <xsl:element name="path" use-attribute-sets="pathAttribs">
     <xsl:attribute name="d">
 <xsl:call-template name="Move">
-        <xsl:with-param name="x" select="$xOffset -  $waXOuterRadius - $postGuard - $waXInnerRadius + (.5 * $thickness) div math:sqrt(2)"/>
+        <xsl:with-param name="x" select="$xOffset -  $waXOuterRadius - $postGuard - .5 * $lineSide + (.5 * $thickness) div math:sqrt(2)"/>
         <xsl:with-param name="y" select="$yOffset + 2 * $waYOuterRadius + $upperPad"/>
     </xsl:call-template>
     
     <xsl:text>l</xsl:text>
-    <xsl:value-of select="2 * $waXInnerRadius"/>
+    <xsl:value-of select="$lineSide"/>
     <xsl:text>,</xsl:text>
-    <xsl:value-of select="2 * $waXInnerRadius"/>
+    <xsl:value-of select="$lineSide"/>
     <xsl:text>l</xsl:text>
     <xsl:value-of select="-($thickness) div math:sqrt(2)"/>
     <xsl:text>,</xsl:text>
     <xsl:value-of select="($thickness) div math:sqrt(2)"/>
     <xsl:text>l</xsl:text>
-    <xsl:value-of select="-2 * $waXInnerRadius"/>
+    <xsl:value-of select="-$lineSide"/>
     <xsl:text>,</xsl:text>
-    <xsl:value-of select="- 2 * $waXInnerRadius"/>
+    <xsl:value-of select="- $lineSide"/>
 
     <xsl:call-template name="end"/>
     </xsl:attribute>

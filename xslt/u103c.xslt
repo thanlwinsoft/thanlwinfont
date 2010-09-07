@@ -6,12 +6,6 @@
 <xsl:include href="param.xslt"/>
 <xsl:include href="path.xslt"/>
 
-<xsl:variable name="yayitOuterDx" select="math:sin($yayitJoinAngle) * $waYOuterRadius"/>
-<xsl:variable name="yayitOuterDy" select="(1 - math:cos($yayitJoinAngle)) * $waYOuterRadius"/>
-<xsl:variable name="yayitInnerDx" select="math:sin($yayitJoinAngle) * $waYInnerRadius"/>
-<xsl:variable name="yayitInnerDy" select="$waYOuterRadius - math:cos($yayitJoinAngle) * $waYInnerRadius"/>
-<xsl:variable name="yayitJoinHeight" select=".5*($yayitInnerDy + $yayitOuterDy)"/>
-<xsl:variable name="yayitWidth" select="$waXOuterRadius + $thickness"/>
 <!--
 <xsl:variable name="overlap" select="-$yayitOuterDx - $preGuard"/>
 -->
@@ -27,11 +21,12 @@
 
 <xsl:template name="u103c">
 	<xsl:param name="xOffset" select="0"/>
+	<xsl:param name="yOffset" select="0"/>
     <xsl:element name="path" use-attribute-sets="pathAttribs">
     <xsl:attribute name="d">
     <xsl:call-template name="Move">
         <xsl:with-param name="x" select="$xOffset +2 * $waXOuterRadius +$preGuard + 2 * $cornerOuterRadius"/>
-        <xsl:with-param name="y" select="$ascent - $cornerOuterRadius"/>
+        <xsl:with-param name="y" select="$yOffset + $ascent - $cornerOuterRadius"/>
     </xsl:call-template>
 	<xsl:call-template name="corner">
 		<xsl:with-param name="x" select="0"/>
