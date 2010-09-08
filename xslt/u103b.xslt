@@ -16,7 +16,7 @@
 <xsl:variable name="overlap" select="-$yapinOuterDx - $preGuard"/>
 -->
 <xsl:variable name="overlap" select="0"/>
-<xsl:variable name="advance" select="$waXOuterRadius + $postGuard"/>
+<xsl:variable name="advance" select="2 * $thickness + $postGuard"/>
 
 
 <xsl:template match="svg:g">

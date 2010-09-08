@@ -4,7 +4,7 @@
 	xmlns="http://www.w3.org/2000/svg">
 
 <!-- advance must be greater than zero -->
-<xsl:variable name="advance" select="1"/>
+<xsl:variable name="advance" select="2 * $dotOuterRadius + $postGuard"/>
 <xsl:variable name="overlap" select="0"/>
 <xsl:include href="param.xslt"/>
 <xsl:include href="path.xslt"/>
@@ -15,13 +15,14 @@
 	</xsl:copy>
 </xsl:template>
 
+<!-- default to having a small advance, since this makes number of ligatures smaller -->
 <xsl:template name="u1037">
 	<xsl:param name="xOffset" select="0"/>
 	<xsl:param name="yOffset" select="0"/>
     <xsl:element name="path" use-attribute-sets="pathAttribs">
     <xsl:attribute name="d">
     <xsl:call-template name="Move">
-        <xsl:with-param name="x" select="$xOffset - $postGuard - $dotOuterRadius"/>
+        <xsl:with-param name="x" select="$xOffset"/>
         <xsl:with-param name="y" select="$yOffset - $medialPad - 2 * $dotOuterRadius"/>
     </xsl:call-template>
 	<xsl:call-template name="arc">

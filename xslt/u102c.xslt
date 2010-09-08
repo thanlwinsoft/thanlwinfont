@@ -7,7 +7,7 @@
 <xsl:include href="param.xslt"/>
 <xsl:include href="path.xslt"/>
 
-<xsl:variable name="advance" select="$narrowConsWidth"/>
+<xsl:variable name="advance" select="2 * $waXOuterRadius - .5 * $thickness"/>
 <xsl:variable name="overlap" select="0"/>
 <xsl:variable name="intersectAngle"
 	select="math:acos(($waXOuterRadius - .5 * $thickness) div $waXOuterRadius)"/>

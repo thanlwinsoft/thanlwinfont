@@ -29,7 +29,7 @@
 	</axsl:choose>
 </axsl:variable>
 <axsl:variable name="overlap" select="0"/>
-<axsl:variable name="advance" select="$widthOffset + $preGuard + 2 * $thickness + 2 * $postGuard"/>
+<axsl:variable name="advance" select="$widthOffset + $preGuard + $thickness + 2 * $postGuard"/>
 
 <axsl:include href="../xslt/param.xslt"/>
 <axsl:include href="../xslt/path.xslt"/>

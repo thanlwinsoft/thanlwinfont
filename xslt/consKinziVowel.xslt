@@ -8,12 +8,13 @@
 
 <xsl:param name="base"/>
 <xsl:param name="baseTemplate" select="$base"/>
-<xsl:param name="yayit"/>
+<xsl:param name="vowel"/>
 
 <xsl:template match="/">
 <axsl:stylesheet version="1.0" >
 <axsl:import href="{concat('../xslt/',$baseTemplate,'.xslt')}"/>
-<axsl:import href="{concat('../xslt/',$yayit,'.xslt')}"/>
+<axsl:import href="../xslt/u1004_u103a_u1039.xslt"/>
+<axsl:import href="{concat('../xslt/',$vowel,'.xslt')}"/>
 
 <axsl:variable name="widthOffset" >
 	<axsl:choose>
@@ -26,27 +27,31 @@
 	</axsl:choose>
 </axsl:variable>
 <axsl:variable name="overlap" select="0"/>
-<axsl:variable name="advance" select="$widthOffset + $preGuard + $thickness + 2 * $postGuard"/>
+<axsl:variable name="advance" select="$widthOffset"/>
 
 <axsl:include href="../xslt/param.xslt"/>
 <axsl:include href="../xslt/path.xslt"/>
 
 <axsl:template match="svg:g">
 	<axsl:copy use-attribute-sets="gAttribs">
-		<axsl:call-template name="{concat($base, '_u103c')}"/>
+		<axsl:call-template name="{concat('u1004_u103a_u1039_',$base, '_', $vowel)}"/>
 	</axsl:copy>
 </axsl:template>
 
-<axsl:template name="{concat($base, '_u103c')}">
+<axsl:template name="{concat('u1004_u103a_u1039_',$base, '_', $vowel)}">
 	<axsl:param name="xOffset" select="0"/>
 	<axsl:param name="yOffset" select="0"/>
-	<axsl:call-template name="{$yayit}">
-		<axsl:with-param name="xOffset" select="$xOffset"/>
-		<axsl:with-param name="yOffset" select="$yOffset"/>
-	</axsl:call-template>
 	<axsl:call-template name="{$baseTemplate}">
-		<axsl:with-param name="xOffset" select="$xOffset + $preGuard + $thickness + $postGuard"/>
-		<axsl:with-param name="yOffset" select="$yOffset"/>
+		<axsl:with-param name="xOffset" select="0"/>
+		<axsl:with-param name="yOffset" select="0"/>
+	</axsl:call-template>
+	<axsl:call-template name="u1004_u103a_u1039">
+		<axsl:with-param name="xOffset" select="$advance - .5 * $waXOuterRadius"/>
+		<axsl:with-param name="yOffset" select="0"/>
+	</axsl:call-template>
+	<axsl:call-template name="{$vowel}">
+		<axsl:with-param name="xOffset" select="$advance + .5 * $waXOuterRadius"/>
+		<axsl:with-param name="yOffset" select="0"/>
 	</axsl:call-template>
 </axsl:template>
 

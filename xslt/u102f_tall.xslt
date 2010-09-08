@@ -7,7 +7,7 @@
 <xsl:include href="param.xslt"/>
 <xsl:include href="path.xslt"/>
 
-<xsl:variable name="advance" select="$preGuard + $postGuard + $thickness"/>
+<xsl:variable name="advance" select="$preGuard + $postGuard + 2 * $thickness + $cornerOuterRadius"/>
 <xsl:variable name="overlap" select="0"/>
 
 <xsl:template match="svg:g">
@@ -22,7 +22,7 @@
     <xsl:element name="path" use-attribute-sets="pathAttribs">
     <xsl:attribute name="d">
     <xsl:call-template name="Move">
-        <xsl:with-param name="x" select="$preGuard"/>
+        <xsl:with-param name="x" select="$xOffset + $preGuard"/>
         <xsl:with-param name="y" select="$yOffset + 2 * $waYOuterRadius"/>
     </xsl:call-template>
 	

@@ -9,15 +9,15 @@
 <xsl:param name="ascent" select="700"/>
 <xsl:param name="descent" select="300"/>
 <xsl:param name="baseline" select="$ascent"/>
-<xsl:param name="preGuard" select="20" />
-<xsl:param name="postGuard" select="20"/>
+<xsl:param name="preGuard" select="25" />
+<xsl:param name="postGuard" select="25"/>
 <xsl:param name="thickness" select="50"/>
 <xsl:param name="cubicCircleFactor" select=".5"/>
 <xsl:param name="waXOuterRadius" select="200"/>
 <xsl:param name="waYOuterRadius" select="200"/>
 
 <!-- define a few parameters which are only used by the python script -->
-<xsl:param name="minCodePoint" select="4096"/><!-- in decimal otherwise it won't parse -->
+<xsl:param name="minCodePoint" select="32"/><!-- in decimal otherwise it won't parse -->
 <xsl:param name="maxCodePoint" select="9676"/>
 <xsl:param name="copyright" select="'Keith Stribley 2010 (ThanLwinSoft.org)'"/>
 <xsl:param name="version" select="0.1"/>

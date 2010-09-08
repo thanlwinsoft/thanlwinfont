@@ -23,7 +23,7 @@
     <xsl:element name="path" use-attribute-sets="pathAttribs">
     <xsl:attribute name="d">
     <xsl:variable name="kinziThickness" select="$thickness div 2"/>
-    <xsl:variable name="kinziOuterRadius" select="($ascent - 2 * $waYOuterRadius - $upperPad + $kinziThickness) div 4"/>
+    <xsl:variable name="kinziOuterRadius" select="(2 * $waYOuterRadius * $upperScale + $kinziThickness) div 4"/>
     <xsl:variable name="kinziInnerRadius" select="$kinziOuterRadius - $kinziThickness"/>
     
     <xsl:variable name="cutOuterDx" select="math:cos($myCutAngle) * $kinziOuterRadius"/>

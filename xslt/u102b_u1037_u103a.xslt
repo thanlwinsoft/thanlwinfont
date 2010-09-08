@@ -4,21 +4,24 @@
 	xmlns:math="http://exslt.org/math"
 	xmlns="http://www.w3.org/2000/svg">
 
+<xsl:import href="u1037.xslt"/>
 <xsl:include href="param.xslt"/>
 <xsl:include href="path.xslt"/>
 
-<xsl:variable name="advance" select="$preGuard + $thickness + $postGuard"/>
+<xsl:variable name="advance" select="$preGuard + $waXOuterRadius + $postGuard"/>
 <xsl:variable name="overlap" select="0"/>
 
 <xsl:template match="svg:g">
 	<xsl:copy use-attribute-sets="gAttribs">
-	<xsl:call-template name="u102b"/>
+	<xsl:call-template name="u102b_u1037_u103a"/>
 	</xsl:copy>
 </xsl:template>
 
-<xsl:template name="u102b">
+<xsl:template name="u102b_u1037_u103a">
 	<xsl:param name="xOffset" select="0"/>
 	<xsl:param name="yOffset" select="0"/>
+	
+	<xsl:variable name="intersectAngle" select="math:acos(1 - ($thickness div $waXOuterRadius))"/>
     <xsl:element name="path" use-attribute-sets="pathAttribs">
     <xsl:attribute name="d">
     <xsl:call-template name="Move">
@@ -29,9 +32,28 @@
         <xsl:with-param name="rx" select="$waXOuterRadius div 2"/>
         <xsl:with-param name="ry" select="$waYOuterRadius div 2"/>
         <xsl:with-param name="axisRotation" select="0"/>
-        <xsl:with-param name="large" select="1"/>
+        <xsl:with-param name="large" select="0"/>
         <xsl:with-param name="clockwise" select="0"/>
-        <xsl:with-param name="x" select="$waXOuterRadius"/>
+        <xsl:with-param name="x" select="$waXOuterRadius - .5 * $thickness"/>
+        <xsl:with-param name="y" select=".5 * $waYOuterRadius * math:sin($intersectAngle)"/>
+    </xsl:call-template>
+    <xsl:call-template name="arc">
+        <xsl:with-param name="rx" select="$waXOuterRadius div 2"/>
+        <xsl:with-param name="ry" select="$waYOuterRadius div 2"/>
+        <xsl:with-param name="axisRotation" select="0"/>
+        <xsl:with-param name="large" select="0"/>
+        <xsl:with-param name="clockwise" select="0"/>
+        <xsl:with-param name="x" select="$waXOuterRadius - .5 * $thickness"/>
+        <xsl:with-param name="y" select="- .5 * $waYOuterRadius * math:sin($intersectAngle)"/>
+    </xsl:call-template>
+	<xsl:text>l</xsl:text><xsl:value-of select="-$thickness"/><xsl:text>,0</xsl:text>
+	<xsl:call-template name="arc">
+        <xsl:with-param name="rx" select="$waXOuterRadius div 2 - $thickness"/>
+        <xsl:with-param name="ry" select="$waYOuterRadius div 2 - $thickness"/>
+        <xsl:with-param name="axisRotation" select="0"/>
+        <xsl:with-param name="large" select="1"/>
+        <xsl:with-param name="clockwise" select="1"/>
+        <xsl:with-param name="x" select="-$waXOuterRadius + 2 * $thickness"/>
         <xsl:with-param name="y" select="0"/>
     </xsl:call-template>
     
@@ -47,11 +69,14 @@
         <xsl:with-param name="x" select="-$waXOuterRadius + 2 * $thickness"/>
         <xsl:with-param name="y" select="0"/>
     </xsl:call-template>
-
 	<xsl:call-template name="end"/>
 
     </xsl:attribute>
     </xsl:element>
+    <xsl:call-template name="u1037">
+    	<xsl:with-param name="xOffset" select="$xOffset + $preGuard + $thickness"/>
+    	<xsl:with-param name="yOffset" select="$yOffset"/>
+    </xsl:call-template>
 </xsl:template>
 
 </xsl:stylesheet>

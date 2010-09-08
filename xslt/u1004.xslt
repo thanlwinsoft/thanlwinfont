@@ -9,6 +9,7 @@
 
 <xsl:variable name="advance" select="$narrowConsWidth"/>
 <xsl:variable name="overlap" select="0"/>
+<xsl:variable name="isWide" select="0"/>
 
 <xsl:variable name="cutOuterDx" select="math:cos($myCutAngle) * $waYOuterRadius"/>
 <xsl:variable name="cutOuterDy" select="math:sin($myCutAngle) * $waYOuterRadius"/>

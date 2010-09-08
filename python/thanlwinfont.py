@@ -29,6 +29,7 @@ if __name__ == "__main__":
 	font.setGlyphTypes()
 	font.addMedialGlyphs()
 	font.addReorderedGlyphs()
+	font.addSpecialLigatures()
 	font.save()
 
 	

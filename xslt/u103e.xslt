@@ -12,11 +12,11 @@
 
 <xsl:template match="svg:g">
 	<xsl:copy use-attribute-sets="gAttribs">
-	<xsl:call-template name="u102f"/>
+	<xsl:call-template name="u103e"/>
 	</xsl:copy>
 </xsl:template>
 
-<xsl:template name="u102f">
+<xsl:template name="u103e">
 	<xsl:param name="xOffset" select="0"/>
 	<xsl:param name="yOffset" select="0"/>
     <xsl:element name="path" use-attribute-sets="pathAttribs">

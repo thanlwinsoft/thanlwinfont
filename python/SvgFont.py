@@ -59,7 +59,8 @@ class SvgFont(object) :
 		glyph.round()
 		validationState = glyph.validate()
 		if validationState:
-			print "Glyph failed to validate: {0} {1:x}".format(glyphName, validationState)
+			if validationState != 4: # ignore 4, since it is so common
+				print "Glyph failed to validate: {0} {1:x}".format(glyphName, validationState)
 			self.log.warn("Glyph {0} failed to validate".format(glyphName))
 		else:
 			# print "Glyph validated: " + glyphName
@@ -71,8 +72,8 @@ class SvgFont(object) :
 		maxCodePoint = int(self.xslParams.getParam("maxCodePoint"))
 		
 		for codePoint in range(minCodePoint, maxCodePoint +1):
-			svgFile = "svg/u{0:x}.svg".format(codePoint)
-			glyphName = "u{0:x}".format(codePoint)
+			svgFile = "svg/u{0:04x}.svg".format(codePoint)
+			glyphName = "u{0:04x}".format(codePoint)
 			if os.access(svgFile, os.R_OK):
 				self.importGlyph(svgFile, glyphName, codePoint)
 			else:

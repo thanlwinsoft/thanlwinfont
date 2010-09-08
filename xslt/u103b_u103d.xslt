@@ -12,27 +12,29 @@
 <xsl:include href="param.xslt"/>
 <xsl:include href="path.xslt"/>
 
-<xsl:variable name="yapinAngle" select="$pi div 6"/>
+<xsl:variable name="yapinAngle" select="$pi div 8"/>
 
 <xsl:variable name="waThickness" select="$medialScale * $thickness"/>
 <xsl:variable name="yapinIntersectAngle" select="math:asin($thickness div (2 * $waXOuterRadius*$medialScale))"/>
 
 <xsl:template match="svg:g">
 	<xsl:copy use-attribute-sets="gAttribs">
-	<xsl:call-template name="u103b_u103d_u103e">
+	<xsl:call-template name="u103b_u103d">
 		<xsl:with-param name="xOffset" select="0"/>
 		<xsl:with-param name="yOffset" select="0"/>
 	</xsl:call-template>
 	</xsl:copy>
 </xsl:template>
 
-<xsl:template name="u103b_u103d_u103e">
+<xsl:template name="u103b_u103d">
 	<xsl:param name="xOffset" select="0"/>
 	<xsl:param name="yOffset" select="0"/>
-	<xsl:variable name="yapinWidth" select="$waXOuterRadius + $thickness"/>
+	<xsl:variable name="yapinWidth" select="$waXOuterRadius + 2 * $thickness + $postGuard"/>
 	<xsl:variable name="yapinArmDx" select="$yapinWidth - $waXOuterRadius * $medialScale * math:cos($yapinAngle)"/>
 	<xsl:variable name="yapinArmDxAbove" select="$yapinArmDx - $thickness * (1 + .5 * math:sin($yapinAngle))"/>
 	<xsl:variable name="yapinArmDxBelow" select="$yapinArmDx + $thickness * (.5 * math:sin($yapinAngle))"/>
+	<xsl:variable name="yapinHeight" select="2 * $waYOuterRadius + $medialPad + (1 + math:sin($yapinAngle + $yapinIntersectAngle)) * $waYOuterRadius* $medialScale + $yapinArmDxBelow * math:tan($yapinAngle)"/>
+
     <xsl:element name="path" use-attribute-sets="pathAttribs">
     <xsl:attribute name="d">
     <xsl:call-template name="Move">
@@ -46,13 +48,13 @@
         <xsl:with-param name="y" select="-$yapinArmDxBelow * math:tan($yapinAngle)"/>
 		<xsl:with-param name="r" select="$cornerInnerRadius"/>
 		<xsl:with-param name="nextX" select="0"/>
-        <xsl:with-param name="nextY" select="$descent + 2 * $waYOuterRadius"/>
+        <xsl:with-param name="nextY" select="$yapinHeight"/>
 	</xsl:call-template>
 	<xsl:text>l</xsl:text><xsl:value-of select="-$thickness"/><xsl:text>,0</xsl:text>
 	<xsl:variable name="slantAngle" select="math:atan(($descent - $yapinDepth) div $waXOuterRadius)"/>
 	<xsl:call-template name="corner">
 		<xsl:with-param name="x" select="0"/>
-        <xsl:with-param name="y" select="-$descent - (2 * $waYOuterRadius)+$thickness * (1 div math:cos($yapinAngle) + math:tan($yapinAngle))"/>
+        <xsl:with-param name="y" select="-$yapinHeight +$thickness * (1 div math:cos($yapinAngle) + math:tan($yapinAngle))"/>
 		<xsl:with-param name="r" select="$cornerInnerRadius"/>
 		<xsl:with-param name="nextX" select="-$yapinArmDxAbove"/>
         <xsl:with-param name="nextY" select="$yapinArmDxAbove * math:tan($yapinAngle)"/>
