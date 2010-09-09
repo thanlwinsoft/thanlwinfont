@@ -12,18 +12,40 @@
 
 <xsl:template match="svg:g">
 	<xsl:copy use-attribute-sets="gAttribs">
-	<xsl:call-template name="u1030"/>
+	<xsl:call-template name="u103e_u1030"/>
 	</xsl:copy>
 </xsl:template>
 
-<xsl:template name="u1030">
+<xsl:template name="u103e_u1030">
 	<xsl:param name="xOffset" select="0"/>
 	<xsl:param name="yOffset" select="0"/>
     <xsl:element name="path" use-attribute-sets="pathAttribs">
     <xsl:attribute name="d">
     <xsl:call-template name="Move">
-        <xsl:with-param name="x" select="$xOffset - $waXOuterRadius - $postGuard - 2 * $thickness"/>
+        <xsl:with-param name="x" select="$xOffset - $waXOuterRadius - $postGuard - 1.5 * $thickness"/>
         <xsl:with-param name="y" select="$yOffset - $medialPad"/>
+    </xsl:call-template>
+	
+	<xsl:call-template name="corner">
+		<xsl:with-param name="x" select="0"/>
+        <xsl:with-param name="y" select="$medialPad - $descent"/>
+		<xsl:with-param name="r" select="$cornerOuterRadius"/>
+		<xsl:with-param name="nextX" select="-($cornerOuterRadius+$thickness)"/>
+        <xsl:with-param name="nextY" select="0"/>
+	</xsl:call-template>
+	<xsl:text>l0,</xsl:text><xsl:value-of select="$thickness"/>
+	<xsl:call-template name="corner">
+		<xsl:with-param name="x" select="$cornerInnerRadius + $thickness"/>
+        <xsl:with-param name="y" select="0"/>
+		<xsl:with-param name="r" select="$cornerInnerRadius"/>
+		<xsl:with-param name="nextX" select="0"/>
+        <xsl:with-param name="nextY" select="- $medialPad + $descent - $thickness"/>
+	</xsl:call-template>
+	<xsl:call-template name="end"/>
+	
+	<xsl:call-template name="move">
+        <xsl:with-param name="x" select="$thickness"/>
+        <xsl:with-param name="y" select="0"/>
     </xsl:call-template>
 	
 	<xsl:text>l0,</xsl:text><xsl:value-of select="$medialPad - $descent"/>

@@ -11,13 +11,6 @@
 
 <xsl:variable name="advance" select="$narrowConsWidth"/>
 <xsl:variable name="overlap" select="0"/>
-<xsl:variable name="innerIntersectAngle" select="math:acos(.5 * $waXOuterRadius div $waXInnerRadius)"/>
-<xsl:variable name="outerIntersectAngle" select="$innerIntersectAngle + $thickness div $waXInnerRadius"/>
-
-<xsl:variable name="dxInner" select=".5 * $waXOuterRadius"/>
-<xsl:variable name="dyInner" select="$waXInnerRadius * math:sin($innerIntersectAngle)"/>
-<xsl:variable name="dxOuter" select="$waXInnerRadius * math:cos($outerIntersectAngle)"/>
-<xsl:variable name="dyOuter" select="$waXInnerRadius * math:sin($outerIntersectAngle)"/>
 
 
 
@@ -30,6 +23,13 @@
 <xsl:template name="u1005">
 	<xsl:param name="xOffset" select="0"/>
 	<xsl:param name="yOffset" select="0"/>
+<xsl:variable name="innerIntersectAngle" select="math:acos(.5 * $waXOuterRadius div $waXInnerRadius)"/>
+<xsl:variable name="outerIntersectAngle" select="$innerIntersectAngle + $thickness div $waXInnerRadius"/>
+
+<xsl:variable name="dxInner" select=".5 * $waXOuterRadius"/>
+<xsl:variable name="dyInner" select="$waXInnerRadius * math:sin($innerIntersectAngle)"/>
+<xsl:variable name="dxOuter" select="$waXInnerRadius * math:cos($outerIntersectAngle)"/>
+<xsl:variable name="dyOuter" select="$waXInnerRadius * math:sin($outerIntersectAngle)"/>
     <xsl:element name="path" use-attribute-sets="pathAttribs">
     <xsl:attribute name="d">
     <xsl:call-template name="Move">

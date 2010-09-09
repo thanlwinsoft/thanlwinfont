@@ -11,15 +11,6 @@
 <xsl:variable name="overlap" select="0"/>
 <xsl:variable name="isWide" select="1"/>
 
-<xsl:variable name="cutOuterDx" select="math:cos($myCutAngle) * $waYOuterRadius"/>
-<xsl:variable name="cutOuterDy" select="math:sin($myCutAngle) * $waYOuterRadius"/>
-<xsl:variable name="cutInnerDx" select="math:cos($myCutAngle) * $waYInnerRadius"/>
-<xsl:variable name="cutInnerDy" select="math:sin($myCutAngle) * $waYInnerRadius"/>
-
-<xsl:variable name="hookOuterDx" select="math:cos($hookStartAngle) * $waYOuterRadius"/>
-<xsl:variable name="hookOuterDy" select="math:sin($hookStartAngle) * $waYOuterRadius"/>
-<xsl:variable name="hookInnerDx" select="math:cos($hookStartAngle) * $waYInnerRadius"/>
-<xsl:variable name="hookInnerDy" select="math:sin($hookStartAngle) * $waYInnerRadius"/>
 
 <xsl:template match="svg:g">
 	<xsl:copy use-attribute-sets="gAttribs">
@@ -30,6 +21,17 @@
 <xsl:template name="u1009">
 	<xsl:param name="xOffset" select="0"/>
 	<xsl:param name="yOffset" select="0"/>
+
+<xsl:variable name="cutOuterDx" select="math:cos($myCutAngle) * $waYOuterRadius"/>
+<xsl:variable name="cutOuterDy" select="math:sin($myCutAngle) * $waYOuterRadius"/>
+<xsl:variable name="cutInnerDx" select="math:cos($myCutAngle) * $waYInnerRadius"/>
+<xsl:variable name="cutInnerDy" select="math:sin($myCutAngle) * $waYInnerRadius"/>
+
+<xsl:variable name="hookOuterDx" select="math:cos($hookStartAngle) * $waYOuterRadius"/>
+<xsl:variable name="hookOuterDy" select="math:sin($hookStartAngle) * $waYOuterRadius"/>
+<xsl:variable name="hookInnerDx" select="math:cos($hookStartAngle) * $waYInnerRadius"/>
+<xsl:variable name="hookInnerDy" select="math:sin($hookStartAngle) * $waYInnerRadius"/>
+
     <xsl:element name="path" use-attribute-sets="pathAttribs">
     <xsl:attribute name="d">
     <xsl:call-template name="Move">

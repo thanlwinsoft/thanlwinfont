@@ -7,49 +7,39 @@
 <xsl:include href="param.xslt"/>
 <xsl:include href="path.xslt"/>
 
-<xsl:variable name="advance" select="1"/>
+<xsl:variable name="advance" select="$narrowConsWidth"/>
 <xsl:variable name="overlap" select="0"/>
 
 <xsl:template match="svg:g">
 	<xsl:copy use-attribute-sets="gAttribs">
-	<xsl:call-template name="u1030"/>
+	<xsl:call-template name="u103e_small"/>
 	</xsl:copy>
 </xsl:template>
 
-<xsl:template name="u1030">
+<xsl:template name="u103e_small">
 	<xsl:param name="xOffset" select="0"/>
 	<xsl:param name="yOffset" select="0"/>
     <xsl:element name="path" use-attribute-sets="pathAttribs">
     <xsl:attribute name="d">
     <xsl:call-template name="Move">
-        <xsl:with-param name="x" select="$xOffset - $waXOuterRadius - $postGuard - 2 * $thickness"/>
-        <xsl:with-param name="y" select="$yOffset - $medialPad"/>
+        <xsl:with-param name="x" select="$xOffset - $waXInnerRadius -.5 * $thickness - $postGuard"/>
+        <xsl:with-param name="y" select="- $medialPad"/>
     </xsl:call-template>
 	
-	<xsl:text>l0,</xsl:text><xsl:value-of select="$medialPad - $descent"/>
-	<xsl:text>l</xsl:text><xsl:value-of select="$thickness"/><xsl:text>,0</xsl:text>
-	<xsl:text>l0,</xsl:text><xsl:value-of select="-$medialPad + $descent"/>
-	<xsl:call-template name="end"/>
-	
-	<xsl:call-template name="move">
-        <xsl:with-param name="x" select="2 * $thickness"/>
-        <xsl:with-param name="y" select="0"/>
-    </xsl:call-template>
-
 	<xsl:call-template name="corner">
 		<xsl:with-param name="x" select="0"/>
-        <xsl:with-param name="y" select="$medialPad - $descent"/>
+        <xsl:with-param name="y" select=".5 * ($medialPad - $descent)"/>
 		<xsl:with-param name="r" select="$cornerOuterRadius"/>
-		<xsl:with-param name="nextX" select="$cornerOuterRadius+$thickness"/>
+		<xsl:with-param name="nextX" select="- $cornerOuterRadius - $thickness"/>
         <xsl:with-param name="nextY" select="0"/>
 	</xsl:call-template>
 	<xsl:text>l0,</xsl:text><xsl:value-of select="$thickness"/>
 	<xsl:call-template name="corner">
-		<xsl:with-param name="x" select="-$cornerInnerRadius - $thickness"/>
+		<xsl:with-param name="x" select="$cornerInnerRadius + $thickness"/>
         <xsl:with-param name="y" select="0"/>
 		<xsl:with-param name="r" select="$cornerInnerRadius"/>
 		<xsl:with-param name="nextX" select="0"/>
-        <xsl:with-param name="nextY" select="- $medialPad + $descent - $thickness"/>
+        <xsl:with-param name="nextY" select=".5*($descent - $medialPad) - $thickness"/>
 	</xsl:call-template>
 
 	<xsl:call-template name="end"/>

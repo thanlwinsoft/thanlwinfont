@@ -77,11 +77,12 @@ class SvgFont(object) :
 			if os.access(svgFile, os.R_OK):
 				self.importGlyph(svgFile, glyphName, codePoint)
 			else:
-				self.log.info(_("{0} not found").format(svgFile))
+				self.log.debug(_("{0} not found").format(svgFile))
 	
 	def getSvgAdvance(self, svgFile):
 		svg = xml.dom.minidom.parse(svgFile)
 		viewBox = svg.documentElement.getAttribute('viewBox').split(' ')
+		# print svgFile + " " + repr(viewBox)
 		return int(viewBox[2])
 	
 	def save(self):

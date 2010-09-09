@@ -21,15 +21,20 @@
 <xsl:template name="u100d">
 	<xsl:param name="xOffset" select="0"/>
 	<xsl:param name="yOffset" select="0"/>
+	<xsl:param name="lineThickness" select="$thickness"/>	
+	<xsl:param name="extraTail" select="0"/>
+	<xsl:param name="hookInnerRadius" select="($waXOuterRadius * (1 - math:cos($hookStartAngle)) - $lineThickness) div (1 + math:cos($hookStartAngle))"/>
+	<xsl:param name="hookOuterRadius" select="$hookInnerRadius + $lineThickness"/>
+	<xsl:param name="cornerOuterRadius" select="$cornerInnerRadius + $lineThickness"/>
 <xsl:variable name="cutOuterDx" select="math:cos($myCutAngle) * $waYOuterRadius"/>
 <xsl:variable name="cutOuterDy" select="math:sin($myCutAngle) * $waYOuterRadius"/>
-<xsl:variable name="cutInnerDx" select="math:cos($myCutAngle) * $waYInnerRadius"/>
-<xsl:variable name="cutInnerDy" select="math:sin($myCutAngle) * $waYInnerRadius"/>
+<xsl:variable name="cutInnerDx" select="math:cos($myCutAngle) * ($waYOuterRadius - $lineThickness)"/>
+<xsl:variable name="cutInnerDy" select="math:sin($myCutAngle) * ($waYOuterRadius - $lineThickness)"/>
 
 <xsl:variable name="hookOuterDx" select="math:cos($hookStartAngle) * $waYOuterRadius"/>
 <xsl:variable name="hookOuterDy" select="math:sin($hookStartAngle) * $waYOuterRadius"/>
-<xsl:variable name="hookInnerDx" select="math:cos($hookStartAngle) * $waYInnerRadius"/>
-<xsl:variable name="hookInnerDy" select="math:sin($hookStartAngle) * $waYInnerRadius"/>
+<xsl:variable name="hookInnerDx" select="math:cos($hookStartAngle) * ($waYOuterRadius - $lineThickness)"/>
+<xsl:variable name="hookInnerDy" select="math:sin($hookStartAngle) * ($waYOuterRadius - $lineThickness)"/>
 
 
     <xsl:element name="path" use-attribute-sets="pathAttribs">
@@ -61,8 +66,8 @@
     <xsl:text>l</xsl:text><xsl:value-of select="($hookInnerRadius + $hookOuterRadius) * math:cos($hookStartAngle)"/>
     <xsl:text>,</xsl:text><xsl:value-of select="- ($hookInnerRadius + $hookOuterRadius) * math:cos($hookStartAngle) div math:tan($hookStartAngle)"/>
     <xsl:call-template name="arc">
-        <xsl:with-param name="rx" select="$waXInnerRadius"/>
-        <xsl:with-param name="ry" select="$waYInnerRadius"/>
+        <xsl:with-param name="rx" select="($waXOuterRadius - $lineThickness)"/>
+        <xsl:with-param name="ry" select="($waYOuterRadius - $lineThickness)"/>
         <xsl:with-param name="axisRotation" select="0"/>
         <xsl:with-param name="large" select="0"/>
         <xsl:with-param name="clockwise" select="1"/>
@@ -80,18 +85,18 @@
     </xsl:call-template>
     <xsl:call-template name="corner">
 		<xsl:with-param name="x" select="0"/>
-        <xsl:with-param name="y" select="$cornerInnerRadius + $thickness - $descent"/>
+        <xsl:with-param name="y" select="$cornerInnerRadius + $lineThickness - $descent - $extraTail"/>
 		<xsl:with-param name="r" select="$cornerInnerRadius"/>
 		<xsl:with-param name="nextX" select="$cornerInnerRadius"/>
         <xsl:with-param name="nextY" select="0"/>
 	</xsl:call-template>
-	<xsl:text>l0,</xsl:text><xsl:value-of select="-$thickness"/>
+	<xsl:text>l0,</xsl:text><xsl:value-of select="-$lineThickness"/>
 	<xsl:call-template name="corner">
 		<xsl:with-param name="x" select="-$cornerOuterRadius"/>
         <xsl:with-param name="y" select="0"/>
 		<xsl:with-param name="r" select="$cornerOuterRadius"/>
 		<xsl:with-param name="nextX" select="0"/>
-        <xsl:with-param name="nextY" select="$descent - $cornerOuterRadius + $thickness"/>
+        <xsl:with-param name="nextY" select="$descent - $cornerOuterRadius + $lineThickness + $extraTail"/>
 	</xsl:call-template>
 
 	<xsl:call-template name="arc">
@@ -129,8 +134,8 @@
     </xsl:call-template>
     
     <xsl:call-template name="arc">
-        <xsl:with-param name="rx" select="$waXInnerRadius"/>
-        <xsl:with-param name="ry" select="$waYInnerRadius"/>
+        <xsl:with-param name="rx" select="($waXOuterRadius - $lineThickness)"/>
+        <xsl:with-param name="ry" select="($waYOuterRadius - $lineThickness)"/>
         <xsl:with-param name="axisRotation" select="0"/>
         <xsl:with-param name="large" select="1"/>
         <xsl:with-param name="clockwise" select="1"/>

@@ -20,40 +20,43 @@
 	<xsl:param name="yOffset" select="0"/>
     <xsl:element name="path" use-attribute-sets="pathAttribs">
     <xsl:attribute name="d">
-<xsl:call-template name="Move">
-        <xsl:with-param name="x" select="$xOffset -  $waXOuterRadius - $postGuard + $upperScale * $waXOuterRadius div math:sqrt(2)"/>
-        <xsl:with-param name="y" select="$yOffset + 3 * $waYOuterRadius + $upperPad"/>
+    <xsl:variable name="thaRadius" select="$waXOuterRadius * $upperScale"/>
+    <xsl:variable name="tailOuterHeight" select="($thaRadius - .5 * $thickness) div math:sqrt(2)"/>
+    <xsl:variable name="tailInnerHeight" select="$tailOuterHeight + $thickness div math:sqrt(2)"/>
+	<xsl:call-template name="Move">
+        <xsl:with-param name="x" select="$xOffset -  $waXOuterRadius - $postGuard + $thaRadius div math:sqrt(2)"/>
+        <xsl:with-param name="y" select="$yOffset + 2 * $waYOuterRadius + (2 * $thaRadius) div math:sqrt(2) + $tailOuterHeight"/>
     </xsl:call-template>
     <xsl:call-template name="arc">
-        <xsl:with-param name="rx" select="$upperScale * $waXOuterRadius"/>
-        <xsl:with-param name="ry" select="$upperScale * $waXOuterRadius"/>
+        <xsl:with-param name="rx" select="$thaRadius"/>
+        <xsl:with-param name="ry" select="$thaRadius"/>
         <xsl:with-param name="axisRotation" select="0"/>
         <xsl:with-param name="large" select="1"/>
         <xsl:with-param name="clockwise" select="1"/>
-        <xsl:with-param name="x" select="-math:sqrt(2) * $upperScale * $waXOuterRadius"/>
-        <xsl:with-param name="y" select="-math:sqrt(2) * $upperScale * $waXOuterRadius"/>
+        <xsl:with-param name="x" select="-math:sqrt(2) * $thaRadius"/>
+        <xsl:with-param name="y" select="-math:sqrt(2) * $thaRadius"/>
     </xsl:call-template>
     <xsl:text>l</xsl:text>
-    <xsl:value-of select="($upperScale * $waXOuterRadius) div math:sqrt(2)"/>
+    <xsl:value-of select="$tailOuterHeight"/>
     <xsl:text>,</xsl:text>
-    <xsl:value-of select="-($upperScale * $waXOuterRadius) div math:sqrt(2)"/>
+    <xsl:value-of select="-$tailOuterHeight"/>
     <xsl:text>l</xsl:text>
-    <xsl:value-of select="($thickness) div math:sqrt(2)"/>
+    <xsl:value-of select="($thickness) * math:sqrt(2)"/>
     <xsl:text>,</xsl:text>
-    <xsl:value-of select="($thickness) div math:sqrt(2)"/>
+    <xsl:value-of select="0"/>
     <xsl:text>l</xsl:text>
-    <xsl:value-of select="-($upperScale * $waXOuterRadius) div math:sqrt(2)"/>
+    <xsl:value-of select="-$tailInnerHeight"/>
     <xsl:text>,</xsl:text>
-    <xsl:value-of select="($upperScale * $waXOuterRadius) div math:sqrt(2)"/>
+    <xsl:value-of select="$tailInnerHeight"/>
 
     <xsl:call-template name="arc">
-        <xsl:with-param name="rx" select="$upperScale * $waXOuterRadius - $thickness"/>
-        <xsl:with-param name="ry" select="$upperScale * $waXOuterRadius - $thickness"/>
+        <xsl:with-param name="rx" select="$thaRadius - $thickness"/>
+        <xsl:with-param name="ry" select="$thaRadius - $thickness"/>
         <xsl:with-param name="axisRotation" select="0"/>
         <xsl:with-param name="large" select="1"/>
         <xsl:with-param name="clockwise" select="0"/>
-        <xsl:with-param name="x" select="math:sqrt(2) * ($upperScale * $waXOuterRadius - $thickness)"/>
-        <xsl:with-param name="y" select="math:sqrt(2) * ($upperScale * $waXOuterRadius - $thickness)"/>
+        <xsl:with-param name="x" select="math:sqrt(2) * ($thaRadius - $thickness)"/>
+        <xsl:with-param name="y" select="math:sqrt(2) * ($thaRadius - $thickness)"/>
     </xsl:call-template>
 
     <xsl:call-template name="end"/>
