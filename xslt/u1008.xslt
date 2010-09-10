@@ -8,7 +8,7 @@
 <xsl:import href="u103b.xslt"/>
 
 <xsl:variable name="overlap" select="0"/>
-<xsl:variable name="advance" select="$waXOuterRadius + $narrowConsWidth"/>
+<xsl:variable name="advance" select="2 * $thickness + $postGuard + $narrowConsWidth"/>
 
 <xsl:include href="param.xslt"/>
 <xsl:include href="path.xslt"/>

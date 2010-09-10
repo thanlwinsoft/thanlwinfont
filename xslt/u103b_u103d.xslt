@@ -7,7 +7,7 @@
 <xsl:import href="u101d.xslt"/>
 
 <xsl:variable name="overlap" select="0"/>
-<xsl:variable name="advance" select="$thickness + $postGuard"/>
+<xsl:variable name="advance" select="$preGuard + $thickness + $postGuard"/>
 
 <xsl:include href="param.xslt"/>
 <xsl:include href="path.xslt"/>
@@ -29,7 +29,7 @@
 <xsl:template name="u103b_u103d">
 	<xsl:param name="xOffset" select="0"/>
 	<xsl:param name="yOffset" select="0"/>
-	<xsl:variable name="yapinWidth" select="$waXOuterRadius + 2 * $thickness + $postGuard"/>
+	<xsl:variable name="yapinWidth" select="$waXOuterRadius + $preGuard + $thickness + $postGuard"/>
 	<xsl:variable name="yapinArmDx" select="$yapinWidth - $waXOuterRadius * $medialScale * math:cos($yapinAngle)"/>
 	<xsl:variable name="yapinArmDxAbove" select="$yapinArmDx - $thickness * (1 + .5 * math:sin($yapinAngle))"/>
 	<xsl:variable name="yapinArmDxBelow" select="$yapinArmDx + $thickness * (.5 * math:sin($yapinAngle))"/>

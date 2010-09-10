@@ -22,7 +22,7 @@
     <xsl:attribute name="d">
     <xsl:call-template name="Move">
         <xsl:with-param name="x" select="$xOffset - $postGuard - $waXOuterRadius"/>
-        <xsl:with-param name="y" select="$yOffset + 2 * $waYOuterRadius + $upperPad"/>
+        <xsl:with-param name="y" select="$yOffset + 2 * $waYOuterRadius + $upperPad + $waYOuterRadius * $upperScale - $dotOuterRadius"/>
     </xsl:call-template>
 	<xsl:call-template name="arc">
         <xsl:with-param name="rx" select="$dotOuterRadius"/>

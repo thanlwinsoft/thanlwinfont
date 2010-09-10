@@ -7,7 +7,7 @@
 <xsl:include href="param.xslt"/>
 <xsl:include href="path.xslt"/>
 
-<xsl:variable name="advance" select="$narrowConsWidth"/>
+<xsl:variable name="advance" select="1"/>
 <xsl:variable name="overlap" select="0"/>
 
 <xsl:template match="svg:g">
@@ -41,7 +41,7 @@
 		<xsl:with-param name="nextX" select="0"/>
         <xsl:with-param name="nextY" select="- $medialPad + $descent - $thickness"/>
 	</xsl:call-template>
-
+	<xsl:text>l</xsl:text><xsl:value-of select="$thickness"/><xsl:text>,0</xsl:text>
 	<xsl:call-template name="end"/>
 
     </xsl:attribute>

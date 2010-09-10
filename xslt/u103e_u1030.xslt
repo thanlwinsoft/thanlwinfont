@@ -41,6 +41,7 @@
 		<xsl:with-param name="nextX" select="0"/>
         <xsl:with-param name="nextY" select="- $medialPad + $descent - $thickness"/>
 	</xsl:call-template>
+	<xsl:text>l</xsl:text><xsl:value-of select="$thickness"/><xsl:text>,0</xsl:text>
 	<xsl:call-template name="end"/>
 	
 	<xsl:call-template name="move">
@@ -51,6 +52,7 @@
 	<xsl:text>l0,</xsl:text><xsl:value-of select="$medialPad - $descent"/>
 	<xsl:text>l</xsl:text><xsl:value-of select="$thickness"/><xsl:text>,0</xsl:text>
 	<xsl:text>l0,</xsl:text><xsl:value-of select="-$medialPad + $descent"/>
+	<xsl:text>l</xsl:text><xsl:value-of select="-$thickness"/><xsl:text>,0</xsl:text>
 	<xsl:call-template name="end"/>
 	
 	<xsl:call-template name="move">
@@ -73,7 +75,7 @@
 		<xsl:with-param name="nextX" select="0"/>
         <xsl:with-param name="nextY" select="- $medialPad + $descent - $thickness"/>
 	</xsl:call-template>
-
+	<xsl:text>l</xsl:text><xsl:value-of select="-$thickness"/><xsl:text>,0</xsl:text>
 	<xsl:call-template name="end"/>
 
     </xsl:attribute>

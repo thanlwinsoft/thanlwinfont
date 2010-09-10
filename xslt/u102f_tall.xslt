@@ -7,7 +7,8 @@
 <xsl:include href="param.xslt"/>
 <xsl:include href="path.xslt"/>
 
-<xsl:variable name="advance" select="$preGuard + $postGuard + 2 * $thickness + $cornerOuterRadius"/>
+<xsl:variable name="u102fTallAdvance" select="$preGuard + $postGuard + $thickness + $cornerOuterRadius"/>
+<xsl:variable name="advance" select="$u102fTallAdvance"/>
 <xsl:variable name="overlap" select="0"/>
 
 <xsl:template match="svg:g">

@@ -29,7 +29,7 @@
 <axsl:variable name="overlap" select="0"/>
 <xsl:choose>
 <xsl:when test="starts-with($medial,'u103b')">
-<axsl:variable name="advance" select="$narrowConsWidth + $widthOffset + 2 * $thickness + $postGuard"/>
+<axsl:variable name="advance" select="$narrowConsWidth + $widthOffset + $preGuard + $thickness + $postGuard"/>
 </xsl:when>
 <xsl:otherwise>
 <axsl:variable name="advance" select="$narrowConsWidth + $widthOffset"/>

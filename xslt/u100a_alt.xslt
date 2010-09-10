@@ -108,7 +108,7 @@
 		<xsl:with-param name="x" select="0"/>
         <xsl:with-param name="y" select="-($descent + $waYOuterRadius - $hookOuterDy - $hookInnerRadius * math:sin($hookStartAngle))"/>
 		<xsl:with-param name="r" select="$cornerOuterRadius"/>
-		<xsl:with-param name="nextX" select="2 * $waXOuterRadius"/>
+		<xsl:with-param name="nextX" select="2 * $waXOuterRadius - 2 * $thickness"/>
         <xsl:with-param name="nextY" select="0"/>
 	</xsl:call-template>
     
@@ -116,7 +116,7 @@
     
 	<xsl:text>l0,</xsl:text><xsl:value-of select="$thickness"/>
 	<xsl:call-template name="corner">
-		<xsl:with-param name="x" select="-2 * $waXOuterRadius + 1 * $thickness"/>
+		<xsl:with-param name="x" select="-2 * $waXOuterRadius + 3 * $thickness"/>
         <xsl:with-param name="y" select="0"/>
 		<xsl:with-param name="r" select="$cornerInnerRadius"/>
 		<xsl:with-param name="nextX" select="0"/>

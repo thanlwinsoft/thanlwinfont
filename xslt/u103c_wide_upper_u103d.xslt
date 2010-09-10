@@ -74,7 +74,7 @@
 	</xsl:call-template>
 	<xsl:call-template name="end"/>
 	<xsl:call-template name="Move">
-        <xsl:with-param name="x" select="3*$waXOuterRadius +$preGuard + $cornerOuterRadius"/>
+        <xsl:with-param name="x" select="$xOffset + 3*$waXOuterRadius +$preGuard + $cornerOuterRadius"/>
         <xsl:with-param name="y" select="$yOffset - $descent + $waThickness"/>
     </xsl:call-template>
     <xsl:call-template name="arc">

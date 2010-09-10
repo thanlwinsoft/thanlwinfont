@@ -29,7 +29,14 @@
 	</axsl:choose>
 </axsl:variable>
 <axsl:variable name="overlap" select="0"/>
+<xsl:choose>
+<xsl:when test="$lowerVowel = 'u1030_tall'">
+<axsl:variable name="advance" select="$widthOffset + $preGuard + 5 * $thickness + 3 * $postGuard + $cornerOuterRadius"/>
+</xsl:when>
+<xsl:otherwise>
 <axsl:variable name="advance" select="$widthOffset + $preGuard + 3 * $thickness + 3 * $postGuard + $cornerOuterRadius"/>
+</xsl:otherwise>
+</xsl:choose>
 
 <axsl:include href="../xslt/param.xslt"/>
 <axsl:include href="../xslt/path.xslt"/>

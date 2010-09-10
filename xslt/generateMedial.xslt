@@ -15,11 +15,25 @@
 
 <axsl:variable name="widthOffset" >
 	<axsl:choose>
+		<axsl:when test="'{$base}' = 'u100f'">
+		<axsl:value-of select="$wideConsWidth + $waXInnerRadius"/>
+		</axsl:when>
 		<axsl:when test="$isWide"><axsl:value-of select="$wideConsWidth"/>
 		</axsl:when>
 		<axsl:otherwise><axsl:value-of select="$narrowConsWidth"/></axsl:otherwise>
 	</axsl:choose>
 </axsl:variable>
+<axsl:variable name="medialDx" >
+	<axsl:choose>
+		<axsl:when test="'{$base}' = 'u100f'">
+		<axsl:value-of select="(2 * $waXOuterRadius - .5 * $thickness)* (1 - $medialScale) - .5 * $waXInnerRadius * $medialScale"/>
+		</axsl:when>
+		<axsl:when test="$isWide"><axsl:value-of select="(2 * $waXOuterRadius - .5 * $thickness)* (1 - $medialScale)"/>
+		</axsl:when>
+		<axsl:otherwise><axsl:value-of select="$waXOuterRadius * (1 - $medialScale)"/></axsl:otherwise>
+	</axsl:choose>
+</axsl:variable>
+
 <axsl:variable name="overlap" select="0"/>
 <axsl:variable name="advance" select="1"/>
 
@@ -36,8 +50,8 @@
 	<axsl:param name="xOffset" select="0"/>
 	<axsl:param name="yOffset" select="0"/>
 	<axsl:call-template name="{$baseTemplate}">
-		<axsl:with-param name="xOffset" select="-$widthOffset -$preGuard -$postGuard"/>
-		<axsl:with-param name="yOffset" select="-2*$waYOuterRadius - $medialPad div $medialScale"/>
+		<axsl:with-param name="xOffset" select="($xOffset div $medialScale) -$medialDx div $medialScale -$widthOffset + $postGuard -$postGuard div $medialScale"/>
+		<axsl:with-param name="yOffset" select="($yOffset div $medialScale) -2*$waYOuterRadius - $medialPad div $medialScale"/>
 	</axsl:call-template>
 </axsl:template>
 

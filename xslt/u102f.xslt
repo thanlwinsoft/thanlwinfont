@@ -22,7 +22,7 @@
     <xsl:element name="path" use-attribute-sets="pathAttribs">
     <xsl:attribute name="d">
     <xsl:call-template name="Move">
-        <xsl:with-param name="x" select="$xOffset - $waXInnerRadius - $postGuard"/>
+        <xsl:with-param name="x" select="$xOffset - $waXOuterRadius - .5 * $thickness - $postGuard"/>
         <xsl:with-param name="y" select="$yOffset - $medialPad"/>
     </xsl:call-template>
 	

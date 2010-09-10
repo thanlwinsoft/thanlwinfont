@@ -89,7 +89,7 @@
 	
 	<xsl:call-template name="Move">
         <xsl:with-param name="x" select="$xOffset + 3*$waXOuterRadius + $cornerOuterRadius + $preGuard + $thickness"/>
-        <xsl:with-param name="y" select="- $medialPad"/>
+        <xsl:with-param name="y" select="$yOffset - $medialPad"/>
     </xsl:call-template>
 	
 	<xsl:call-template name="corner">
