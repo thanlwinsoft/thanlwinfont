@@ -6,18 +6,12 @@
 <xsl:include href="param.xslt"/>
 <xsl:include href="path.xslt"/>
 
-<xsl:variable name="yapinOuterDx" select="math:sin($yapinJoinAngle) * $waYOuterRadius"/>
-<xsl:variable name="yapinOuterDy" select="(1 - math:cos($yapinJoinAngle)) * $waYOuterRadius"/>
-<xsl:variable name="yapinInnerDx" select="math:sin($yapinJoinAngle) * $waYInnerRadius"/>
-<xsl:variable name="yapinInnerDy" select="$waYOuterRadius - math:cos($yapinJoinAngle) * $waYInnerRadius"/>
-<xsl:variable name="yapinJoinHeight" select=".5*($yapinInnerDy + $yapinOuterDy)"/>
-<xsl:variable name="yapinWidth" select="$waXOuterRadius + $thickness"/>
 <!--
 <xsl:variable name="overlap" select="-$yapinOuterDx - $preGuard"/>
 -->
 <xsl:variable name="overlap" select="0"/>
-<xsl:variable name="advance" select="2 * $thickness + $postGuard"/>
-
+<xsl:variable name="yapinAdvance" select="2 * $thickness + $postGuard"/>
+<xsl:variable name="advance" select="$yapinAdvance"/>
 
 <xsl:template match="svg:g">
 	<xsl:copy use-attribute-sets="gAttribs">
@@ -28,6 +22,12 @@
 <xsl:template name="u103b">
 	<xsl:param name="xOffset" select="0"/>
 	<xsl:param name="yOffset" select="0"/>
+	<xsl:variable name="yapinOuterDx" select="math:sin($yapinJoinAngle) * $waYOuterRadius"/>
+	<xsl:variable name="yapinOuterDy" select="(1 - math:cos($yapinJoinAngle)) * $waYOuterRadius"/>
+	<xsl:variable name="yapinInnerDx" select="math:sin($yapinJoinAngle) * $waYInnerRadius"/>
+	<xsl:variable name="yapinInnerDy" select="$waYOuterRadius - math:cos($yapinJoinAngle) * $waYInnerRadius"/>
+	<xsl:variable name="yapinJoinHeight" select=".5*($yapinInnerDy + $yapinOuterDy)"/>
+	<xsl:variable name="yapinWidth" select="$waXOuterRadius + $thickness"/>
     <xsl:element name="path" use-attribute-sets="pathAttribs">
     <xsl:attribute name="d">
     <xsl:call-template name="Move">

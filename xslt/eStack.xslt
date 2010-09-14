@@ -19,13 +19,9 @@
 
 <axsl:variable name="overlap" select="0"/>
 <xsl:choose>
-<xsl:when test="$lowerCons = 'u1006'">
-<axsl:variable name="wideConsBelowOverlap" select=".5 * ($wideConsWidth * $medialScale - $narrowConsWidth)"/>
-<axsl:variable name="advance" select="$preGuard + $postGuard + 2 * $narrowConsWidth + $wideConsBelowOverlap"/>
-</xsl:when>
-<xsl:when test="$lowerCons = 'u1010'">
-<axsl:variable name="wideConsBelowOverlap" select=".5 * ($wideConsWidth * $medialScale - $narrowConsWidth)"/>
-<axsl:variable name="advance" select="$preGuard + $postGuard + $narrowConsWidth + $wideConsBelowOverlap"/>
+<xsl:when test="$lowerCons = 'u1010' or $lowerCons = 'u1006'">
+<axsl:variable name="wideConsBelowOverlap" select=".5 * ((4 * $waXOuterRadius - $thickness)* $medialScale - 2 * $waXOuterRadius)"/>
+<axsl:variable name="advance" select="round($preGuard + $postGuard + 2 * $narrowConsWidth +  $wideConsBelowOverlap)"/>
 </xsl:when>
 <xsl:otherwise>
 <axsl:variable name="wideConsBelowOverlap" select="0"/>
@@ -49,7 +45,7 @@
 	</axsl:copy>
 	<axsl:element name="svg:g" use-attribute-sets="gMedialAttribs">
 		<axsl:call-template name="{concat('u1039_', $lowerCons)}">
-			<axsl:with-param name="xOffset" select="2 * $narrowConsWidth - 2 * $wideConsBelowOverlap"/>
+			<axsl:with-param name="xOffset" select="2 * $narrowConsWidth + $wideConsBelowOverlap"/>
 			<axsl:with-param name="yOffset" select="0"/>
 		</axsl:call-template>
 	</axsl:element>
@@ -59,7 +55,14 @@
 	<axsl:param name="xOffset" select="0"/>
 	<axsl:param name="yOffset" select="0"/>
 	<axsl:call-template name="{$lowerCons}">
-		<axsl:with-param name="xOffset" select="($xOffset div $medialScale) -$narrowConsWidth -$preGuard div $medialScale -$postGuard div $medialScale"/>
+		<xsl:choose>
+		<xsl:when test="$lowerCons = 'u1010' or $lowerCons = 'u1006'">
+		<axsl:with-param name="xOffset" select="($xOffset div $medialScale) -$wideConsWidth + $postGuard div $medialScale -$postGuard div $medialScale"/>
+		</xsl:when>
+		<xsl:otherwise>	
+		<axsl:with-param name="xOffset" select="($xOffset div $medialScale) -$narrowConsWidth + $postGuard div $medialScale -$postGuard div $medialScale"/>
+		</xsl:otherwise>
+		</xsl:choose>
 		<axsl:with-param name="yOffset" select="($yOffset div $medialScale)-2*$waYOuterRadius - $medialPad div $medialScale"/>
 	</axsl:call-template>
 </axsl:template>

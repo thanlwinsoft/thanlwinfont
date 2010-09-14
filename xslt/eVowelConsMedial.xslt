@@ -14,30 +14,35 @@
 <axsl:stylesheet version="1.0" >
 <axsl:import href="{concat('../xslt/',$baseTemplate,'.xslt')}"/>
 <axsl:import href="{concat('../xslt/',$medial,'.xslt')}"/>
+
 <axsl:import href="../xslt/u1031.xslt"/>
+
+<axsl:include href="../xslt/param.xslt"/>
+<axsl:include href="../xslt/path.xslt"/>
+
 
 <axsl:variable name="widthOffset" >
 	<axsl:choose>
 		<axsl:when test="'{$base}' = 'u100f'">
 			<axsl:value-of select="$wideConsWidth + $waXInnerRadius"/>
 		</axsl:when>
-		<axsl:when test="$isWide"><axsl:value-of select="$wideConsWidth"/>
+		<axsl:when test="$isWide &gt; 0"><axsl:value-of select="$wideConsWidth"/>
+		<axsl:message>Wide</axsl:message>
 		</axsl:when>
-		<axsl:otherwise><axsl:value-of select="$narrowConsWidth"/></axsl:otherwise>
+		<axsl:otherwise><axsl:value-of select="$narrowConsWidth"/>
+		<axsl:message>Narrow<axsl:value-of select="$isWide"/></axsl:message>
+		</axsl:otherwise>
 	</axsl:choose>
 </axsl:variable>
 <axsl:variable name="overlap" select="0"/>
 <xsl:choose>
 <xsl:when test="starts-with($medial,'u103b')">
-<axsl:variable name="advance" select="$narrowConsWidth + $widthOffset + $preGuard + $thickness + $postGuard"/>
+<axsl:variable name="advance" select="$narrowConsWidth + $widthOffset + $yapinAdvance"/>
 </xsl:when>
 <xsl:otherwise>
 <axsl:variable name="advance" select="$narrowConsWidth + $widthOffset"/>
 </xsl:otherwise>
 </xsl:choose>
-
-<axsl:include href="../xslt/param.xslt"/>
-<axsl:include href="../xslt/path.xslt"/>
 
 <axsl:template match="svg:g">
 	<axsl:copy use-attribute-sets="gAttribs">

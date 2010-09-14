@@ -106,6 +106,13 @@ class MyanmarSvgFont(SvgFont.SvgFont):
 		self.addLigature("medialLigSub", ["u103b", "u103e", "u1036", "u1037"])
 		
 		self.addLigature("medialLigSub", ["u103b", "u103d", "u103e", "u1036", "u1037"])
+		
+		self.addLigature("medialLigSub", ["u103d", "u102d", "u102f"])
+
+		self.addLigature("medialLigSub", ["u103e", "u102f"])
+		self.addLigature("medialLigSub", ["u103e", "u1030"])
+		self.addLigature("medialLigSub", ["u103e", "u102d", "u102f"])
+		
 
 		for yayitVowel in ["u102f","u1030"]:
 			self.addLigature("medialLigSub", ["u103b", yayitVowel])
@@ -126,6 +133,9 @@ class MyanmarSvgFont(SvgFont.SvgFont):
 			for wide in wideCons:
 				wideGlyph = "u{0:04x}".format(wide)
 				self.addLigature("medialLigSub",[narrowGlyph,"u1039",wideGlyph])
+				self.addLigature("medialLigSub",[narrowGlyph,"u1039",wideGlyph,"u102c"])
+				self.addLigature("medialLigSub",[narrowGlyph,"u1039",wideGlyph,"u102d"])
+				self.addLigature("medialLigSub",[narrowGlyph,"u1039",wideGlyph,"u102e"])
 				self.addLigature("medialLigSub",[narrowGlyph,"u1039",wideGlyph,"u102f"])
 				self.addLigature("medialLigSub",[narrowGlyph,"u1039",wideGlyph,"u1030"])
 				self.addLigature("medialLigSub",[narrowGlyph,"u1039",wideGlyph,"u102d","u102f"])
@@ -165,23 +175,34 @@ class MyanmarSvgFont(SvgFont.SvgFont):
 			
 			self.addLigature("reorder", [glyphName, "u103c"])
 			self.addLigature("reorder", [glyphName, "u103c", "u1031"])
+			self.addLigature("reorder", [glyphName, "u103c", "u1031", "u102c"])
 			self.addLigature("reorder", [glyphName, "u103c", "u103d", "u1031"])
 			self.addLigature("reorder", [glyphName, "u103c", "u103e", "u1031"])
+			self.addLigature("reorder", [glyphName, "u103c", "u103d", "u1031", "u102c"])
+			self.addLigature("reorder", [glyphName, "u103c", "u103e", "u1031", "u102c"])
 			self.addLigature("reorder", [glyphName, "u103c", "u103d"])
 
 			self.addLigature("reorder", [glyphName, "u103c", "u103e"])
 			self.addLigature("reorder", [glyphName, "u103c", "u102f"])
 			self.addLigature("reorder", [glyphName, "u103c", "u1030"])
+			self.addLigature("reorder", [glyphName, "u103c", "u103d", "u102f"])
+			self.addLigature("reorder", [glyphName, "u103c", "u103d", "u1030"])
 			self.addLigature("reorder", [glyphName, "u103c", "u102d", "u102f"])
 			self.addLigature("reorder", [glyphName, "u103c", "u103e", "u102f"])
+			self.addLigature("reorder", [glyphName, "u103c", "u103e", "u1030"])
 			self.addLigature("reorder", [glyphName, "u103c", "u103e", "u102d", "u102f"])
+
+			self.addLigature("reorder", [glyphName, "u103c", "u102f", "u1036", "u1037"])
 
 			for j in range(len(upperVowels)):
 				vowel = "u{0:04x}".format(upperVowels[j])
 				self.addLigature("reorder", [glyphName, "u103c", vowel])
 				self.addLigature("reorder", [glyphName, "u103c", "u103d", vowel])
 				self.addLigature("reorder", [glyphName, "u103c", "u103e", vowel])
-					
+
+		self.addLigature("reorder", ["u1029", "u1031"])
+		self.addLigature("reorder", ["u1019", "u103c", "u103d", "u103e"])
+
 		# a few stacks occur with e vowel
 		self.addLigature("reorder", ["u1005", "u1039", "u1006", "u1031"])
 		self.addLigature("reorder", ["u1014", "u1039", "u1010", "u1031"])
@@ -195,30 +216,37 @@ class MyanmarSvgFont(SvgFont.SvgFont):
 		featureScriptLang = (("liga",(("mymr",("dflt")),)),)
 		self.font.addLookupSubtable("medialLig", "miscLig")
 		
-		self.addLigature("reorder", ["u102b", "u103a"])
-		self.addLigature("reorder", ["u102b", "u1037", "u103a"])
-		self.addLigature("reorder", ["u102d", "u1036"])
-		self.addLigature("reorder", ["u1037", "u103a"])
-		self.addLigature("reorder", ["u102b", "u1037"])
-		self.addLigature("reorder", ["u102c", "u1037"])
-		self.addLigature("reorder", ["u1032", "u1037"])
-		self.addLigature("reorder", ["u1036", "u1037"])
-		self.addLigature("reorder", ["u1009", "u102c"])
-		self.addLigature("reorder", ["u1009", "u103e"])
-		self.addLigature("reorder", ["u1009", "u103e", "u102c"])
-		self.addLigature("reorder", ["u1009", "u103a"])
-		self.addLigature("reorder", ["u1009", "u1037", "u103a"])
-		self.addLigature("reorder", ["u1009", "u1039", "u1007"])
-		self.addLigature("reorder", ["u1009", "u1039", "u1007", "u102f"])
-		self.addLigature("reorder", ["u1009", "u1039", "u1007", "u102d", "u102f"])
-		self.addLigature("reorder", ["u100b", "u1039", "u100c"])		
-		self.addLigature("reorder", ["u100d", "u1039", "u100e"])
-		self.addLigature("reorder", ["u100f", "u1039", "u100d"])
+		self.addLigature("medialLigSub", ["u102b", "u103a"])
+		self.addLigature("medialLigSub", ["u102b", "u1037", "u103a"])
+		self.addLigature("medialLigSub", ["u102d", "u1036"])
+		self.addLigature("medialLigSub", ["u1037", "u103a"])
+		self.addLigature("medialLigSub", ["u102b", "u1037"])
+		self.addLigature("medialLigSub", ["u102c", "u1037"])
+		self.addLigature("medialLigSub", ["u1032", "u1037"])
+		self.addLigature("medialLigSub", ["u1036", "u1037"])
+		self.addLigature("medialLigSub", ["u1009", "u102c"])
+		self.addLigature("medialLigSub", ["u1009", "u103e"])
+		self.addLigature("medialLigSub", ["u1009", "u103e", "u102c"])
+		self.addLigature("medialLigSub", ["u1009", "u103a"])
+		self.addLigature("medialLigSub", ["u101b", "u1032"]) # to stop u1032_u1037 ligature
+		self.addLigature("medialLigSub", ["u101b", "u1036"]) # to stop u1032_u1037 ligature
+		self.addLigature("medialLigSub", ["u1009", "u1037", "u103a"])
+		self.addLigature("medialLigSub", ["u1009", "u1039", "u1005"])
+		self.addLigature("medialLigSub", ["u1009", "u1039", "u1007"])
+		self.addLigature("medialLigSub", ["u1009", "u1039", "u1007", "u102f"])
+		self.addLigature("medialLigSub", ["u1009", "u1039", "u1007", "u1030"])		
+		self.addLigature("medialLigSub", ["u1009", "u1039", "u1007", "u102d", "u102f"])
+		self.addLigature("medialLigSub", ["u100b", "u1039", "u100c"])		
+		self.addLigature("medialLigSub", ["u100d", "u1039", "u100e"])
+		self.addLigature("medialLigSub", ["u100f", "u1039", "u100d"])
+		self.addLigature("medialLigSub", ["u1025", "u102f", "u1036"])
 				
 		for altWithLower in ["u100a", "u1014", "u101b"]:
 			self.addLigature("reorder", [altWithLower, "u103b"])
 			self.addLigature("reorder", [altWithLower, "u103d"])
 			self.addLigature("reorder", [altWithLower, "u103e"])
+			self.addLigature("reorder", [altWithLower, "u103b", "u102f"])
+			self.addLigature("reorder", [altWithLower, "u103b", "u1030"])			
 			self.addLigature("reorder", [altWithLower, "u103b", "u103d"])
 			self.addLigature("reorder", [altWithLower, "u103b", "u103e"])
 			self.addLigature("reorder", [altWithLower, "u103b", "u103d", "u103e"])
@@ -230,18 +258,18 @@ class MyanmarSvgFont(SvgFont.SvgFont):
 			self.addLigature("reorder", [altWithLower, "u103e", "u1030"])
 			self.addLigature("reorder", [altWithLower, "u103e", "u102d", "u102f"])
 		
-		self.addLigature("medialLigSub", ["u1014","u1039","u1010"])
 		self.addLigature("medialLigSub", ["u1014","u1039","u1012"])
 		self.addLigature("medialLigSub", ["u1014","u1039","u1013"])
 		self.addLigature("medialLigSub", ["u1014","u1039","u1014"])
-		self.addLigature("medialLigSub", ["u1014","u1039","u1010","u102f"])
 		self.addLigature("medialLigSub", ["u1014","u1039","u1012","u102f"])
 		self.addLigature("medialLigSub", ["u1014","u1039","u1013","u102f"])
-		self.addLigature("medialLigSub", ["u1014","u1039","u1010","u102d","u102f"])
+		self.addLigature("medialLigSub", ["u1014","u1039","u1012","u1030"])
+		self.addLigature("medialLigSub", ["u1014","u1039","u1013","u1030"])
 		self.addLigature("medialLigSub", ["u1014","u1039","u1012","u102d","u102f"])
 		self.addLigature("medialLigSub", ["u1014","u1039","u1013","u102d","u102f"])
 		self.addLigature("reorder", ["u1014","u1039","u1012","u103c"])
 		self.addLigature("reorder", ["u1014","u1039","u1012","u103c","u1031"])
+		self.addLigature("medialLigSub", ["u1020", "u103e"])
 		
 		self.addLigature("reorder", ["u1004","u103a","u1039","u1000","u103c"])
 		reorderedGlyphName="kinzi_u1000_u103c_u1036"

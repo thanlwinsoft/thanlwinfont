@@ -10,15 +10,6 @@
 <xsl:variable name="advance" select="$wideConsWidth"/>
 <xsl:variable name="overlap" select="0"/>
 <xsl:variable name="isWide" select="1"/>
-<xsl:variable name="intersectAngle"
-	select="math:acos(($waXOuterRadius - .5 * $thickness) div $waXOuterRadius)"/>
-
-<xsl:variable name="intersectDy" select="$waYOuterRadius * math:sin($intersectAngle)"/>
-
-<xsl:variable name="cutOuterDx" select="math:cos($myCutAngle) * $waXOuterRadius"/>
-<xsl:variable name="cutOuterDy" select="math:sin($myCutAngle) * $waYOuterRadius"/>
-<xsl:variable name="cutInnerDx" select="math:cos($myCutAngle) * $waXInnerRadius"/>
-<xsl:variable name="cutInnerDy" select="math:sin($myCutAngle) * $waYInnerRadius"/>
 
 <xsl:template match="svg:g">
 	<xsl:copy use-attribute-sets="gAttribs">
@@ -29,6 +20,17 @@
 <xsl:template name="u1018">
 	<xsl:param name="xOffset" select="0"/>
 	<xsl:param name="yOffset" select="0"/>
+
+	<xsl:variable name="intersectAngle"
+		select="math:acos(($waXOuterRadius - .5 * $thickness) div $waXOuterRadius)"/>
+
+	<xsl:variable name="intersectDy" select="$waYOuterRadius * math:sin($intersectAngle)"/>
+
+	<xsl:variable name="cutOuterDx" select="math:cos($myCutAngle) * $waXOuterRadius"/>
+	<xsl:variable name="cutOuterDy" select="math:sin($myCutAngle) * $waYOuterRadius"/>
+	<xsl:variable name="cutInnerDx" select="math:cos($myCutAngle) * $waXInnerRadius"/>
+	<xsl:variable name="cutInnerDy" select="math:sin($myCutAngle) * $waYInnerRadius"/>
+
     <xsl:element name="path" use-attribute-sets="pathAttribs">
     <xsl:attribute name="d">
     <xsl:call-template name="Move">

@@ -4,10 +4,10 @@
 	xmlns:svg="http://www.w3.org/2000/svg"
 	xmlns:math="http://exslt.org/math">
 
-<xsl:param name="emWidth" select="1000"/>
-<xsl:param name="emHeight" select="1000"/>
-<xsl:param name="ascent" select="700"/>
-<xsl:param name="descent" select="300"/>
+<xsl:param name="emWidth" select="1100"/>
+<xsl:param name="emHeight" select="1100"/>
+<xsl:param name="ascent" select="750"/>
+<xsl:param name="descent" select="350"/>
 <xsl:param name="baseline" select="$ascent"/>
 <xsl:param name="preGuard" select="25" />
 <xsl:param name="postGuard" select="25"/>
@@ -21,6 +21,10 @@
 <xsl:param name="maxCodePoint" select="9676"/>
 <xsl:param name="copyright" select="'Keith Stribley 2010 (ThanLwinSoft.org)'"/>
 <xsl:param name="version" select="0.1"/>
+
+<!-- Latin alphabet parameters -->
+<xsl:param name="capitalYOuterRadius" select=".5 * $ascent"/>
+<xsl:param name="capitalYInnerRadius" select="$capitalYOuterRadius - $thickness"/>
 
 <xsl:param name="pi" select="3.141592654"/>
 <xsl:param name="myCutAngle" select="25 * $pi div 180"/>

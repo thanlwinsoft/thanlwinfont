@@ -18,13 +18,13 @@
 </xsl:template>
 
 
-<xsl:variable name="loopInnerDiameter" select="$waXInnerRadius * math:sqrt(2) - 2 * $thickness"/>
-<xsl:variable name="loopInnerDelta" select="$loopInnerDiameter div math:sqrt(2)"/>
 
 <xsl:template name="u101b">
 	<xsl:param name="xOffset" select="0"/>
 	<xsl:param name="yOffset" select="0"/>
 
+	<xsl:variable name="loopInnerDiameter" select="$waXInnerRadius * math:sqrt(2) - 2 * $thickness"/>
+	<xsl:variable name="loopInnerDelta" select="$loopInnerDiameter div math:sqrt(2)"/>
     <xsl:element name="path" use-attribute-sets="pathAttribs">
     <xsl:attribute name="d">
     <xsl:call-template name="Move">

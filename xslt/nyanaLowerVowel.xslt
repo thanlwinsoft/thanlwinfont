@@ -18,9 +18,17 @@
 
 <axsl:variable name="overlap" select="0"/>
 <xsl:choose>
+<xsl:when test="$cons = 'u100a' and starts-with($lowerVowel, 'u103b')">
+<axsl:variable name="widthOffset" select="$wideConsWidth"/>
+<axsl:variable name="advance" select="$wideConsWidth + $yapinAdvance"/>
+</xsl:when>
 <xsl:when test="$cons = 'u100a'">
 <axsl:variable name="widthOffset" select="$wideConsWidth"/>
 <axsl:variable name="advance" select="$wideConsWidth"/>
+</xsl:when>
+<xsl:when test="starts-with($lowerVowel, 'u103b')">
+<axsl:variable name="widthOffset" select="$narrowConsWidth"/>
+<axsl:variable name="advance" select="$narrowConsWidth + $yapinAdvance"/>
 </xsl:when>
 <xsl:otherwise>
 <axsl:variable name="widthOffset" select="$narrowConsWidth"/>

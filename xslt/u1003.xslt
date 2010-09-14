@@ -11,6 +11,17 @@
 <xsl:variable name="overlap" select="0"/>
 <xsl:variable name="isWide" select="1"/>
 
+
+<xsl:template match="svg:g">
+	<xsl:copy use-attribute-sets="gAttribs">
+	<xsl:call-template name="u1003"/>
+	</xsl:copy>
+</xsl:template>
+
+<xsl:template name="u1003">
+	<xsl:param name="xOffset" select="0"/>
+	<xsl:param name="yOffset" select="0"/>
+
 <xsl:variable name="intersectAngle"
 	select="math:acos(($waXOuterRadius - .5 * $thickness) div $waXOuterRadius)"/>
 
@@ -26,15 +37,6 @@
 <xsl:variable name="hookInnerDx" select="math:sin($hookStartAngle) * $waYInnerRadius"/>
 <xsl:variable name="hookInnerDy" select="math:cos($hookStartAngle) * $waYInnerRadius"/>
 
-<xsl:template match="svg:g">
-	<xsl:copy use-attribute-sets="gAttribs">
-	<xsl:call-template name="u1003"/>
-	</xsl:copy>
-</xsl:template>
-
-<xsl:template name="u1003">
-	<xsl:param name="xOffset" select="0"/>
-	<xsl:param name="yOffset" select="0"/>
     <xsl:element name="path" use-attribute-sets="pathAttribs">
     <xsl:attribute name="d">
     <xsl:call-template name="Move">

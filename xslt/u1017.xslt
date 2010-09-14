@@ -9,13 +9,9 @@
 
 <xsl:variable name="advance" select="$narrowConsWidth"/>
 <xsl:variable name="overlap" select="0"/>
-<xsl:variable name="intersectAngle" select="math:atan($waXOuterRadius div $waXInnerRadius)"/>
 <xsl:variable name="isWide" select="0"/>
 
 
-<xsl:variable name="dx" select="$waXInnerRadius * math:sin($intersectAngle)"/>
-<xsl:variable name="dyBottom" select="$waXInnerRadius * math:cos($intersectAngle)"/>
-<xsl:variable name="dyTop" select="$waXOuterRadius * math:cos(.5 * $pi - $intersectAngle)"/>
 
 <xsl:template match="svg:g">
 	<xsl:copy use-attribute-sets="gAttribs">
@@ -26,6 +22,11 @@
 <xsl:template name="u1017">
 	<xsl:param name="xOffset" select="0"/>
 	<xsl:param name="yOffset" select="0"/>
+	<xsl:variable name="intersectAngle" select="math:atan($waXOuterRadius div $waXInnerRadius)"/>
+	<xsl:variable name="dx" select="$waXInnerRadius * math:sin($intersectAngle)"/>
+	<xsl:variable name="dyBottom" select="$waXInnerRadius * math:cos($intersectAngle)"/>
+	<xsl:variable name="dyTop" select="$waXOuterRadius * math:cos(.5 * $pi - $intersectAngle)"/>
+
     <xsl:element name="path" use-attribute-sets="pathAttribs">
     <xsl:attribute name="d">
     <xsl:call-template name="Move">

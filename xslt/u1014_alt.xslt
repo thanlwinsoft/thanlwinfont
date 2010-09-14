@@ -16,14 +16,14 @@
 	</xsl:copy>
 </xsl:template>
 
-<xsl:variable name="naOuterRadius" select=".5 * $waYOuterRadius + .25 * $thickness"/>
-<xsl:variable name="naInnerRadius" select="$naOuterRadius - $thickness"/>
-<xsl:variable name="naTopOuterRadius" select="$naOuterRadius - .5 * $thickness"/>
-<xsl:variable name="naTopInnerRadius" select="$naTopOuterRadius - $thickness"/>
-
 <xsl:template name="u1014_alt">
 	<xsl:param name="xOffset" select="0"/>
 	<xsl:param name="yOffset" select="0"/>
+
+	<xsl:variable name="naOuterRadius" select=".5 * $waYOuterRadius + .25 * $thickness"/>
+	<xsl:variable name="naInnerRadius" select="$naOuterRadius - $thickness"/>
+	<xsl:variable name="naTopOuterRadius" select="$naOuterRadius - .5 * $thickness"/>
+	<xsl:variable name="naTopInnerRadius" select="$naTopOuterRadius - $thickness"/>
 
     <xsl:element name="path" use-attribute-sets="pathAttribs">
     <xsl:attribute name="d">

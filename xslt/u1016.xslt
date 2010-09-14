@@ -10,21 +10,6 @@
 
 <xsl:variable name="advance" select="$narrowConsWidth"/>
 <xsl:variable name="overlap" select="0"/>
-<xsl:variable name="cutOuterDx" select="math:sin($myCutAngle) * $waYOuterRadius"/>
-<xsl:variable name="cutOuterDy" select="math:cos($myCutAngle) * $waYOuterRadius"/>
-<xsl:variable name="cutInnerDx" select="math:sin($myCutAngle) * $waYInnerRadius"/>
-<xsl:variable name="cutInnerDy" select="math:cos($myCutAngle) * $waYInnerRadius"/>
-
-<xsl:variable name="loopOuterDx" select="math:sin($loopCutAngle) * $waXOuterRadius"/>
-<xsl:variable name="loopOuterDy" select="math:cos($loopCutAngle) * $waYOuterRadius"/>
-<xsl:variable name="loopInnerDx" select="math:sin($loopCutAngle) * $waXInnerRadius"/>
-<xsl:variable name="loopInnerDy" select="math:cos($loopCutAngle) * $waYInnerRadius"/>
-
-<xsl:variable name="loopIntersectAngle" select="math:asin($loopOuterDx div $waXInnerRadius)"/>
-<xsl:variable name="loopIntersectDy" select="math:cos($loopIntersectAngle) * $waYInnerRadius"/>
-<xsl:variable name="loopIntersectInternalAngle" select="2 * $loopIntersectAngle - $loopCutAngle"/>
-<xsl:variable name="loopInnerIntersectDy" select="math:cos($loopIntersectInternalAngle) * $waXInnerRadius"/>
-<xsl:variable name="loopInnerIntersectDx" select="math:sin($loopIntersectInternalAngle) * $waXInnerRadius"/>
 
 <xsl:template match="svg:g">
 	<xsl:copy use-attribute-sets="gAttribs">
@@ -35,7 +20,22 @@
 <xsl:template name="u1016">
 	<xsl:param name="xOffset" select="0"/>
 	<xsl:param name="yOffset" select="0"/>
-	<xsl:message terminate="no"><xsl:value-of select="$cutOuterDy"/></xsl:message>
+	<xsl:variable name="cutOuterDx" select="math:sin($myCutAngle) * $waYOuterRadius"/>
+	<xsl:variable name="cutOuterDy" select="math:cos($myCutAngle) * $waYOuterRadius"/>
+	<xsl:variable name="cutInnerDx" select="math:sin($myCutAngle) * $waYInnerRadius"/>
+	<xsl:variable name="cutInnerDy" select="math:cos($myCutAngle) * $waYInnerRadius"/>
+
+	<xsl:variable name="loopOuterDx" select="math:sin($loopCutAngle) * $waXOuterRadius"/>
+	<xsl:variable name="loopOuterDy" select="math:cos($loopCutAngle) * $waYOuterRadius"/>
+	<xsl:variable name="loopInnerDx" select="math:sin($loopCutAngle) * $waXInnerRadius"/>
+	<xsl:variable name="loopInnerDy" select="math:cos($loopCutAngle) * $waYInnerRadius"/>
+
+	<xsl:variable name="loopIntersectAngle" select="math:asin($loopOuterDx div $waXInnerRadius)"/>
+	<xsl:variable name="loopIntersectDy" select="math:cos($loopIntersectAngle) * $waYInnerRadius"/>
+	<xsl:variable name="loopIntersectInternalAngle" select="2 * $loopIntersectAngle - $loopCutAngle"/>
+	<xsl:variable name="loopInnerIntersectDy" select="math:cos($loopIntersectInternalAngle) * $waXInnerRadius"/>
+	<xsl:variable name="loopInnerIntersectDx" select="math:sin($loopIntersectInternalAngle) * $waXInnerRadius"/>
+
     <xsl:element name="path" use-attribute-sets="pathAttribs">
     <xsl:attribute name="d">
     <xsl:call-template name="Move">

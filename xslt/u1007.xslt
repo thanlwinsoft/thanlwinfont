@@ -12,6 +12,16 @@
 <xsl:variable name="isWide" select="0"/>
 
 
+<xsl:template match="svg:g">
+	<xsl:copy use-attribute-sets="gAttribs">
+	<xsl:call-template name="u1007"/>
+	</xsl:copy>
+</xsl:template>
+
+<xsl:template name="u1007">
+	<xsl:param name="xOffset" select="0"/>
+	<xsl:param name="yOffset" select="0"/>
+
 <xsl:variable name="cutOuterDx" select="math:cos($zaLowerAngle) * $waYOuterRadius"/>
 <xsl:variable name="cutOuterDy" select="math:sin($zaLowerAngle) * $waYOuterRadius"/>
 <xsl:variable name="cutInnerDx" select="math:cos($zaLowerAngle) * $waYInnerRadius"/>
@@ -22,17 +32,6 @@
 <xsl:variable name="hookInnerDx" select="math:cos($zaAngle) * $waYInnerRadius"/>
 <xsl:variable name="hookInnerDy" select="math:sin($zaAngle) * $waYInnerRadius"/>
 
-
-<xsl:template match="svg:g">
-	<xsl:copy use-attribute-sets="gAttribs">
-	<xsl:call-template name="u1007"/>
-	</xsl:copy>
-</xsl:template>
-
-<xsl:template name="u1007">
-	<xsl:param name="xOffset" select="0"/>
-	<xsl:param name="yOffset" select="0"/>
-	<xsl:message terminate="no"><xsl:value-of select="$cutOuterDy"/></xsl:message>
     <xsl:element name="path" use-attribute-sets="pathAttribs">
     <xsl:attribute name="d">
     <xsl:call-template name="Move">

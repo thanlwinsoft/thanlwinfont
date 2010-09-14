@@ -31,5 +31,5 @@ if __name__ == "__main__":
 	font.addReorderedGlyphs()
 	font.addSpecialLigatures()
 	font.save()
+	print "Created Font with {0} glyphs.".format(font.glyphCount)
 
-	

@@ -36,7 +36,7 @@
 <xsl:when test="$vowel = 'u1030' and $augamyit = 'u1037'">
 <axsl:variable name="advance" select="7 * $thickness + $cornerOuterRadius + $postGuard + 2 * $dotOuterRadius"/>
 </xsl:when>
-<xsl:when test="$vowel = 'u1030' and $augamyit = 'u1037'">
+<xsl:when test="$vowel = 'u1030'">
 <axsl:variable name="advance" select="7 * $thickness + $cornerOuterRadius + $postGuard"/>
 </xsl:when>
 <xsl:when test="$augamyit = 'u1037'">

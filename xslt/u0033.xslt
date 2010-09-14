@@ -13,15 +13,15 @@
 
 <xsl:template match="svg:g">
 	<xsl:copy use-attribute-sets="gAttribs">
-	<xsl:call-template name="u1012"/>
+	<xsl:call-template name="u0033"/>
 	</xsl:copy>
 </xsl:template>
 
 
-<xsl:template name="u1012">
+<xsl:template name="u0033">
 	<xsl:param name="xOffset" select="0"/>
 	<xsl:param name="yOffset" select="0"/>
-<xsl:variable name="daYOuterRadius" select=".5 * $waYOuterRadius + .25 * $thickness"/>
+<xsl:variable name="daYOuterRadius" select=".25 * ($ascent + $thickness)"/>
 <xsl:variable name="daYInnerRadius" select="$daYOuterRadius - $thickness"/>
 
 <xsl:variable name="intersectAngle" select="math:asin(1 - $thickness div (2 * $daYOuterRadius))"/>
@@ -31,7 +31,7 @@
     <xsl:attribute name="d">
     <xsl:call-template name="Move">
         <xsl:with-param name="x" select="$xOffset + $preGuard"/>
-        <xsl:with-param name="y" select="$yOffset + $waYOuterRadius + $daYOuterRadius - .5 * $thickness"/>
+        <xsl:with-param name="y" select="$yOffset + 3 * $daYOuterRadius - $thickness"/>
     </xsl:call-template>
     <xsl:call-template name="arc">
         <xsl:with-param name="rx" select="$waXOuterRadius"/>

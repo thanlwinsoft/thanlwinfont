@@ -49,15 +49,20 @@ class SvgFont(object) :
 		self.outName = outname
 		self.sfdFile = outname + ".sfd"
 		self.ttfFile = outname + ".ttf"
+		self.glyphCount = 0
 
 	def importGlyph(self, svgFile, glyphName, codePoint=-1):
 		glyph = self.font.createChar(codePoint, glyphName)
+		if (glyph.isWorthOutputting()):
+			self.log.warn("Warning: glyph {0} already has data".format(glyphName))
+			print "Warning: glyph {0} already has data".format(glyphName)
 		glyph.importOutlines(svgFile)
 		glyph.width = self.getSvgAdvance(svgFile)
 		glyph.correctDirection()
 		glyph.addExtrema()
 		glyph.round()
 		validationState = glyph.validate()
+		self.glyphCount += 1
 		if validationState:
 			if validationState != 4: # ignore 4, since it is so common
 				print "Glyph failed to validate: {0} {1:x}".format(glyphName, validationState)

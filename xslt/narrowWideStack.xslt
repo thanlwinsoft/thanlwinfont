@@ -25,6 +25,9 @@
 <axsl:import href="{concat('../xslt/',$upperTemplate,'.xslt')}"/>
 <axsl:import href="{concat('../xslt/',$lowerTemplate,'.xslt')}"/>
 
+<axsl:include href="../xslt/param.xslt"/>
+<axsl:include href="../xslt/path.xslt"/>
+
 <xsl:choose>
 <xsl:when test="$lower = 'u100f'">
 <axsl:variable name="lowerWidth" select="$wideConsWidth + $waXInnerRadius"/>
@@ -48,15 +51,15 @@
 <xsl:when test="$tallVowel = 'u1030_tall'">
 <axsl:variable name="tallWidth" select="$u1030TallAdvance"/>
 </xsl:when>
+<xsl:when test="$tallVowel = 'u102c'">
+<axsl:variable name="tallWidth" select="$u102cAdvance"/>
+</xsl:when>
 <xsl:otherwise>
 <axsl:variable name="tallWidth" select="0"/>
 </xsl:otherwise>
 </xsl:choose>
 <axsl:variable name="overlap" select="0"/>
 <axsl:variable name="advance" select="round($narrowConsWidth + 2 * $medialDx + $tallWidth)"/>
-
-<axsl:include href="../xslt/param.xslt"/>
-<axsl:include href="../xslt/path.xslt"/>
 
 <axsl:template match="svg:g">
 	<axsl:copy use-attribute-sets="gAttribs">
@@ -72,7 +75,14 @@
 		</xsl:if>
 		<xsl:if test="string-length($tallVowel) &gt; 0">
 		<axsl:call-template name="{$tallVowel}">
+			<xsl:choose>
+			<xsl:when test="$tallVowel = 'u102c'">
+			<axsl:with-param name="xOffset" select="$medialDx + $narrowConsWidth"/>
+			</xsl:when>
+			<xsl:otherwise>
 			<axsl:with-param name="xOffset" select="2 * $medialDx + $narrowConsWidth"/>
+			</xsl:otherwise>
+			</xsl:choose>
 			<axsl:with-param name="yOffset" select="0"/>
 		</axsl:call-template>		
 		</xsl:if>

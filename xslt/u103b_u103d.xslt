@@ -4,10 +4,10 @@
 	xmlns:math="http://exslt.org/math">
 
 
-<xsl:import href="u101d.xslt"/>
 
 <xsl:variable name="overlap" select="0"/>
-<xsl:variable name="advance" select="$preGuard + $thickness + $postGuard"/>
+<xsl:variable name="yapinAdvance" select="2 * $thickness + $postGuard"/>
+<xsl:variable name="advance" select="$yapinAdvance"/>
 
 <xsl:include href="param.xslt"/>
 <xsl:include href="path.xslt"/>
