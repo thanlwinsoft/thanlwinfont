@@ -9,8 +9,8 @@
 <xsl:param name="ascent" select="750"/>
 <xsl:param name="descent" select="350"/>
 <xsl:param name="baseline" select="$ascent"/>
-<xsl:param name="preGuard" select="25" />
-<xsl:param name="postGuard" select="25"/>
+<xsl:param name="preGuard" select="40" />
+<xsl:param name="postGuard" select="40"/>
 <xsl:param name="thickness" select="50"/>
 <xsl:param name="cubicCircleFactor" select=".5"/>
 <xsl:param name="waXOuterRadius" select="200"/>
@@ -49,11 +49,12 @@
 <xsl:param name="wideConsWidth" select="$preGuard + $postGuard + 4 * $waXOuterRadius - $thickness"/>
 <xsl:param name="thaGyiWidth" select="$preGuard + $postGuard + 6 * $waXOuterRadius - 2 * $thickness"/>
 
+<xsl:param name="yayitHookDepth" select = "$thickness"/>
 <xsl:param name="yapinDepth" select=".5*$descent"/>
+<xsl:param name="upperPad" select="20"/>
 <xsl:param name="upperScale" select=".6"/>
-<xsl:param name="medialScale" select=".65"/>
 <xsl:param name="medialPad" select="20"/>
-<xsl:param name="upperPad" select="25"/>
+<xsl:param name="medialScale" select=".5 * ($descent - $medialPad) div $waYOuterRadius"/>
 
 <xsl:param name="dotThickness" select="$thickness * $upperScale"/>
 <xsl:param name="dotInnerRadius" select="$dotThickness"/>

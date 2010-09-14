@@ -76,6 +76,8 @@ class SvgFont(object) :
 		minCodePoint = int(self.xslParams.getParam("minCodePoint"))
 		maxCodePoint = int(self.xslParams.getParam("maxCodePoint"))
 		
+		#self.importGlyph("svg/u0000.svg", ".notdef")
+		
 		for codePoint in range(minCodePoint, maxCodePoint +1):
 			svgFile = "svg/u{0:04x}.svg".format(codePoint)
 			glyphName = "u{0:04x}".format(codePoint)

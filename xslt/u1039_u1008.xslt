@@ -16,11 +16,11 @@
 
 <xsl:template match="svg:g">
 	<xsl:copy use-attribute-sets="gAttribs">
-	<xsl:call-template name="u1005"/>
+	<xsl:call-template name="u1039_u1008"/>
 	</xsl:copy>
 </xsl:template>
 
-<xsl:template name="u1005">
+<xsl:template name="u1039_u1008">
 	<xsl:param name="xOffset" select="0"/>
 	<xsl:param name="yOffset" select="0"/>
 	<xsl:variable name="zaXOuterRadius" select="$medialScale * $waXOuterRadius"/>

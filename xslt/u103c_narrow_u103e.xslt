@@ -26,11 +26,11 @@
     <xsl:attribute name="d">
     <xsl:call-template name="Move">
         <xsl:with-param name="x" select="$xOffset +2 * $waXOuterRadius +$preGuard + 2 * $cornerOuterRadius"/>
-        <xsl:with-param name="y" select="$yOffset + $ascent - $cornerOuterRadius"/>
+        <xsl:with-param name="y" select="$yOffset + $ascent - $cornerOuterRadius - $yayitHookDepth"/>
     </xsl:call-template>
 	<xsl:call-template name="corner">
 		<xsl:with-param name="x" select="0"/>
-        <xsl:with-param name="y" select="$cornerOuterRadius"/>
+        <xsl:with-param name="y" select="$cornerOuterRadius + $yayitHookDepth"/>
 		<xsl:with-param name="r" select="$cornerOuterRadius"/>
 		<xsl:with-param name="nextX" select="-$waXOuterRadius - $cornerOuterRadius"/>
         <xsl:with-param name="nextY" select="0"/>
@@ -54,12 +54,12 @@
         <xsl:with-param name="y" select="0"/>
 		<xsl:with-param name="r" select="$cornerOuterRadius"/>
 		<xsl:with-param name="nextX" select="0"/>
-        <xsl:with-param name="nextY" select="$cornerOuterRadius"/>
+        <xsl:with-param name="nextY" select="$cornerOuterRadius + $yayitHookDepth"/>
 	</xsl:call-template>
 	<xsl:text>l</xsl:text><xsl:value-of select="-$thickness"/><xsl:text>,0</xsl:text>
 	<xsl:call-template name="corner">
 		<xsl:with-param name="x" select="0"/>
-        <xsl:with-param name="y" select="-$cornerInnerRadius"/>
+        <xsl:with-param name="y" select="-$cornerInnerRadius - $yayitHookDepth"/>
 		<xsl:with-param name="r" select="$cornerInnerRadius"/>
 		<xsl:with-param name="nextX" select="-$waXOuterRadius - $cornerInnerRadius"/>
         <xsl:with-param name="nextY" select="0"/>
@@ -83,7 +83,7 @@
         <xsl:with-param name="y" select="0"/>
 		<xsl:with-param name="r" select="$cornerInnerRadius"/>
 		<xsl:with-param name="nextX" select="0"/>
-        <xsl:with-param name="nextY" select="-$cornerInnerRadius"/>
+        <xsl:with-param name="nextY" select="-$cornerInnerRadius - $yayitHookDepth"/>
 	</xsl:call-template>
 	<xsl:call-template name="end"/>
 	

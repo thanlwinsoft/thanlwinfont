@@ -80,7 +80,9 @@ $(eval $(call tallMedial,u100d))
 medials : $(patsubst %, svg/u1039_%.svg, $(medialCons) $(rotatedMedialCons)) $(patsubst %, svg/u1039_%_u102f.svg, $(medialCons)) $(patsubst %, svg/u1039_%_u102d_u102f.svg, $(medialCons)) $(patsubst %, svg/u1039_%_u1030.svg, $(medialCons)) narrowwidestack
 
 
-ereorder: $(patsubst %, svg/%_u1031.svg, $(allCons) u1029) $(patsubst %, svg/%_u103c_u1031.svg, $(wideCons) $(narrowCons)) $(patsubst %, svg/%_u103c_u1031_u102c.svg, $(wideCons) $(narrowCons)) $(patsubst %, svg/%_u103c_u103d_u1031.svg, $(wideCons) $(narrowCons)) $(patsubst %, svg/%_u103c_u103d_u1031_u102c.svg, $(wideCons) $(narrowCons)) $(patsubst %, svg/%_u103c_u103e_u1031.svg, $(wideCons) $(narrowCons)) $(patsubst %, svg/%_u103c_u103e_u1031_u102c.svg, $(wideCons) $(narrowCons)) $(patsubst %, svg/%_u103b_u1031.svg, $(takesMedialEVowel)) $(patsubst %, svg/%_u103b_u103d_u1031.svg, $(takesMedialEVowel) u1014 u100a u101b) $(patsubst %, svg/%_u103b_u103e_u1031.svg, $(takesMedialEVowel)) $(patsubst %, svg/%_u103b_u103d_u103e_u1031.svg, $(takesMedialEVowel)) $(patsubst %, svg/%_u103d_u1031.svg, $(takesMedialEVowel) u1014 u100a u101b) $(patsubst %, svg/%_u103e_u1031.svg, $(takesMedialEVowel) u1014 u100a u101b) $(patsubst %, svg/%_u103d_u103e_u1031.svg, $(takesMedialEVowel) u1014 u100a u101b) svg/u1005_u1039_u1006_u1031.svg svg/u1014_u1039_u1010_u1031.svg svg/u1014_u1039_u1012_u1031.svg svg/u1014_u1039_u1013_u1031.svg svg/u1017_u1039_u1017_u1031.svg svg/u1019_u1039_u1019_u1031.svg svg/u100b_u1039_u100c_u1031.svg
+ereorder:: $(patsubst %, svg/%_u1031.svg, $(allCons) u1029)
+
+# $(patsubst %, svg/%_u103c_u1031.svg, $(wideCons) $(narrowCons)) $(patsubst %, svg/%_u103c_u1031_u102c.svg, $(wideCons) $(narrowCons)) $(patsubst %, svg/%_u103c_u103d_u1031.svg, $(wideCons) $(narrowCons)) $(patsubst %, svg/%_u103c_u103d_u1031_u102c.svg, $(wideCons) $(narrowCons)) $(patsubst %, svg/%_u103c_u103e_u1031.svg, $(wideCons) $(narrowCons)) $(patsubst %, svg/%_u103c_u103e_u1031_u102c.svg, $(wideCons) $(narrowCons)) $(patsubst %, svg/%_u103b_u1031.svg, $(takesMedialEVowel)) $(patsubst %, svg/%_u103b_u103d_u1031.svg, $(takesMedialEVowel) u1014 u100a u101b) $(patsubst %, svg/%_u103b_u103e_u1031.svg, $(takesMedialEVowel)) $(patsubst %, svg/%_u103b_u103d_u103e_u1031.svg, $(takesMedialEVowel)) $(patsubst %, svg/%_u103d_u1031.svg, $(takesMedialEVowel) u1014 u100a u101b) $(patsubst %, svg/%_u103e_u1031.svg, $(takesMedialEVowel) u1014 u100a u101b) $(patsubst %, svg/%_u103d_u103e_u1031.svg, $(takesMedialEVowel) u1014 u100a u101b) svg/u1005_u1039_u1006_u1031.svg svg/u1014_u1039_u1010_u1031.svg svg/u1014_u1039_u1012_u1031.svg svg/u1014_u1039_u1013_u1031.svg svg/u1017_u1039_u1017_u1031.svg svg/u1019_u1039_u1019_u1031.svg svg/u100b_u1039_u100c_u1031.svg
 
 define eVowelYayit
 svg/$(1)_u103c_u1031.svg : xslt/$(1).xslt xslt/u1031.xslt xslt/$(2).xslt xslt/eVowelYayitCons.xslt Makefile xslt/param.xslt
@@ -92,6 +94,8 @@ svg/$(1)_u103c_u1031_u102c.svg : xslt/$(1).xslt xslt/u1031.xslt xslt/$(2).xslt x
 	mkdir -p tmp
 	xsltproc -o tmp/$(1)_u103c_u1031_u102c.xslt --stringparam yayit $(2) --stringparam base $(1) --stringparam aVowel u102c xslt/eVowelYayitCons.xslt blank.svg
 	xsltproc -o $$@  tmp/$(1)_u103c_u1031_u102c.xslt blank.svg
+	
+ereorder::svg/$(1)_u103c_u1031.svg svg/$(1)_u103c_u1031_u102c.svg
 endef
 
 $(foreach cons,$(wideCons),$(eval $(call eVowelYayit,$(cons),u103c_wide)))
@@ -108,6 +112,8 @@ svg/$(1)_u103c_u103d_u1031_u102c.svg : xslt/$(1).xslt xslt/u1031.xslt xslt/$(2).
 	mkdir -p tmp
 	xsltproc -o tmp/$(1)_u103c_u103d_u1031_u102c.xslt --stringparam yayit $(2) --stringparam base $(1) --stringparam aVowel u102c xslt/eVowelYayitCons.xslt blank.svg
 	xsltproc -o $$@  tmp/$(1)_u103c_u103d_u1031_u102c.xslt blank.svg
+
+ereorder :: svg/$(1)_u103c_u103d_u1031.svg svg/$(1)_u103c_u103d_u1031_u102c.svg
 endef
 
 $(foreach cons,$(wideCons),$(eval $(call eVowelYayitWasway,$(cons),u103c_wide_u103d)))
@@ -124,6 +130,8 @@ svg/$(1)_u103c_u103e_u1031_u102c.svg : xslt/$(1).xslt xslt/u1031.xslt xslt/$(2).
 	mkdir -p tmp
 	xsltproc -o tmp/$(1)_u103c_u103e_u1031_u102c.xslt --stringparam yayit $(2) --stringparam base $(1) --stringparam aVowel u102c xslt/eVowelYayitCons.xslt blank.svg
 	xsltproc -o $$@  tmp/$(1)_u103c_u103e_u1031_u102c.xslt blank.svg
+
+ereorder :: svg/$(1)_u103c_u103e_u1031.svg svg/$(1)_u103c_u103e_u1031_u102c.svg
 endef
 
 $(foreach cons,$(wideCons),$(eval $(call eVowelYayitHato,$(cons),u103c_wide_u103e)))
@@ -135,6 +143,8 @@ svg/$(1)_$(2)_u1031.svg : xslt/$(1).xslt xslt/u1031.xslt xslt/$(2).xslt xslt/eVo
 	mkdir -p tmp
 	xsltproc -o tmp/$(1)_$(2)_u1031.xslt --stringparam medial $(2) --stringparam base $(1)  xslt/eVowelConsMedial.xslt blank.svg
 	xsltproc -o $$@  tmp/$(1)_$(2)_u1031.xslt blank.svg
+
+ereorder :: svg/$(1)_$(2)_u1031.svg
 endef
 
 $(foreach medial,$(afterMedials),$(foreach cons,$(takesMedialEVowel),$(eval $(call eVowelConsMedial,$(cons),$(medial)))))
@@ -144,9 +154,18 @@ svg/$(1)_u1039_$(3)_u1031.svg : xslt/$(2).xslt xslt/u1031.xslt xslt/$(3).xslt xs
 	mkdir -p tmp
 	xsltproc -o tmp/$(1)_u1039_$(3)_u1031.xslt --stringparam lowerCons $(3) --stringparam upperCons $(1) --stringparam upperConsTemplate $(2) xslt/eStack.xslt blank.svg
 	xsltproc -o $$@  tmp/$(1)_u1039_$(3)_u1031.xslt blank.svg
+
+svg/$(1)_u1039_$(3)_u1031_u102c.svg : xslt/$(2).xslt xslt/u1031.xslt xslt/$(3).xslt xslt/eStack.xslt Makefile xslt/param.xslt xslt/u102c.xslt
+	mkdir -p tmp
+	xsltproc -o tmp/$(1)_u1039_$(3)_u1031.xslt --stringparam lowerCons $(3) --stringparam upperCons $(1) --stringparam upperConsTemplate $(2) --stringparam aVowel u102c xslt/eStack.xslt blank.svg
+	xsltproc -o $$@  tmp/$(1)_u1039_$(3)_u1031.xslt blank.svg
+
+ereorder :: svg/$(1)_u1039_$(3)_u1031.svg svg/$(1)_u1039_$(3)_u1031_u102c.svg
 endef
 
 $(eval $(call eStack,u1005,u1005,u1006))
+$(eval $(call eStack,u1012,u1012,u1012))
+$(eval $(call eStack,u1012,u1012,u1013))
 $(eval $(call eStack,u1014,u1014_alt,u1010))
 $(eval $(call eStack,u1014,u1014_alt,u1012))
 $(eval $(call eStack,u1014,u1014_alt,u1013))

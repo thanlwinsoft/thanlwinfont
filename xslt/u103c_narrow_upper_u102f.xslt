@@ -48,12 +48,12 @@
         <xsl:with-param name="y" select="0"/>
 		<xsl:with-param name="r" select="$cornerOuterRadius"/>
 		<xsl:with-param name="nextX" select="0"/>
-        <xsl:with-param name="nextY" select="$cornerOuterRadius"/>
+        <xsl:with-param name="nextY" select="$cornerOuterRadius + $yayitHookDepth"/>
 	</xsl:call-template>
 	<xsl:text>l</xsl:text><xsl:value-of select="-$thickness"/><xsl:text>,0</xsl:text>
 	<xsl:call-template name="corner">
 		<xsl:with-param name="x" select="0"/>
-        <xsl:with-param name="y" select="-$cornerInnerRadius"/>
+        <xsl:with-param name="y" select="-$cornerInnerRadius - $yayitHookDepth"/>
 		<xsl:with-param name="r" select="$cornerInnerRadius"/>
 		<xsl:with-param name="nextX" select="-$waXOuterRadius + $cornerInnerRadius + 2 * $thickness"/>
         <xsl:with-param name="nextY" select="0"/>

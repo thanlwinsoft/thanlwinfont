@@ -51,7 +51,7 @@
 <xsl:when test="$tallVowel = 'u1030_tall'">
 <axsl:variable name="tallWidth" select="$u1030TallAdvance"/>
 </xsl:when>
-<xsl:when test="$tallVowel = 'u102c'">
+<xsl:when test="$upperVowel = 'u102c'">
 <axsl:variable name="tallWidth" select="$u102cAdvance"/>
 </xsl:when>
 <xsl:otherwise>
@@ -75,14 +75,7 @@
 		</xsl:if>
 		<xsl:if test="string-length($tallVowel) &gt; 0">
 		<axsl:call-template name="{$tallVowel}">
-			<xsl:choose>
-			<xsl:when test="$tallVowel = 'u102c'">
-			<axsl:with-param name="xOffset" select="$medialDx + $narrowConsWidth"/>
-			</xsl:when>
-			<xsl:otherwise>
 			<axsl:with-param name="xOffset" select="2 * $medialDx + $narrowConsWidth"/>
-			</xsl:otherwise>
-			</xsl:choose>
 			<axsl:with-param name="yOffset" select="0"/>
 		</axsl:call-template>		
 		</xsl:if>
