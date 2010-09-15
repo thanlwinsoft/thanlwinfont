@@ -23,7 +23,9 @@
 <xsl:param name="version" select="0.1"/>
 
 <!-- Latin alphabet parameters -->
-<xsl:param name="capitalYOuterRadius" select=".5 * $ascent"/>
+<xsl:param name="latinAscent" select="600"/>
+<xsl:param name="latinDescent" select="200"/>
+<xsl:param name="capitalYOuterRadius" select=".5 * $latinAscent"/>
 <xsl:param name="capitalYInnerRadius" select="$capitalYOuterRadius - $thickness"/>
 
 <xsl:param name="pi" select="3.141592654"/>

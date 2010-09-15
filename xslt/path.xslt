@@ -18,6 +18,14 @@
     <xsl:text> </xsl:text>
 </xsl:template>
 
+<xsl:template name="line">
+    <xsl:param name="x" select="0"/>
+    <xsl:param name="y" select="0"/>
+    <xsl:text>l</xsl:text><xsl:value-of select="$x"/>
+    <xsl:text>,</xsl:text><xsl:value-of select="$y"/>
+    <xsl:text> </xsl:text>
+</xsl:template>
+
 <xsl:template name="arc">
     <xsl:param name="rx" select="0"/>
     <xsl:param name="ry" select="0"/>
@@ -67,8 +75,8 @@
 </xsl:template>
 
 <xsl:template name="outer2inner">
-	<xsl:param name="cx" select="0"/>
-	<xsl:param name="cy" select="0"/>
+	<xsl:param name="cx"/>
+	<xsl:param name="cy"/>
 	<xsl:param name="t" select="$thickness"/>
 	<xsl:variable name="r" select="math:sqrt($cx * $cx + $cy * $cy)"/>
 	<!-- for now, just do a simple line -->
@@ -79,8 +87,8 @@
 </xsl:template>
 
 <xsl:template name="inner2outer">
-	<xsl:param name="cx" select="0"/>
-	<xsl:param name="cy" select="0"/>
+	<xsl:param name="cx"/>
+	<xsl:param name="cy"/>
 	<!-- for now, just do a simple line -->
 	<xsl:text>l</xsl:text>
 	<xsl:value-of select="- $cx * ($thickness div $waXOuterRadius)"/>

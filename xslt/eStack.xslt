@@ -37,7 +37,7 @@
 </xsl:when>
 <xsl:otherwise>
 	<axsl:variable name="wideConsBelowOverlap" select="0"/>
-	<axsl:variable name="advance" select="$preGuard + $postGuard + 2 * $narrowConsWidth"/>
+	<axsl:variable name="advance" select="2 * $narrowConsWidth"/>
 </xsl:otherwise>
 </xsl:choose>
 
@@ -78,7 +78,7 @@
 		<axsl:with-param name="xOffset" select="($xOffset div $medialScale) -$wideConsWidth + $postGuard div $medialScale -$postGuard div $medialScale"/>
 		</xsl:when>
 		<xsl:otherwise>	
-		<axsl:with-param name="xOffset" select="($xOffset div $medialScale) -$narrowConsWidth + $postGuard div $medialScale -$postGuard div $medialScale"/>
+		<axsl:with-param name="xOffset" select="($xOffset div $medialScale) - $preGuard - $postGuard div $medialScale - ($waXOuterRadius) *( 1 div $medialScale + 1)"/>
 		</xsl:otherwise>
 		</xsl:choose>
 		<axsl:with-param name="yOffset" select="($yOffset div $medialScale)-2*$waYOuterRadius - $medialPad div $medialScale"/>

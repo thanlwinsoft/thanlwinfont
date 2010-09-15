@@ -30,7 +30,7 @@
     <xsl:attribute name="d">
     <xsl:call-template name="Move">
         <xsl:with-param name="x" select="$xOffset + $preGuard"/>
-        <xsl:with-param name="y" select="$yOffset + $waYOuterRadius"/>
+        <xsl:with-param name="y" select="$yOffset + $latinAscent - $waYOuterRadius"/>
     </xsl:call-template>
     <xsl:call-template name="arc">
         <xsl:with-param name="rx" select="$waXOuterRadius"/>
@@ -41,7 +41,7 @@
         <xsl:with-param name="x" select="2 * $waXOuterRadius"/>
         <xsl:with-param name="y" select="0"/>
     </xsl:call-template>
-    <xsl:variable name="ellipseOuterRadius" select="$waYOuterRadius + $descent - $cornerOuterRadius"/>
+    <xsl:variable name="ellipseOuterRadius" select="$latinAscent - $waYOuterRadius - $thickness"/>
     <xsl:variable name="ellipseInnerRadius" select="$ellipseOuterRadius - $thickness"/>
     <xsl:call-template name="arc">
         <xsl:with-param name="rx" select="$ellipseOuterRadius"/>
@@ -63,21 +63,9 @@
     </xsl:call-template>
    
     
-    <xsl:call-template name="corner">
-		<xsl:with-param name="x" select="0"/>
-        <xsl:with-param name="y" select="-$cornerInnerRadius"/>
-		<xsl:with-param name="r" select="$cornerInnerRadius"/>
-		<xsl:with-param name="nextX" select="$cornerInnerRadius + $thickness"/>
-        <xsl:with-param name="nextY" select="0"/>
-	</xsl:call-template>
-	<xsl:text>l0,</xsl:text><xsl:value-of select="-$thickness"/>
-    <xsl:call-template name="corner">
-		<xsl:with-param name="x" select="-$cornerOuterRadius -  $thickness"/>
-        <xsl:with-param name="y" select="0"/>
-		<xsl:with-param name="r" select="$cornerOuterRadius"/>
-		<xsl:with-param name="nextX" select="0"/>
-        <xsl:with-param name="nextY" select="$cornerOuterRadius"/>
-	</xsl:call-template>
+    
+	<xsl:text>l</xsl:text><xsl:value-of select="-$thickness"/><xsl:text>,0</xsl:text>
+    
 	<xsl:call-template name="arc">
         <xsl:with-param name="rx" select="$ellipseOuterRadius"/>
         <xsl:with-param name="ry" select="$ellipseOuterRadius"/>
@@ -104,6 +92,21 @@
         <xsl:with-param name="large" select="1"/>
         <xsl:with-param name="clockwise" select="1"/>
         <xsl:with-param name="x" select="-2 * $waXInnerRadius"/>
+        <xsl:with-param name="y" select="0"/>
+    </xsl:call-template>
+    <xsl:call-template name="end"/>
+    
+    <xsl:call-template name="Move">
+        <xsl:with-param name="x" select="$xOffset + $preGuard + $waXOuterRadius"/>
+        <xsl:with-param name="y" select="$yOffset"/>
+    </xsl:call-template>
+	<xsl:call-template name="arc">
+        <xsl:with-param name="rx" select=".5 * $thickness"/>
+        <xsl:with-param name="ry" select=".5 * $thickness"/>
+        <xsl:with-param name="axisRotation" select="0"/>
+        <xsl:with-param name="large" select="1"/>
+        <xsl:with-param name="clockwise" select="1"/>
+        <xsl:with-param name="x" select="-1"/>
         <xsl:with-param name="y" select="0"/>
     </xsl:call-template>
     <xsl:call-template name="end"/>

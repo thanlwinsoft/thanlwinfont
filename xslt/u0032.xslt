@@ -21,7 +21,7 @@
 	<xsl:param name="yOffset" select="0"/>
     <xsl:element name="path" use-attribute-sets="pathAttribs">
     <xsl:attribute name="d">
-    <xsl:variable name="approxHeight" select="$ascent -  1.5 * $waXOuterRadius"/>
+    <xsl:variable name="approxHeight" select="$latinAscent -  1.5 * $waXOuterRadius"/>
     <xsl:variable name="twoAngle" select="math:atan((2 * $waXOuterRadius - $thickness) div ($approxHeight))"/>
     <xsl:call-template name="Move">
         <xsl:with-param name="x" select="$xOffset + $preGuard + 2 * $waXOuterRadius"/>
