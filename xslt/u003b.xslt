@@ -4,7 +4,7 @@
 	xmlns="http://www.w3.org/2000/svg">
 
 <!-- advance must be greater than zero -->
-<xsl:variable name="advance" select="2 * $dotOuterRadius + $postGuard"/>
+<xsl:variable name="advance" select="2 * $latinDotRadius + $postGuard"/>
 <xsl:variable name="overlap" select="0"/>
 <xsl:include href="param.xslt"/>
 <xsl:include href="path.xslt"/>
@@ -22,40 +22,40 @@
     <xsl:element name="path" use-attribute-sets="pathAttribs">
     <xsl:attribute name="d">
     <xsl:call-template name="Move">
-        <xsl:with-param name="x" select="$xOffset + $dotOuterRadius"/>
+        <xsl:with-param name="x" select="$xOffset + $preGuard + $latinDotRadius"/>
         <xsl:with-param name="y" select="$yOffset"/>
     </xsl:call-template>
 	<xsl:call-template name="arc">
-        <xsl:with-param name="rx" select="$dotOuterRadius"/>
-        <xsl:with-param name="ry" select="$dotOuterRadius"/>
+        <xsl:with-param name="rx" select="$latinDotRadius"/>
+        <xsl:with-param name="ry" select="$latinDotRadius"/>
         <xsl:with-param name="axisRotation" select="0"/>
         <xsl:with-param name="large" select="1"/>
         <xsl:with-param name="clockwise" select="0"/>
-        <xsl:with-param name="x" select="$dotOuterRadius"/>
-        <xsl:with-param name="y" select="$dotOuterRadius"/>
+        <xsl:with-param name="x" select="$latinDotRadius"/>
+        <xsl:with-param name="y" select="$latinDotRadius"/>
     </xsl:call-template>
     <xsl:call-template name="arc">
-        <xsl:with-param name="rx" select="2 * $dotOuterRadius"/>
-        <xsl:with-param name="ry" select="2 * $dotOuterRadius"/>
+        <xsl:with-param name="rx" select="2 * $latinDotRadius"/>
+        <xsl:with-param name="ry" select="2 * $latinDotRadius"/>
         <xsl:with-param name="axisRotation" select="0"/>
         <xsl:with-param name="large" select="0"/>
         <xsl:with-param name="clockwise" select="0"/>
-        <xsl:with-param name="x" select="- 2 * $dotOuterRadius"/>
-        <xsl:with-param name="y" select="- 2 * $dotOuterRadius"/>
+        <xsl:with-param name="x" select="- 2 * $latinDotRadius"/>
+        <xsl:with-param name="y" select="- 2 * $latinDotRadius"/>
     </xsl:call-template>
     
-    <xsl:text>l</xsl:text><xsl:value-of select="$dotOuterRadius"/>
-    <xsl:text>,</xsl:text><xsl:value-of select="$dotOuterRadius"/>
+    <xsl:text>l</xsl:text><xsl:value-of select="$latinDotRadius"/>
+    <xsl:text>,</xsl:text><xsl:value-of select="$latinDotRadius"/>
     
     <xsl:call-template name="end"/>
     
     <xsl:call-template name="Move">
-        <xsl:with-param name="x" select="$xOffset + $dotOuterRadius"/>
-        <xsl:with-param name="y" select="$yOffset + 2 * $waYOuterRadius - $dotOuterRadius"/>
+        <xsl:with-param name="x" select="$xOffset + $preGuard + $latinDotRadius"/>
+        <xsl:with-param name="y" select="$yOffset + 2 * $waYOuterRadius - $latinDotRadius"/>
     </xsl:call-template>
 	<xsl:call-template name="arc">
-        <xsl:with-param name="rx" select="$dotOuterRadius"/>
-        <xsl:with-param name="ry" select="$dotOuterRadius"/>
+        <xsl:with-param name="rx" select="$latinDotRadius"/>
+        <xsl:with-param name="ry" select="$latinDotRadius"/>
         <xsl:with-param name="axisRotation" select="0"/>
         <xsl:with-param name="large" select="1"/>
         <xsl:with-param name="clockwise" select="1"/>

@@ -7,7 +7,7 @@
 <xsl:include href="param.xslt"/>
 <xsl:include href="path.xslt"/>
 
-<xsl:variable name="advance" select="$preGuard + $postGuard + $waXOuterRadius"/>
+<xsl:variable name="advance" select="$preGuard + $postGuard + 2 * $waXOuterRadius"/>
 <xsl:variable name="overlap" select="0"/>
 
 <xsl:template match="svg:g">
@@ -23,28 +23,28 @@
     <xsl:attribute name="d">
     <xsl:call-template name="Move">
         <xsl:with-param name="x" select="$xOffset + $preGuard"/>
-        <xsl:with-param name="y" select="-$medialPad"/>
+        <xsl:with-param name="y" select="-$descent + $waYOuterRadius "/>
     </xsl:call-template>
 	<xsl:call-template name="arc">
-        <xsl:with-param name="rx" select="$waXOuterRadius div 2"/>
-        <xsl:with-param name="ry" select="$waYOuterRadius div 2"/>
+        <xsl:with-param name="rx" select="$waXOuterRadius "/>
+        <xsl:with-param name="ry" select="$waYOuterRadius "/>
         <xsl:with-param name="axisRotation" select="0"/>
         <xsl:with-param name="large" select="1"/>
         <xsl:with-param name="clockwise" select="1"/>
-        <xsl:with-param name="x" select="$waXOuterRadius"/>
+        <xsl:with-param name="x" select="2 * $waXOuterRadius"/>
         <xsl:with-param name="y" select="0"/>
     </xsl:call-template>
     
-    <xsl:text>l0,</xsl:text><xsl:value-of select="(2 * $waYOuterRadius + $medialPad)"/>
+    <xsl:text>l0,</xsl:text><xsl:value-of select="(2 * $waYOuterRadius + $descent - $waYOuterRadius)"/>
     <xsl:text>l</xsl:text><xsl:value-of select="-$thickness"/><xsl:text>,0</xsl:text>
-    <xsl:text>l0,</xsl:text><xsl:value-of select="-(2 * $waYOuterRadius + $medialPad)"/>
+    <xsl:text>l0,</xsl:text><xsl:value-of select="-(2 * $waYOuterRadius + $descent - $waYOuterRadius)"/>
     <xsl:call-template name="arc">
-        <xsl:with-param name="rx" select="$waXOuterRadius div 2 - $thickness"/>
-        <xsl:with-param name="ry" select="$waYOuterRadius div 2 - $thickness"/>
+        <xsl:with-param name="rx" select="$waXOuterRadius - $thickness"/>
+        <xsl:with-param name="ry" select="$waYOuterRadius - $thickness"/>
         <xsl:with-param name="axisRotation" select="0"/>
         <xsl:with-param name="large" select="1"/>
         <xsl:with-param name="clockwise" select="0"/>
-        <xsl:with-param name="x" select="-$waXOuterRadius + 2 * $thickness"/>
+        <xsl:with-param name="x" select="-2 * $waXOuterRadius + 2 * $thickness"/>
         <xsl:with-param name="y" select="0"/>
     </xsl:call-template>
 

@@ -36,11 +36,11 @@
 	
 	<xsl:call-template name="Move">
         <xsl:with-param name="x" select="$xOffset + $preGuard + .5 * $thickness"/>
-        <xsl:with-param name="y" select="$yOffset + 2 * $waYOuterRadius + $upperPad"/>
+        <xsl:with-param name="y" select="$yOffset + 2 * $waYOuterRadius + $upperPad + $latinDotRadius"/>
     </xsl:call-template>
 	<xsl:call-template name="arc">
-        <xsl:with-param name="rx" select=".5 * $thickness"/>
-        <xsl:with-param name="ry" select=".5 * $thickness"/>
+        <xsl:with-param name="rx" select="$latinDotRadius"/>
+        <xsl:with-param name="ry" select="$latinDotRadius"/>
         <xsl:with-param name="axisRotation" select="0"/>
         <xsl:with-param name="large" select="1"/>
         <xsl:with-param name="clockwise" select="1"/>

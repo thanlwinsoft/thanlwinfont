@@ -16,10 +16,6 @@
 	</xsl:copy>
 </xsl:template>
 
-
-<xsl:variable name="loopInnerDiameter" select="$waXInnerRadius * math:sqrt(2) - 2 * $thickness"/>
-<xsl:variable name="loopInnerDelta" select="$loopInnerDiameter div math:sqrt(2)"/>
-
 <!-- TODO use more arcs than corners, this is currently ugly -->
 
 <xsl:template name="u101b">
@@ -41,7 +37,7 @@
         <xsl:with-param name="x" select="2 * $waXOuterRadius"/>
         <xsl:with-param name="y" select="0"/>
     </xsl:call-template>
-    <xsl:variable name="ellipseOuterRadius" select="$latinAscent - $waYOuterRadius - $thickness"/>
+    <xsl:variable name="ellipseOuterRadius" select="$latinAscent - $waYOuterRadius - $thickness - 2 * $latinDotRadius"/>
     <xsl:variable name="ellipseInnerRadius" select="$ellipseOuterRadius - $thickness"/>
     <xsl:call-template name="arc">
         <xsl:with-param name="rx" select="$ellipseOuterRadius"/>
@@ -101,8 +97,8 @@
         <xsl:with-param name="y" select="$yOffset"/>
     </xsl:call-template>
 	<xsl:call-template name="arc">
-        <xsl:with-param name="rx" select=".5 * $thickness"/>
-        <xsl:with-param name="ry" select=".5 * $thickness"/>
+        <xsl:with-param name="rx" select="$latinDotRadius"/>
+        <xsl:with-param name="ry" select="$latinDotRadius"/>
         <xsl:with-param name="axisRotation" select="0"/>
         <xsl:with-param name="large" select="1"/>
         <xsl:with-param name="clockwise" select="1"/>

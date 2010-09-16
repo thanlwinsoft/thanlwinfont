@@ -7,7 +7,7 @@
 <xsl:include href="param.xslt"/>
 <xsl:include href="path.xslt"/>
 
-<xsl:variable name="advance" select="round($preGuard + $thickness + $postGuard)"/>
+<xsl:variable name="advance" select="round($preGuard + 2 * $latinDotRadius + $postGuard)"/>
 <xsl:variable name="overlap" select="0"/>
 
 <xsl:template match="svg:g">
@@ -27,20 +27,20 @@
     </xsl:call-template>
     <xsl:text>l</xsl:text><xsl:value-of select="$thickness"/>
     <xsl:text>,0</xsl:text>
-    <xsl:text>l0,</xsl:text><xsl:value-of select="-$latinAscent + 2 * $thickness"/>
+    <xsl:text>l0,</xsl:text><xsl:value-of select="-$latinAscent + $thickness + 2 * $latinDotRadius"/>
     <xsl:text>l</xsl:text><xsl:value-of select="-$thickness"/>
     <xsl:text>,0</xsl:text>
-	<xsl:text>l0,</xsl:text><xsl:value-of select="$latinAscent - 2 * $thickness"/>
+	<xsl:text>l0,</xsl:text><xsl:value-of select="$latinAscent - $thickness - 2 * $latinDotRadius"/>
     
 	<xsl:call-template name="end"/>
 	
 	<xsl:call-template name="Move">
-        <xsl:with-param name="x" select="$xOffset + $preGuard + .5 * $thickness"/>
+        <xsl:with-param name="x" select="$xOffset + $preGuard + $latinDotRadius"/>
         <xsl:with-param name="y" select="$yOffset"/>
     </xsl:call-template>
 	<xsl:call-template name="arc">
-        <xsl:with-param name="rx" select=".5 * $thickness"/>
-        <xsl:with-param name="ry" select=".5 * $thickness"/>
+        <xsl:with-param name="rx" select="$latinDotRadius"/>
+        <xsl:with-param name="ry" select="$latinDotRadius"/>
         <xsl:with-param name="axisRotation" select="0"/>
         <xsl:with-param name="large" select="1"/>
         <xsl:with-param name="clockwise" select="1"/>

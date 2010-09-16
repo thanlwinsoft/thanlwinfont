@@ -297,8 +297,7 @@ class MyanmarSvgFont(SvgFont.SvgFont):
 		self.addLigature("medialLigSub", ["u101b", "u103d", "u1036", "u1037"])
 		self.addLigature("medialLigSub", ["u101b", "u103d", "u103e", "u1032", "u1037"])
 		self.addLigature("medialLigSub", ["u101b", "u103d", "u103e", "u1036", "u1037"])
-
-		
+	
 		self.addLigature("medialLigSub", ["u1014","u1039","u1012"])
 		self.addLigature("medialLigSub", ["u1014","u1039","u1013"])
 		self.addLigature("medialLigSub", ["u1014","u1039","u1014"])

@@ -10,7 +10,7 @@
 <xsl:variable name="lineAngle" select="$pi div 6"/>
 
 <!-- advance must be greater than zero -->
-<xsl:variable name="advance" select="$preGuard + $thickness + $bracketOuterRadius * (1 - math:cos($lineAngle)) + $postGuard"/>
+<xsl:variable name="advance" select="$preGuard + $thickness + round($bracketOuterRadius * (1 - math:cos($lineAngle))) + $postGuard"/>
 <xsl:variable name="overlap" select="0"/>
 <xsl:include href="param.xslt"/>
 <xsl:include href="path.xslt"/>
@@ -56,7 +56,6 @@
         <xsl:with-param name="x" select="0"/>
         <xsl:with-param name="y" select="-$bracketInnerRadius"/>
     </xsl:call-template>
-    <xsl:call-template name="end"/>
     <xsl:call-template name="inner2outer">
     	<xsl:with-param name="cx" select="-$bracketOuterRadius * math:cos($lineAngle)"/>
         <xsl:with-param name="cy" select="$bracketOuterRadius * math:sin($lineAngle)"/>

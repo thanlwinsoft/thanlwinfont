@@ -12,16 +12,16 @@
 <xsl:variable name="intersectAngle"
 	select="math:acos(($waXOuterRadius - .5 * $thickness) div $waXOuterRadius)"/>
 
-
+<xsl:variable name="u1023Scale" select="($descent - $medialPad) div (2 * $waYOuterRadius + 2 * $thickness)"/>
 
 <xsl:template match="svg:g">
 	<xsl:copy use-attribute-sets="gAttribs">
 	<xsl:call-template name="u1023"/>
 	</xsl:copy>
-	<svg:g  transform="{concat('matrix(', $medialScale, ' 0 0 ',-$medialScale,' 0 650)')}">
+	<svg:g  transform="{concat('matrix(', $u1023Scale, ' 0 0 ',-$u1023Scale,' 0 ', $ascent,')')}">
 		<xsl:call-template name="u1023">
-			<xsl:with-param name="xOffset" select=".5*$waXOuterRadius div $medialScale"/>
-			<xsl:with-param name="yOffset" select="-2*$waYOuterRadius"/>
+			<xsl:with-param name="xOffset" select="-2 * $waXOuterRadius - $preGuard + ($preGuard + 2 * $waXOuterRadius) div $u1023Scale"/>
+			<xsl:with-param name="yOffset" select="-2*$waYOuterRadius - $medialPad div $u1023Scale"/>
 			<xsl:with-param name="hook" select="1"/>
 		</xsl:call-template>
 	</svg:g>
@@ -49,7 +49,7 @@
     </xsl:call-template>
     <xsl:choose>
     <xsl:when test="$hook">
-    	<xsl:variable name="hookDrop" select=".25 * $thickness"/>
+    	<xsl:variable name="hookDrop" select="1 * $thickness"/>
     	<xsl:text>l0,</xsl:text><xsl:value-of select="-$hookDrop"/>
     	<xsl:text>l</xsl:text><xsl:value-of select="$thickness"/><xsl:text>,0</xsl:text>
     	<xsl:text>l0,</xsl:text><xsl:value-of select="-$thickness"/>

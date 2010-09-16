@@ -558,6 +558,8 @@ svg/$(1)_$(2)_u1031.svg : xslt/$(1)_alt.xslt xslt/u1031.xslt xslt/$(2).xslt xslt
 	mkdir -p tmp
 	xsltproc -o tmp/$(1)_$(2)_u1031.xslt --stringparam medial $(2) --stringparam base $(1) --stringparam baseTemplate $(1)_alt xslt/eVowelConsMedial.xslt blank.svg
 	xsltproc -o $$@  tmp/$(1)_$(2)_u1031.xslt blank.svg
+
+ereorder :: svg/$(1)_$(2)_u1031.svg
 endef
 
 $(foreach cons,u100a u1014 u101b, $(foreach medial,$(afterMedials),$(eval $(call eVowelAltConsMedial,$(cons),$(medial)))))

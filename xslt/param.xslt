@@ -25,6 +25,13 @@
 <!-- Latin alphabet parameters -->
 <xsl:param name="latinAscent" select="600"/>
 <xsl:param name="latinDescent" select="200"/>
+<xsl:param name="lcXOuterRadius" select="$waXOuterRadius"/>
+<xsl:param name="lcXInnerRadius" select="$lcXOuterRadius - $thickness"/>
+<xsl:param name="lcYOuterRadius" select="$waYOuterRadius"/>
+<xsl:param name="lcYInnerRadius" select="$lcYOuterRadius - $thickness"/>
+<xsl:param name="latinDotRadius" select=".75 * $thickness"/>
+<xsl:param name="lcHeight" select="2 * $waYOuterRadius"/>
+<xsl:param name="lcWidth" select="2 * $waXOuterRadius"/>
 <xsl:param name="capitalYOuterRadius" select=".5 * $latinAscent"/>
 <xsl:param name="capitalYInnerRadius" select="$capitalYOuterRadius - $thickness"/>
 
@@ -53,9 +60,9 @@
 
 <xsl:param name="yayitHookDepth" select = "$thickness"/>
 <xsl:param name="yapinDepth" select=".5*$descent"/>
-<xsl:param name="upperPad" select="20"/>
+<xsl:param name="upperPad" select="25"/>
 <xsl:param name="upperScale" select=".6"/>
-<xsl:param name="medialPad" select="20"/>
+<xsl:param name="medialPad" select="25"/>
 <xsl:param name="medialScale" select=".5 * ($descent - $medialPad) div $waYOuterRadius"/>
 
 <xsl:param name="dotThickness" select="$thickness * $upperScale"/>

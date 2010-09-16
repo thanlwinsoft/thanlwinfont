@@ -5,7 +5,7 @@
 	xmlns:math="http://exslt.org/math">
 
 <!-- advance must be greater than zero -->
-<xsl:variable name="advance" select="$wideConsWidth"/>
+<xsl:variable name="advance" select="$narrowConsWidth"/>
 <xsl:variable name="overlap" select="0"/>
 <xsl:include href="param.xslt"/>
 <xsl:include href="path.xslt"/>
