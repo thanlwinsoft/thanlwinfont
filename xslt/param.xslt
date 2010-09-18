@@ -4,11 +4,11 @@
 	xmlns:svg="http://www.w3.org/2000/svg"
 	xmlns:math="http://exslt.org/math">
 
-<xsl:param name="emWidth" select="1100"/>
-<xsl:param name="emHeight" select="1100"/>
+<xsl:param name="emWidth" select="1024"/>
+<xsl:param name="emHeight" select="1024"/>
 <xsl:param name="ascent" select="750"/>
 <xsl:param name="descent" select="350"/>
-<xsl:param name="baseline" select="$ascent"/>
+<xsl:param name="baseline" select="$descent"/>
 <xsl:param name="preGuard" select="40" />
 <xsl:param name="postGuard" select="40"/>
 <xsl:param name="thickness" select="50"/>
@@ -17,10 +17,18 @@
 <xsl:param name="waYOuterRadius" select="200"/>
 
 <!-- define a few parameters which are only used by the python script -->
+<xsl:param name="lookupFont" select="'thanlwin-lookups.sfd'"/><!-- some lookups are cloned from this -->
 <xsl:param name="minCodePoint" select="32"/><!-- in decimal otherwise it won't parse -->
 <xsl:param name="maxCodePoint" select="9676"/>
 <xsl:param name="copyright" select="'Keith Stribley 2010 (ThanLwinSoft.org)'"/>
 <xsl:param name="version" select="0.1"/>
+<xsl:param name="enFamilyName" select="'ThanLwin'"/>
+<xsl:param name="enSubFamily" select="'Medium'"/>
+<xsl:param name="enFullName" select="'ThanLwin'"/>
+<xsl:param name="localizedLang" select="1109"/><!-- 0x455 -->
+<xsl:param name="localizedFamilyName" select="'သံလွင်'"/>
+<xsl:param name="localizedSubFamily" select="'ပိုမှန်'"/>
+<xsl:param name="localizedFullName" select="'သံလွင်'"/>
 
 <!-- Latin alphabet parameters -->
 <xsl:param name="latinAscent" select="600"/>

@@ -27,22 +27,25 @@ class SvgFont(object) :
         self.font = fontforge.font()
         self.font.encoding = 'UnicodeBmp' # 1 USC-2 Unicode BMP
         self.font.fontname = name
-        self.font.fullname = name
-        self.font.familyname = name
+        self.font.fullname = xslParams.getParam("enFullName")
+        self.font.familyname = xslParams.getParam("enFamilyName")
         sfntNameList = list(self.font.sfnt_names[:])
-#        sfntNameList.append((u'Myanmar', u'Family', u'သံလွင်'))
-#        self.font.sfnt_names = tuple(sfntNameList)
         self.font.sfnt_names = (('English (US)', 'Copyright', xslParams.getParam('copyright')), \
-            ('English (US)', 'Family', name), ('English (US)', 'SubFamily', u'Medium'), \
-            ('English (US)', 'UniqueID', u'FontForge 2.0 : ' + name + ": " + datetime.datetime.now().isoformat()),\
-            ('English (US)', 'Fullname', name), \
+            ('English (US)', 'Family', self.font.familyname), ('English (US)', 'SubFamily', xslParams.getParam("enSubFamily")), \
+            ('English (US)', 'UniqueID', u'FontForge 2.0 : ' + self.font.fullname + ": " + datetime.datetime.now().isoformat()),\
+            ('English (US)', 'Fullname', self.font.fullname), \
             ('English (US)', 'Version', 'Version {0:09.3f}'.format(float(xslParams.getParam('version')))),\
-            ('English (US)', 'PostscriptName', name),\
+            ('English (US)', 'PostscriptName', self.font.fontname),\
             ('English (US)', 'License', "Open Font License", 'Licence URL', 'http://scripts.sil.org/OFL'))
+        langCode = int(xslParams.getParam("localizedLang"))   
+        self.font.appendSFNTName(langCode, 1, xslParams.getParam("localizedFamilyName").encode('UTF-8'))
+        self.font.appendSFNTName(langCode, 2, xslParams.getParam("localizedSubFamily").encode('UTF-8'))
+        self.font.appendSFNTName(langCode, 4, xslParams.getParam("localizedFullName").encode('UTF-8'))
+
         print(self.font.sfnt_names)
-        self.font.em = int(xslParams.getParam("emWidth"))
         self.font.ascent = int(xslParams.getParam("ascent"))
         self.font.descent = int(xslParams.getParam("descent"))
+        self.font.em = int(xslParams.getParam("emWidth"))
         logFile =  codecs.open(outname +".log", "w", "UTF-8")
         logging.basicConfig(filemode="r", level=logging.DEBUG, stream=logFile)
         self.log = logging.getLogger(outname)
@@ -136,7 +139,7 @@ class SvgFont(object) :
         return int(viewBox[2])
     
     def save(self):
-        self.font.generate(self.ttfFile)
+        self.font.generate(self.ttfFile, flags=('opentype','apple','dummy-dsig'))
         self.font.save(self.sfdFile)
         self.font.saveNamelist(self.outName + "names.txt")
         logging.shutdown()
@@ -155,6 +158,9 @@ class XslParameters:
             self.params[params[i].getAttribute("name")] = params[i].getAttribute("select")
 
     def getParam(self, name):
-        print name + ":" + self.params[name]
-        return self.params[name]
+        value = self.params[name]
+        if (value[0] == "'" and value[-1] == "'" and len(value) > 1):
+            value = value[1:-1]
+        print name + ":" + value
+        return value
 

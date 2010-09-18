@@ -54,7 +54,7 @@ upperVowel:=u102d u102e u1032
 
 font: thanlwin.sfd
 
-thanlwin.sfd : svg $(wildcard python/*.py) $(wildcard svg/*.svg)
+thanlwin.sfd : svg $(wildcard python/*.py) $(wildcard svg/*.svg) thanlwin-lookups.sfd
 	python/thanlwinfont.py xslt/param.xslt "ThanLwin" thanlwin
 
 svg: $(subst xslt,svg,$(wildcard xslt/u*.xslt) $(tests)) medials ereorder yayit yapin kinzi misc tallConsVowel

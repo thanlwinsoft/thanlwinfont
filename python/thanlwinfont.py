@@ -30,6 +30,7 @@ if __name__ == "__main__":
 	font.addMedialGlyphs()
 	font.addReorderedGlyphs()
 	font.addSpecialLigatures()
+	font.addSequenceChecks()
 	font.save()
 	print "Created Font with {0} glyphs.".format(font.glyphCount)
 
