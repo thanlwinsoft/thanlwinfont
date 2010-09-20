@@ -21,11 +21,11 @@
 
 <xsl:template match="svg:g">
 	<xsl:copy use-attribute-sets="gAttribs">
-	<xsl:call-template name="u101e"/>
+	<xsl:call-template name="u103f"/>
 	</xsl:copy>
 </xsl:template>
 
-<xsl:template name="u101e">
+<xsl:template name="u103f">
     <xsl:element name="path" use-attribute-sets="pathAttribs">
     <xsl:attribute name="d">
     <xsl:call-template name="Move">

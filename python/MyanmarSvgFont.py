@@ -61,7 +61,7 @@ class MyanmarSvgFont(SvgFont.SvgFont):
             glyph = self.font.createChar(vowelMarks[i])
             glyph.glyphclass = "mark"
             
-    def addLigature(self, subtable, ligGlyphs, glyphName=None):
+    def addLigature(self, subtable, ligGlyphs, svgFile=None, glyphName=None):
         ligName = ""
         for i in range(len(ligGlyphs)):
             if len(ligName) > 0:
@@ -70,7 +70,8 @@ class MyanmarSvgFont(SvgFont.SvgFont):
                 ligName = ligGlyphs[i]
         if glyphName is None:
             glyphName = ligName
-        svgFile = "svg/" + ligName + ".svg"
+        if svgFile is None:
+            svgFile = self.svgDir + "/" + ligName + ".svg"
         if os.access(svgFile, os.R_OK):
             glyph = self.importGlyph(svgFile, glyphName, -1)
             glyph.glyphclass = "baseligature"
@@ -79,7 +80,7 @@ class MyanmarSvgFont(SvgFont.SvgFont):
             self.log.info(_("{0} not found").format(svgFile))
 
     def addMedialGlyphs(self):
-        featureScriptLang = (("liga",(("mymr",("dflt", "BRM ")),)),)
+        featureScriptLang = (("liga",(("mymr",("dflt", "DFLT", "BRM ")),)),)
         self.font.addLookup("medialLig", "gsub_ligature", (), featureScriptLang)
         self.font.addLookupSubtable("medialLig", "medialLigSub")
 
@@ -163,7 +164,7 @@ class MyanmarSvgFont(SvgFont.SvgFont):
 
 
     def addReorderedGlyphs(self):
-        featureScriptLang = (("liga",(("mymr",("dflt","BRM ")),)),)
+        featureScriptLang = (("liga",(("mymr",("dflt","DFLT","BRM ")),)),)
         self.font.addLookupSubtable("medialLig", "reorder")
 
         for i in range(len(cons)):
@@ -180,7 +181,7 @@ class MyanmarSvgFont(SvgFont.SvgFont):
                     self.addLigature("reorder", [glyphName, "u{0:04x}".format(afterMedials[j]), "u{0:04x}".format(afterMedials[k]), "u1031"])
                     if (j == 0 and k == 1):
                         self.addLigature("reorder", [glyphName, "u{0:04x}".format(afterMedials[j]), "u{0:04x}".format(afterMedials[k]), "u{0:04x}".format(afterMedials[k+1]), "u1031"])
-            
+
             #kinzi
             self.addLigature("reorder", ["u1004", "u103a", "u1039", glyphName])
             self.addLigature("reorder", ["u1004", "u103a", "u1039", glyphName, "u1031"])
@@ -204,6 +205,7 @@ class MyanmarSvgFont(SvgFont.SvgFont):
             self.addLigature("reorder", [glyphName, "u103c", "u103d"])
 
             self.addLigature("reorder", [glyphName, "u103c", "u103e"])
+            self.addLigature("reorder", [glyphName, "u103c", "u102c"])
             self.addLigature("reorder", [glyphName, "u103c", "u102f"])
             self.addLigature("reorder", [glyphName, "u103c", "u1030"])
             self.addLigature("reorder", [glyphName, "u103c", "u103d", "u102f"])
@@ -225,6 +227,7 @@ class MyanmarSvgFont(SvgFont.SvgFont):
         self.addLigature("reorder", ["u1019", "u103c", "u103d", "u103e"])
 
         # a few stacks occur with e vowel
+        self.addLigature("reorder", ["u1005", "u1039", "u1005", "u1031"])
         self.addLigature("reorder", ["u1005", "u1039", "u1006", "u1031"])
         self.addLigature("reorder", ["u1007", "u1039", "u1008", "u1031"])
         self.addLigature("reorder", ["u1010", "u1039", "u1010", "u1031"])
@@ -236,6 +239,7 @@ class MyanmarSvgFont(SvgFont.SvgFont):
         self.addLigature("reorder", ["u1017", "u1039", "u1017", "u1031"])
         self.addLigature("reorder", ["u1019", "u1039", "u1019", "u1031"])
         self.addLigature("reorder", ["u100b", "u1039", "u100c", "u1031"])
+        self.addLigature("reorder", ["u100f", "u1039", "u100f", "u1031"])        
         self.addLigature("reorder", ["u1014", "u1039", "u1010", "u103c","u1031"])
         self.addLigature("reorder", ["u1014", "u1039", "u1012", "u103c", "u1031"])
         reorderedGlyphName = "u10104u1039u1012u103cu1031u102c"
@@ -254,6 +258,9 @@ class MyanmarSvgFont(SvgFont.SvgFont):
         
         reorderedGlyphName = "kinzi_u1002_u103c_u102d_u102f"
         self.addLigature("reorder", ["u1004","u103a","u1039","u1002","u103c", "u102d","u102f"], glyphName=reorderedGlyphName)
+        
+        # replace any unordered kinzi with dotted circle
+        self.addLigature("reorder", ["u1004","u103a","u1039"], svgFile=self.svgDir + "/u1004_u103a_u1039_u25cc.svg")
         
 
     def addSpecialLigatures(self):
@@ -293,23 +300,36 @@ class MyanmarSvgFont(SvgFont.SvgFont):
         self.addLigature("medialLigSub", ["u100f", "u1039", "u100d", "u102f"])
         self.addLigature("medialLigSub", ["u100f", "u1039", "u100d", "u102d", "u102f"])
         self.addLigature("medialLigSub", ["u1025", "u102f", "u1036"])
+        
+        self.addLigature("medialLigSub", ["u25cc_u102b", "u25cc_u103a"], svgFile=self.svgDir + "/u25cc_u102b_u103a.svg")
                 
         for altWithLower in ["u100a", "u1014", "u101b"]:
-            self.addLigature("reorder", [altWithLower, "u103b"])
-            self.addLigature("reorder", [altWithLower, "u103d"])
-            self.addLigature("reorder", [altWithLower, "u103e"])
+            self.addLigature("reorder", [altWithLower, "u103b", "u102f", "u1036"])
+            self.addLigature("reorder", [altWithLower, "u103d", "u102f", "u1036"])
+            self.addLigature("reorder", [altWithLower, "u103e", "u102f", "u1036"])
+            self.addLigature("reorder", [altWithLower, "u103e", "u102d", "u102f"])
+            self.addLigature("reorder", [altWithLower, "u103b", "u103d", "u103e"])
+            self.addLigature("reorder", [altWithLower, "u103b", "u1032"])
+            self.addLigature("reorder", [altWithLower, "u103d", "u1032"])
+            self.addLigature("reorder", [altWithLower, "u103e", "u1032"])
+            self.addLigature("reorder", [altWithLower, "u103b", "u1036"])
+            self.addLigature("reorder", [altWithLower, "u103d", "u1036"])
+            self.addLigature("reorder", [altWithLower, "u103e", "u1036"])
+            self.addLigature("reorder", [altWithLower, "u103d", "u103e"])
             self.addLigature("reorder", [altWithLower, "u103b", "u102f"])
             self.addLigature("reorder", [altWithLower, "u103b", "u1030"])            
             self.addLigature("reorder", [altWithLower, "u103b", "u103d"])
             self.addLigature("reorder", [altWithLower, "u103b", "u103e"])
-            self.addLigature("reorder", [altWithLower, "u103b", "u103d", "u103e"])
-            self.addLigature("reorder", [altWithLower, "u103d", "u103e"])        
-            self.addLigature("reorder", [altWithLower, "u102f"])
-            self.addLigature("reorder", [altWithLower, "u1030"])
             self.addLigature("reorder", [altWithLower, "u102d", "u102f"])
             self.addLigature("reorder", [altWithLower, "u103e", "u102f"])
             self.addLigature("reorder", [altWithLower, "u103e", "u1030"])
-            self.addLigature("reorder", [altWithLower, "u103e", "u102d", "u102f"])
+            self.addLigature("reorder", [altWithLower, "u102f"])
+            self.addLigature("reorder", [altWithLower, "u1030"])
+            self.addLigature("reorder", [altWithLower, "u103b"])
+            self.addLigature("reorder", [altWithLower, "u103d"])
+            self.addLigature("reorder", [altWithLower, "u103e"])
+            
+        self.addLigature("reorder", ["u1004", "u103a", "u1039", "u104e"])
 
         self.addLigature("medialLigSub", ["u101b", "u103d", "u1032", "u1037"])
         self.addLigature("medialLigSub", ["u101b", "u103d", "u1036", "u1037"])
@@ -326,6 +346,7 @@ class MyanmarSvgFont(SvgFont.SvgFont):
         self.addLigature("medialLigSub", ["u1014","u1039","u1012","u102d","u102f"])
         self.addLigature("medialLigSub", ["u1014","u1039","u1013","u102d","u102f"])
         self.addLigature("medialLigSub", ["u1020", "u103e"])
+        self.addLigature("medialLigSub", ["u1009", "u1010", "u103a"])
         
         
         for i in range(len(tallCons)):
@@ -354,19 +375,23 @@ class MyanmarSvgFont(SvgFont.SvgFont):
             glyph = self.font.createChar(g, gName)
             if (glyph.isWorthOutputting()):
                 glyphList.append(gName)
-                glyph.addPosSub("dottedCircleMark", ("u25cc", gName))
+                dottedCircleGlyph = self.importGlyph("{0}/u25cc_{1}.svg".format(self.svgDir, gName), "u25cc_" + gName, -1)
+                glyph.addPosSub("dottedCircleMark", ("u25cc_" + gName))
+                dottedCircleGlyph.addPosSub("removeDottedCircle", (gName))
+
         if (len(glyphList) > 0):
             markClasses.append((className, tuple(glyphList)))
         return markClasses
 
     def addSequenceChecks(self):
-        #self.font.addAnchorClass("checkMatch", "classKinzi")
-        #self.font.addAnchorClass("checkMatch", "classAsat")
+        featureScriptLang = (("ccmp",(("mymr",("dflt", "DFLT", "BRM ")),)),)
+        self.font.addLookup("mark2DottedCircleMark", "gsub_single", (), featureScriptLang)
+        self.font.addLookupSubtable("mark2DottedCircleMark", "dottedCircleMark")
 
         lookupFontFile = self.xslParams.getParam('lookupFont')
         if os.access(lookupFontFile, os.R_OK):
             parentFont = fontforge.open(lookupFontFile)
-            self.font.importLookups(parentFont, "sequenceCheck")
+            self.font.importLookups(parentFont, "sequenceCheck","medialLig")
         else:
             featureScriptLang = (("clig",(("mymr",("dflt","DFLT","BRM ")),)),)
             self.font.addLookup("sequenceCheck", "gsub_contextchain", (), featureScriptLang)
@@ -374,12 +399,11 @@ class MyanmarSvgFont(SvgFont.SvgFont):
             # currently the python interface isn't powerful enough to add the
             # context lookups so we import from an existing sfd font
             # the dotted circle lookup will be attached to sequenceCheck, so it doesn't get a feature
-            self.font.addLookup("dottedCircle", "gsub_multiple", (), ())
+            self.font.addLookup("dottedCircle", "gsub_ligature", (), ())
             self.font.addLookupSubtable("dottedCircle", "dottedCircleMark")
         
         markClasses = []
         markClasses = self.addMarkClass(markClasses, "classAsat", classAsat)
-        markClasses = self.addMarkClass(markClasses, "classKinzi", classKinzi)
         markClasses = self.addMarkClass(markClasses, "classMedialY",classMedialY)
         markClasses = self.addMarkClass(markClasses, "classMedialR",classMedialR)
         markClasses = self.addMarkClass(markClasses, "classMedialW",classMedialW)

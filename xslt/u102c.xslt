@@ -7,7 +7,7 @@
 <xsl:include href="param.xslt"/>
 <xsl:include href="path.xslt"/>
 
-<xsl:variable name="u102cAdvance" select="2 * $waXOuterRadius - .5 * $thickness"/>
+<xsl:variable name="u102cAdvance" select="2 * $waXOuterRadius - $thickness"/>
 <xsl:variable name="advance" select="$u102cAdvance"/>
 <xsl:variable name="overlap" select="0"/>
 

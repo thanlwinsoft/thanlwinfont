@@ -24,19 +24,21 @@ class SvgFont(object) :
 
     def __init__(self, xslParams, name, outname) :
         self.xslParams = xslParams
+        self.svgDir = "svg"
         self.font = fontforge.font()
         self.font.encoding = 'UnicodeBmp' # 1 USC-2 Unicode BMP
         self.font.fontname = name
         self.font.fullname = xslParams.getParam("enFullName")
         self.font.familyname = xslParams.getParam("enFamilyName")
         sfntNameList = list(self.font.sfnt_names[:])
+        subFamily = xslParams.getParam("enSubFamily")
         self.font.sfnt_names = (('English (US)', 'Copyright', xslParams.getParam('copyright')), \
-            ('English (US)', 'Family', self.font.familyname), ('English (US)', 'SubFamily', xslParams.getParam("enSubFamily")), \
+            ('English (US)', 'Family', self.font.familyname), ('English (US)', 'SubFamily', subFamily), \
             ('English (US)', 'UniqueID', u'FontForge 2.0 : ' + self.font.fullname + ": " + datetime.datetime.now().isoformat()),\
             ('English (US)', 'Fullname', self.font.fullname), \
             ('English (US)', 'Version', 'Version {0:09.3f}'.format(float(xslParams.getParam('version')))),\
-            ('English (US)', 'PostscriptName', self.font.fontname),\
-            ('English (US)', 'License', "Open Font License", 'Licence URL', 'http://scripts.sil.org/OFL'))
+            ('English (US)', 'PostScriptName', self.font.fontname),\
+            ('English (US)', 'License', "Open Font License"), ('English (US)', 'License URL', 'http://scripts.sil.org/OFL'))
         langCode = int(xslParams.getParam("localizedLang"))   
         self.font.appendSFNTName(langCode, 1, xslParams.getParam("localizedFamilyName").encode('UTF-8'))
         self.font.appendSFNTName(langCode, 2, xslParams.getParam("localizedSubFamily").encode('UTF-8'))
@@ -85,14 +87,14 @@ class SvgFont(object) :
         # minCodePoint = 0x1000
         
         #self.importGlyph("svg/u0000.svg", ".notdef")
-        svgList = os.listdir("svg")
+        svgList = os.listdir(self.svgDir)
         svgList.sort()
         uniNumRe = re.compile("u[0-9a-f]{4}")
         
         glyphsWithAlternates = []
         
         for codePoint in range(minCodePoint, maxCodePoint +1):
-            svgPath = "svg/u{0:04x}.svg".format(codePoint)
+            svgPath = "{0}/u{1:04x}.svg".format(self.svgDir, codePoint)
             svgFile = "u{0:04x}.svg".format(codePoint)
             glyphName = "u{0:04x}".format(codePoint)
             if os.access(svgPath, os.R_OK):
@@ -123,7 +125,7 @@ class SvgFont(object) :
             alternates = g[1]
             for altGlyphName in alternates:
                 print altGlyphName
-                svgPath = "svg/" + altGlyphName + ".svg"
+                svgPath = self.svgDir + "/" + altGlyphName + ".svg"
                 altGlyph = self.importGlyph(svgPath, altGlyphName, -1)
             glyph = self.font.createChar(-1, gName)
             if not glyph.script in self.alternateTables:

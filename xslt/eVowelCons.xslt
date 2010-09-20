@@ -19,6 +19,9 @@
 		<axsl:when test="'{$base}' = 'u100f'">
 			<axsl:value-of select="$wideConsWidth + $waXInnerRadius"/>
 		</axsl:when>
+		<axsl:when test="'{$base}' = 'u103f'">
+			<axsl:value-of select="$thaGyiWidth"/>
+		</axsl:when>
 		<axsl:when test="'{$base}' = 'u1008'">
 			<axsl:value-of select="$narrowConsWidth + 2 * $thickness + $postGuard"/>
 		</axsl:when>

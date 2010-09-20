@@ -61,12 +61,12 @@
 		<xsl:with-param name="x" select="0"/>
         <xsl:with-param name="y" select="$cornerOuterRadius"/>
 		<xsl:with-param name="r" select="$cornerOuterRadius"/>
-		<xsl:with-param name="nextX" select="$waXOuterRadius"/>
+		<xsl:with-param name="nextX" select="2 * $waXOuterRadius"/>
         <xsl:with-param name="nextY" select="0"/>
 	</xsl:call-template>
     <xsl:text>l0,</xsl:text><xsl:value-of select="-$thickness"/>
     <xsl:call-template name="corner">
-		<xsl:with-param name="x" select="-$waXInnerRadius"/>
+		<xsl:with-param name="x" select="-$waXInnerRadius - $waXOuterRadius"/>
         <xsl:with-param name="y" select="0"/>
 		<xsl:with-param name="r" select="$cornerInnerRadius"/>
 		<xsl:with-param name="nextX" select="0"/>

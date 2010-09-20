@@ -23,11 +23,11 @@
 
 <xsl:template match="svg:g">
 	<xsl:copy use-attribute-sets="gAttribs">
-	<xsl:call-template name="u100c"/>
+	<xsl:call-template name="u104e"/>
 	</xsl:copy>
 </xsl:template>
 
-<xsl:template name="u100c">
+<xsl:template name="u104e">
 	<xsl:param name="xOffset" select="0"/>
 	<xsl:message terminate="no"><xsl:value-of select="$cutOuterDy"/></xsl:message>
     <xsl:element name="path" use-attribute-sets="pathAttribs">

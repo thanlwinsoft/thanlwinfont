@@ -20,6 +20,18 @@
 <axsl:import href="{concat('../xslt/',$upperVowel,'.xslt')}"/>
 <axsl:import href="{concat('../xslt/',$lowerVowel,'.xslt')}"/>
 
+<xsl:choose>
+<xsl:when test="$lowerVowel = 'u102f_tall'">
+<axsl:variable name="tallWidth" select="$u102fTallAdvance"/>
+</xsl:when>
+<xsl:when test="$lowerVowel = 'u1030_tall'">
+<axsl:variable name="tallWidth" select="$u1030TallAdvance"/>
+</xsl:when>
+<xsl:otherwise>
+<axsl:variable name="tallWidth" select="0"/>
+</xsl:otherwise>
+</xsl:choose>
+
 <axsl:variable name="widthOffset" >
 	<axsl:choose>
 		<axsl:when test="'{$base}' = 'u100f'">
@@ -31,7 +43,7 @@
 	</axsl:choose>
 </axsl:variable>
 <axsl:variable name="overlap" select="0"/>
-<axsl:variable name="advance" select="$widthOffset + $preGuard + 3 * $thickness + 3 * $postGuard + $cornerOuterRadius"/>
+<axsl:variable name="advance" select="$widthOffset + $preGuard + 3 * $thickness + 3 * $postGuard + $cornerOuterRadius + $tallWidth"/>
 
 <axsl:include href="../xslt/param.xslt"/>
 <axsl:include href="../xslt/path.xslt"/>

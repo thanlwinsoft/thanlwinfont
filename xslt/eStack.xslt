@@ -27,13 +27,21 @@
 	<axsl:variable name="wideConsBelowOverlap" select=".5 * ((4 * $waXOuterRadius - $thickness)* $medialScale - 2 * $waXOuterRadius)"/>
 	<axsl:variable name="advance" select="$u102cAdvance + 2 * $narrowConsWidth"/>
 </xsl:when>
+<xsl:when test="($upperCons = 'u100f') and $aVowel = 'u102c'">
+	<axsl:variable name="wideConsBelowOverlap" select="- $narrowConsWidth + .5 * ($waXInnerRadius + $wideConsWidth)"/>
+	<axsl:variable name="advance" select="$u102cAdvance + $wideConsWidth + $waXInnerRadius + $narrowConsWidth"/>
+</xsl:when>
 <xsl:when test="$aVowel = 'u102c'">
 	<axsl:variable name="wideConsBelowOverlap" select="0"/>
 	<axsl:variable name="advance" select="$u102cAdvance + 2 * $narrowConsWidth"/>
 </xsl:when>
+<xsl:when test="($upperCons = 'u100f')">
+	<axsl:variable name="wideConsBelowOverlap" select="- $narrowConsWidth + .5 * ($waXInnerRadius + $wideConsWidth)"/>
+	<axsl:variable name="advance" select="$wideConsWidth + $waXInnerRadius + $narrowConsWidth"/>
+</xsl:when>
 <xsl:when test="$lowerCons = 'u1010' or $lowerCons = 'u1006'">
 	<axsl:variable name="wideConsBelowOverlap" select=".5 * ((4 * $waXOuterRadius - $thickness)* $medialScale - 2 * $waXOuterRadius)"/>
-	<axsl:variable name="advance" select="round($preGuard + $postGuard + 2 * $narrowConsWidth +  $wideConsBelowOverlap)"/>
+	<axsl:variable name="advance" select="round(2 * $narrowConsWidth +  $wideConsBelowOverlap)"/>
 </xsl:when>
 <xsl:otherwise>
 	<axsl:variable name="wideConsBelowOverlap" select="0"/>
@@ -54,9 +62,15 @@
 			<axsl:with-param name="xOffset" select="$narrowConsWidth"/>
 			<axsl:with-param name="yOffset" select="0"/>
 		</axsl:call-template>
-		<xsl:if test="string-length($aVowel)">
+		<xsl:if test="string-length($aVowel) and $upperCons != 'u100f'">
 		<axsl:call-template name="{$aVowel}">
 			<axsl:with-param name="xOffset" select="2 * $narrowConsWidth"/>
+			<axsl:with-param name="yOffset" select="0"/>
+		</axsl:call-template>
+		</xsl:if>
+		<xsl:if test="string-length($aVowel) and $upperCons = 'u100f'">
+		<axsl:call-template name="{$aVowel}">
+			<axsl:with-param name="xOffset" select="$narrowConsWidth + $wideConsWidth + $waXInnerRadius"/>
 			<axsl:with-param name="yOffset" select="0"/>
 		</axsl:call-template>
 		</xsl:if>
@@ -76,6 +90,9 @@
 		<xsl:choose>
 		<xsl:when test="$lowerCons = 'u1010' or $lowerCons = 'u1006'">
 		<axsl:with-param name="xOffset" select="($xOffset div $medialScale) -$wideConsWidth + $postGuard div $medialScale -$postGuard div $medialScale"/>
+		</xsl:when>
+		<xsl:when test="$lowerCons = 'u100f' and $upperCons = 'u100f'">
+		<axsl:with-param name="xOffset" select="($xOffset div $medialScale) -$preGuard - 2 * $waXOuterRadius - .5 * $waXOuterRadius + $thickness"/>
 		</xsl:when>
 		<xsl:otherwise>	
 		<axsl:with-param name="xOffset" select="($xOffset div $medialScale) - $preGuard - $postGuard div $medialScale - ($waXOuterRadius) *( 1 div $medialScale + 1)"/>

@@ -18,6 +18,21 @@
 <axsl:import href="{concat('../xslt/',$yayit,'.xslt')}"/>
 <axsl:import href="{concat('../xslt/',$lowerVowel,'.xslt')}"/>
 
+<xsl:choose>
+<xsl:when test="$lowerVowel = 'u102f_tall'">
+<axsl:variable name="tallWidth" select="$u102fTallAdvance"/>
+</xsl:when>
+<xsl:when test="$lowerVowel = 'u1030_tall'">
+<axsl:variable name="tallWidth" select="$u1030TallAdvance"/>
+</xsl:when>
+<xsl:when test="$lowerVowel = 'u102c'">
+<axsl:variable name="tallWidth" select="$u102cAdvance"/>
+</xsl:when>
+<xsl:otherwise>
+<axsl:variable name="tallWidth" select="0"/>
+</xsl:otherwise>
+</xsl:choose>
+
 <axsl:variable name="widthOffset" >
 	<axsl:choose>
 		<axsl:when test="'{$base}' = 'u100f'">
@@ -31,10 +46,10 @@
 <axsl:variable name="overlap" select="0"/>
 <xsl:choose>
 <xsl:when test="$lowerVowel = 'u1030_tall'">
-<axsl:variable name="advance" select="$widthOffset + $preGuard + 5 * $thickness + 2 * $postGuard + $cornerOuterRadius"/>
+<axsl:variable name="advance" select="$widthOffset + $preGuard + $thickness + 2 * $postGuard + $cornerOuterRadius + $tallWidth"/>
 </xsl:when>
 <xsl:otherwise>
-<axsl:variable name="advance" select="$widthOffset + $preGuard + 3 * $thickness + 2 * $postGuard + $cornerOuterRadius"/>
+<axsl:variable name="advance" select="$widthOffset + $preGuard + $thickness + 2 * $postGuard + $cornerOuterRadius + $tallWidth"/>
 </xsl:otherwise>
 </xsl:choose>
 
@@ -59,8 +74,16 @@
 		<axsl:with-param name="yOffset" select="$yOffset"/>
 	</axsl:call-template>
 	<axsl:call-template name="{$lowerVowel}">
+	<xsl:choose>
+        <xsl:when test="$lowerVowel = 'u102c'">
+		<axsl:with-param name="xOffset" select="$xOffset + $widthOffset + $preGuard + $thickness + $postGuard"/>
+		<axsl:with-param name="yOffset" select="$yOffset"/>
+		</xsl:when>
+		<xsl:otherwise>
 		<axsl:with-param name="xOffset" select="$xOffset + $widthOffset + $preGuard + $thickness + 2 * $postGuard"/>
 		<axsl:with-param name="yOffset" select="$yOffset"/>
+		</xsl:otherwise>
+	</xsl:choose>
 	</axsl:call-template>
 </axsl:template>
 

@@ -6,15 +6,15 @@
 
 <xsl:param name="emWidth" select="1024"/>
 <xsl:param name="emHeight" select="1024"/>
-<xsl:param name="ascent" select="750"/>
-<xsl:param name="descent" select="350"/>
+<xsl:param name="ascent" select="712"/>
+<xsl:param name="descent" select="312"/>
 <xsl:param name="baseline" select="$descent"/>
 <xsl:param name="preGuard" select="40" />
 <xsl:param name="postGuard" select="40"/>
 <xsl:param name="thickness" select="50"/>
 <xsl:param name="cubicCircleFactor" select=".5"/>
-<xsl:param name="waXOuterRadius" select="200"/>
-<xsl:param name="waYOuterRadius" select="200"/>
+<xsl:param name="waXOuterRadius" select="180"/>
+<xsl:param name="waYOuterRadius" select="180"/>
 
 <!-- define a few parameters which are only used by the python script -->
 <xsl:param name="lookupFont" select="'thanlwin-lookups.sfd'"/><!-- some lookups are cloned from this -->
@@ -83,7 +83,7 @@
 			<xsl:value-of select="$overlap"/><xsl:text> </xsl:text>
 			<xsl:value-of select="-$descent"/>
 			<xsl:text> </xsl:text><xsl:value-of select="$advance"/>
-			<xsl:text> </xsl:text><xsl:value-of select="$emHeight"/>
+			<xsl:text> </xsl:text><xsl:value-of select="$ascent + $descent"/>
 		</xsl:attribute>
 		<xsl:apply-templates/>
 	</xsl:copy>
