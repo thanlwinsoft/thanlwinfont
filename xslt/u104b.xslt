@@ -7,16 +7,16 @@
 <xsl:include href="param.xslt"/>
 <xsl:include href="path.xslt"/>
 
-<xsl:variable name="advance" select="$preGuard + $postGuard + 3 * $thickness"/>
+<xsl:variable name="advance" select="$preGuard + $postGuard + 2 * $thickness + $lineSpacing"/>
 <xsl:variable name="overlap" select="0"/>
 
 <xsl:template match="svg:g">
 	<xsl:copy use-attribute-sets="gAttribs">
-	<xsl:call-template name="u1030"/>
+	<xsl:call-template name="u104b"/>
 	</xsl:copy>
 </xsl:template>
 
-<xsl:template name="u1030">
+<xsl:template name="u104b">
 	<xsl:param name="xOffset" select="0"/>
 	<xsl:param name="yOffset" select="0"/>
     <xsl:element name="path" use-attribute-sets="pathAttribs">
@@ -31,9 +31,9 @@
 	<xsl:text>l0,</xsl:text><xsl:value-of select="2 * $waYOuterRadius"/>
 	<xsl:call-template name="end"/>
 	
-	<xsl:call-template name="move">
-        <xsl:with-param name="x" select="2 * $thickness"/>
-        <xsl:with-param name="y" select="0"/>
+	<xsl:call-template name="Move">
+        <xsl:with-param name="x" select="$xOffset +$preGuard + $thickness + $lineSpacing"/>
+        <xsl:with-param name="y" select="2 * $waYOuterRadius"/>
     </xsl:call-template>
 
 	<xsl:text>l0,</xsl:text><xsl:value-of select="-2 * $waYOuterRadius"/>

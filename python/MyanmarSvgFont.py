@@ -388,7 +388,7 @@ class MyanmarSvgFont(SvgFont.SvgFont):
         self.font.addLookup("mark2DottedCircleMark", "gsub_single", (), featureScriptLang)
         self.font.addLookupSubtable("mark2DottedCircleMark", "dottedCircleMark")
 
-        lookupFontFile = self.xslParams.getParam('lookupFont')
+        lookupFontFile = self.params.get("Font", 'lookupFont')
         if os.access(lookupFontFile, os.R_OK):
             parentFont = fontforge.open(lookupFontFile)
             self.font.importLookups(parentFont, "sequenceCheck","medialLig")

@@ -4,8 +4,9 @@
 # This license is available with a FAQ at:http://scripts.sil.org/OFL
 #
 
-VARIANT:=
-PARAMS:=xslt/param$(VARIANT).xslt
+VARIANT:=Medium
+PARAMS:=xslt/param$(VARIANT).xslt xslt/paramDefaults.xslt xslt/path.xslt
+INI_FILE:=param$(VARIANT).ini
 SVG_DIR:=svg/$(VARIANT)
 
 $(SVG_DIR)/%.svg : xslt/%.xslt $(PARAMS) xslt/path.xslt blank.svg
@@ -37,9 +38,9 @@ $(SVG_DIR)/%_u1031.svg : xslt/%.xslt xslt/u1031.xslt xslt/eVowelCons.xslt Makefi
 	xsltproc -o $(subst .xslt,_u1031.xslt,$(subst xslt/,tmp/, $<))  --stringparam base $(subst .xslt,,$(subst xslt/,,$<)) xslt/eVowelCons.xslt blank.svg
 	xsltproc -o $@  $(subst .xslt,_u1031.xslt,$(subst xslt/,tmp/, $<)) blank.svg
 
-%.ini : xslt/%.xslt xslt/param2ini.xslt
+%.ini : xslt/%.xslt xslt/param2ini.xslt xslt/paramDefaults.xslt
 	mkdir -p tmp
-	xsltproc -o tmp/param2ini.xslt --stringparam paramFile $< xslt/param2ini.xslt $<
+	xsltproc -o tmp/param2ini.xslt --stringparam paramFile $< xslt/param2ini.xslt xslt/paramDefaults.xslt
 	xsltproc -o $@ tmp/param2ini.xslt $<
 
 tests=xslt/corners.xslt
@@ -87,16 +88,30 @@ classMarks:=$(classAsat) $(classMedialY) $(classMedialW) $(classMedialH) $(class
 
 upperVowel:=u102d u102e u1032
 
+all: font bold light
+
 font: thanlwin$(VARIANT).sfd
 
 bold:
-	mkdir -p svg/$(VARIANT)
-	VARIANT=bold make -e font
+	mkdir -p svg/Bold
+	rm -f xslt/param.xslt
+	VARIANT=Bold make -e font
+	rm -f xslt/param.xslt
 
-thanlwin$(VARIANT).sfd : svg $(wildcard python/*.py) $(wildcard $(SVG_DIR)/*.svg) thanlwin-lookups.sfd
-	python/thanlwinfont.py $(PARAMS) svg/$(VARIANT) thanlwin$(VARIANT)
+light:
+	mkdir -p svg/Light
+	rm -f xslt/param.xslt
+	VARIANT=Light make -e font
+	rm -f xslt/param.xslt
 
-svg: $(subst xslt,svg,$(wildcard xslt/u*.xslt) $(tests)) medials ereorder yayit yapin kinzi misc tallConsVowel dottedcircle
+thanlwin$(VARIANT).sfd : svg $(wildcard python/*.py) $(wildcard $(SVG_DIR)/*.svg) thanlwin-lookups.sfd $(INI_FILE)
+	python/thanlwinfont.py $(INI_FILE) svg/$(VARIANT) thanlwin$(VARIANT)
+
+svg: xslt/param.xslt $(subst .xslt,.svg,$(subst xslt/,$(SVG_DIR)/,$(wildcard xslt/u*.xslt) $(tests))) medials ereorder yayit yapin kinzi misc tallConsVowel dottedcircle
+
+xslt/param.xslt :
+	rm -f xslt/param.xslt
+	ln -s param$(VARIANT).xslt xslt/param.xslt
 
 define rotatedMedial
 $(SVG_DIR)/u1039_$(1).svg : xslt/$(1).xslt xslt/generateRotatedMedial.xslt Makefile $(PARAMS)
@@ -786,7 +801,7 @@ $(SVG_DIR)/u1014_u1039_u1013_u102d_u102f.svg :: xslt/u1014_alt.xslt xslt/u1013.x
 
 
 clean:
-	rm $(SVG_DIR)/*.svg
+	rm -rf $(SVG_DIR)/*.svg
 	rm -rf tmp
 
 

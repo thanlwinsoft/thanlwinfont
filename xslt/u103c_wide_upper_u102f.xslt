@@ -44,7 +44,7 @@
         <xsl:with-param name="nextY" select="0"/>
 	</xsl:call-template>
 	<xsl:call-template name="corner">
-		<xsl:with-param name="x" select="2*$waXOuterRadius - $cornerOuterRadius"/>
+		<xsl:with-param name="x" select="$waXOuterRadius + $preGuard"/>
         <xsl:with-param name="y" select="0"/>
 		<xsl:with-param name="r" select="$cornerOuterRadius"/>
 		<xsl:with-param name="nextX" select="0"/>
@@ -55,7 +55,7 @@
 		<xsl:with-param name="x" select="0"/>
         <xsl:with-param name="y" select="-$cornerInnerRadius - $yayitHookDepth"/>
 		<xsl:with-param name="r" select="$cornerInnerRadius"/>
-		<xsl:with-param name="nextX" select="-2 * $waXOuterRadius + $cornerInnerRadius + 2 * $thickness"/>
+		<xsl:with-param name="nextX" select="-$waXOuterRadius - $preGuard + $thickness"/>
         <xsl:with-param name="nextY" select="0"/>
 	</xsl:call-template>
 	<xsl:call-template name="corner">
@@ -74,7 +74,7 @@
 	</xsl:call-template>
 	<xsl:call-template name="end"/>
 	<xsl:call-template name="Move">
-        <xsl:with-param name="x" select="$xOffset + 4 * $waXOuterRadius +$preGuard + $cornerOuterRadius + $thickness"/>
+        <xsl:with-param name="x" select="$xOffset + 3 * $waXOuterRadius +2 * $preGuard + $postGuard + $cornerOuterRadius + $lineSpacing + $thickness"/>
         <xsl:with-param name="y" select="$yOffset - $descent"/>
     </xsl:call-template>
     <xsl:call-template name="corner">

@@ -1,5 +1,5 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-	xmlns:math="http://exslt.org/math">
+	xmlns:math="http://exslt.org/math" xmlns:svg="http://www.w3.org/2000/svg">
 
 
 <xsl:template name="Move">
@@ -89,11 +89,13 @@
 <xsl:template name="inner2outer">
 	<xsl:param name="cx"/>
 	<xsl:param name="cy"/>
+	<xsl:param name="t" select="$thickness"/>
+	<xsl:variable name="r" select="math:sqrt($cx * $cx + $cy * $cy)"/>
 	<!-- for now, just do a simple line -->
 	<xsl:text>l</xsl:text>
-	<xsl:value-of select="- $cx * ($thickness div $waXOuterRadius)"/>
+	<xsl:value-of select="- $cx * ($t div $r)"/>
 	<xsl:text>,</xsl:text>
-	<xsl:value-of select="- $cy * ($thickness div $waXOuterRadius)"/>
+	<xsl:value-of select="- $cy * ($t div $r)"/>
 </xsl:template>
 
 <xsl:template name="inner2outerHook">
@@ -310,6 +312,53 @@
 </xsl:template>
 
 <xsl:template name="end"><xsl:text>z</xsl:text></xsl:template>
+
+<xsl:template match="svg:svg">
+	<xsl:copy>
+		<xsl:attribute name="viewBox">
+			<xsl:value-of select="$overlap"/><xsl:text> </xsl:text>
+			<xsl:value-of select="-$fontDescent"/>
+			<xsl:text> </xsl:text><xsl:value-of select="$advance"/>
+			<xsl:text> </xsl:text><xsl:value-of select="$fontAscent + $fontDescent"/>
+		</xsl:attribute>
+		<xsl:apply-templates/>
+	</xsl:copy>
+</xsl:template>
+
+<xsl:attribute-set name="gAttribs">
+	<xsl:attribute name="transform">
+		<xsl:text>matrix(1 0 0 -1 0 </xsl:text>
+		<xsl:value-of select="$fontAscent"/><xsl:text>)</xsl:text>
+	</xsl:attribute>
+</xsl:attribute-set>
+
+<xsl:attribute-set name="gMedialAttribs">
+	<xsl:attribute name="transform">
+		<xsl:text>matrix(</xsl:text><xsl:value-of select="$medialScale"/>
+		<xsl:text> 0 0 </xsl:text>
+		<xsl:value-of select="-$medialScale"/><xsl:text> </xsl:text>
+		<xsl:value-of select="0"/><xsl:text> </xsl:text>
+		<xsl:value-of select="$fontAscent"/><xsl:text>)</xsl:text>
+	</xsl:attribute>
+</xsl:attribute-set>
+
+<xsl:attribute-set name="gUpperAttribs">
+	<xsl:attribute name="transform">
+		<xsl:text>matrix(</xsl:text><xsl:value-of select="$upperScale"/>
+		<xsl:text> 0 0 </xsl:text>
+		<xsl:value-of select="-$upperScale"/><xsl:text> </xsl:text>
+		<xsl:value-of select="0"/><xsl:text> </xsl:text>
+		<xsl:value-of select="$fontAscent"/><xsl:text>)</xsl:text>
+	</xsl:attribute>
+</xsl:attribute-set>
+
+<xsl:attribute-set name="pathAttribs">
+	<!-- to assist viewing 
+    <xsl:attribute name="stroke">blue</xsl:attribute>
+    <xsl:attribute name="stroke-width">5</xsl:attribute>
+    <xsl:attribute name="fill">fill="currentColor"</xsl:attribute>
+    -->
+</xsl:attribute-set>
 
 <!-- Default copy template -->
 <xsl:template match="@*|node()">

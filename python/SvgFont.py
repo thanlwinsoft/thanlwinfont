@@ -16,38 +16,49 @@ import codecs
 import gettext
 import datetime
 import logging
+import ConfigParser
 
 GETTEXT_DOMAIN='thanlwinfont'
 translation = gettext.install(GETTEXT_DOMAIN, unicode=1)
 
 class SvgFont(object) :
 
-    def __init__(self, xslParams, svgdir, outname) :
-        self.xslParams = xslParams
+    def __init__(self, paramsFile, svgdir, outname) :
+        self.params = ConfigParser.SafeConfigParser()
+        parameters = codecs.open(paramsFile, "r", "UTF-8")
+        self.params.readfp(parameters)
         self.svgDir = svgdir
         self.font = fontforge.font()
         self.font.encoding = 'UnicodeBmp' # 1 USC-2 Unicode BMP
-        self.font.fontname = xslParams.getParam("enFamilyName")
-        self.font.fullname = xslParams.getParam("enFullName")
-        self.font.familyname = xslParams.getParam("enFamilyName")
+        self.font.fontname = self.params.get("Font", "enFamilyName")
+        self.font.fullname = self.params.get("Font", "enFullName")
+        self.font.familyname = self.params.get("Font", "enFamilyName")
         sfntNameList = list(self.font.sfnt_names[:])
-        subFamily = xslParams.getParam("enSubFamily")
-        self.font.sfnt_names = (('English (US)', 'Copyright', xslParams.getParam('copyright')), \
+        subFamily = self.params.get("Font", "enSubFamily")
+        self.font.sfnt_names = (('English (US)', 'Copyright', self.params.get("Font", 'copyright')), \
             ('English (US)', 'Family', self.font.familyname), ('English (US)', 'SubFamily', subFamily), \
             ('English (US)', 'UniqueID', u'FontForge 2.0 : ' + self.font.fullname + ": " + datetime.datetime.now().isoformat()),\
             ('English (US)', 'Fullname', self.font.fullname), \
-            ('English (US)', 'Version', 'Version {0:09.3f}'.format(float(xslParams.getParam('version')))),\
+            ('English (US)', 'Version', 'Version {0:09.3f}'.format(float(self.params.get("Font", 'version')))),\
             ('English (US)', 'PostScriptName', self.font.fontname),\
             ('English (US)', 'License', "Open Font License"), ('English (US)', 'License URL', 'http://scripts.sil.org/OFL'))
-        langCode = int(xslParams.getParam("localizedLang"))   
-        self.font.appendSFNTName(langCode, 1, xslParams.getParam("localizedFamilyName").encode('UTF-8'))
-        self.font.appendSFNTName(langCode, 2, xslParams.getParam("localizedSubFamily").encode('UTF-8'))
-        self.font.appendSFNTName(langCode, 4, xslParams.getParam("localizedFullName").encode('UTF-8'))
+        langCode = int(self.params.get("Font", "localizedLang"))   
+        self.font.appendSFNTName(langCode, 1, self.params.get("Font", "localizedFamilyName").encode('UTF-8'))
+        self.font.appendSFNTName(langCode, 2, self.params.get("Font", "localizedSubFamily").encode('UTF-8'))
+        self.font.appendSFNTName(langCode, 4, self.params.get("Font", "localizedFullName").encode('UTF-8'))
+        self.font.appendSFNTName(0x409, 8, self.params.get("Font", "vendor"))
+        self.font.appendSFNTName(0x409, 9, self.params.get("Font", "designer"))
+        self.font.appendSFNTName(0x409, 11, self.params.get("Font", "vendorUrl"))
 
         print(self.font.sfnt_names)
-        self.font.ascent = int(xslParams.getParam("ascent"))
-        self.font.descent = int(xslParams.getParam("descent"))
-        self.font.em = int(xslParams.getParam("emWidth"))
+        self.font.ascent = self.params.getint("Font", "fontAscent")
+        self.font.descent = self.params.getint("Font", "fontDescent")
+        self.font.os2_weight = self.params.getint("Font", "fontWeight")
+        self.font.os2_winascent = self.params.getint("Font", "ascent") - self.font.ascent
+        self.font.os2_windescent = self.params.getint("Font", "descent") - self.font.descent
+        self.font.os2_family_class = self.params.getint("Font", "familyClass")
+        
+        self.font.em = int(self.params.get("Font", "emWidth"))
         logFile =  codecs.open(outname +".log", "w", "UTF-8")
         logging.basicConfig(filemode="r", level=logging.DEBUG, stream=logFile)
         self.log = logging.getLogger(outname)
@@ -81,8 +92,8 @@ class SvgFont(object) :
         return glyph
 
     def addCharGlyphs(self):
-        minCodePoint = int(self.xslParams.getParam("minCodePoint"))
-        maxCodePoint = int(self.xslParams.getParam("maxCodePoint"))
+        minCodePoint = self.params.getint("Font", "minCodePoint")
+        maxCodePoint = self.params.getint("Font", "maxCodePoint")
         
         # minCodePoint = 0x1000
         
