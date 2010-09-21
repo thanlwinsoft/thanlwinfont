@@ -21,7 +21,7 @@ import MyanmarSvgFont
  # main method
 if __name__ == "__main__":
 	if (len(sys.argv) < 3):
-		print _("Usage: {0} params.xsl name outputname")
+		print _("Usage: {0} params.xsl svgdir outputname")
 		sys.exit(1)
 	xslParams = SvgFont.XslParameters(sys.argv[1])
 	font = MyanmarSvgFont.MyanmarSvgFont(xslParams, unicode(sys.argv[2], "UTF-8"), sys.argv[3])

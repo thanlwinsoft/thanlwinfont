@@ -16,7 +16,7 @@
 	</xsl:copy>
 </xsl:template>
 
-<xsl:variable name="lineAngle" select="$pi div 6"/>
+<xsl:variable name="lineAngle" select=".20 * $pi"/>
 <xsl:variable name="upperOuterRadius" select=".5 * ($latinAscent - 2 * $waYOuterRadius + $thickness)"/>
 <xsl:variable name="upperInnerRadius" select="$upperOuterRadius - $thickness"/>
 <xsl:variable name="lineLength" select="$latinAscent - $upperOuterRadius"/>

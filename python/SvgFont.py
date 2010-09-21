@@ -22,12 +22,12 @@ translation = gettext.install(GETTEXT_DOMAIN, unicode=1)
 
 class SvgFont(object) :
 
-    def __init__(self, xslParams, name, outname) :
+    def __init__(self, xslParams, svgdir, outname) :
         self.xslParams = xslParams
-        self.svgDir = "svg"
+        self.svgDir = svgdir
         self.font = fontforge.font()
         self.font.encoding = 'UnicodeBmp' # 1 USC-2 Unicode BMP
-        self.font.fontname = name
+        self.font.fontname = xslParams.getParam("enFamilyName")
         self.font.fullname = xslParams.getParam("enFullName")
         self.font.familyname = xslParams.getParam("enFamilyName")
         sfntNameList = list(self.font.sfnt_names[:])

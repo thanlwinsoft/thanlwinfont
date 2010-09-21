@@ -21,35 +21,63 @@
 <xsl:template name="u0024">
 	<xsl:param name="xOffset" select="0"/>
 	<xsl:param name="yOffset" select="0"/>
+	<xsl:variable name="dollarXOuterRadius" select="$lcXOuterRadius - .5 * $thickness"/>
+	<xsl:variable name="dollarXInnerRadius" select="$dollarXOuterRadius - $thickness"/>	
 <xsl:variable name="daYOuterRadius" select=".25 * ($latinAscent + $thickness)"/>
 <xsl:variable name="daYInnerRadius" select="$daYOuterRadius - $thickness"/>
 
 <xsl:variable name="intersectAngle" select="math:asin(1 - $thickness div (2 * $daYOuterRadius))"/>
-<xsl:variable name="intersectDx" select="$waXOuterRadius * math:cos($intersectAngle)" />
+<xsl:variable name="intersectDx" select="$dollarXOuterRadius * math:cos($intersectAngle)" />
 <xsl:variable name="intersectDy" select="$daYOuterRadius * math:sin($intersectAngle)" />
     <xsl:element name="path" use-attribute-sets="pathAttribs">
     <xsl:attribute name="d">
     <xsl:call-template name="Move">
-        <xsl:with-param name="x" select="$xOffset + $preGuard + 2 * $waXOuterRadius "/>
+        <xsl:with-param name="x" select="$xOffset + $preGuard + 2 * $dollarXOuterRadius + $thickness"/>
         <xsl:with-param name="y" select="$yOffset + 3 * $daYOuterRadius - $thickness"/>
     </xsl:call-template>
     <xsl:call-template name="arc">
-        <xsl:with-param name="rx" select="$waXOuterRadius"/>
+        <xsl:with-param name="rx" select="$dollarXOuterRadius"/>
         <xsl:with-param name="ry" select="$daYOuterRadius"/>
         <xsl:with-param name="axisRotation" select="0"/>
-        <xsl:with-param name="large" select="1"/>
+        <xsl:with-param name="large" select="0"/>
         <xsl:with-param name="clockwise" select="1"/>
-        <xsl:with-param name="x" select="-$waXOuterRadius"/>
-        <xsl:with-param name="y" select="-$daYOuterRadius"/>
+        <xsl:with-param name="x" select="-$dollarXOuterRadius"/>
+        <xsl:with-param name="y" select="$daYOuterRadius"/>
+    </xsl:call-template>
+    <xsl:call-template name="line">
+        <xsl:with-param name="x" select="0"/>
+        <xsl:with-param name="y" select="$thickness"/>
+    </xsl:call-template>
+    <xsl:call-template name="line">
+        <xsl:with-param name="x" select="-$thickness"/>
+        <xsl:with-param name="y" select="0"/>
+    </xsl:call-template>
+    <xsl:call-template name="line">
+        <xsl:with-param name="x" select="0"/>
+        <xsl:with-param name="y" select="-$thickness"/>
+    </xsl:call-template>
+    
+    <xsl:call-template name="arc">
+        <xsl:with-param name="rx" select="$dollarXOuterRadius"/>
+        <xsl:with-param name="ry" select="$daYOuterRadius"/>
+        <xsl:with-param name="axisRotation" select="0"/>
+        <xsl:with-param name="large" select="0"/>
+        <xsl:with-param name="clockwise" select="1"/>
+        <xsl:with-param name="x" select="0"/>
+        <xsl:with-param name="y" select="-2 * $daYOuterRadius"/>
+    </xsl:call-template>
+    <xsl:call-template name="line">
+        <xsl:with-param name="x" select="0"/>
+        <xsl:with-param name="y" select="-2 * $daYInnerRadius"/>
     </xsl:call-template>
     <xsl:call-template name="arc">
-        <xsl:with-param name="rx" select="$waXInnerRadius"/>
+        <xsl:with-param name="rx" select="$dollarXInnerRadius"/>
         <xsl:with-param name="ry" select="$daYInnerRadius"/>
         <xsl:with-param name="axisRotation" select="0"/>
-        <xsl:with-param name="large" select="1"/>
+        <xsl:with-param name="large" select="0"/>
         <xsl:with-param name="clockwise" select="0"/>
-        <xsl:with-param name="x" select="-$waXInnerRadius"/>
-        <xsl:with-param name="y" select="-$daYInnerRadius"/>
+        <xsl:with-param name="x" select="-$dollarXInnerRadius"/>
+        <xsl:with-param name="y" select="$daYInnerRadius"/>
     </xsl:call-template>
     <xsl:call-template name="line">
         <xsl:with-param name="x" select="-$thickness"/>
@@ -57,46 +85,97 @@
     </xsl:call-template>
     
     <xsl:call-template name="arc">
-        <xsl:with-param name="rx" select="$waXOuterRadius"/>
+        <xsl:with-param name="rx" select="$dollarXOuterRadius"/>
         <xsl:with-param name="ry" select="$daYOuterRadius"/>
         <xsl:with-param name="axisRotation" select="0"/>
-        <xsl:with-param name="large" select="1"/>
+        <xsl:with-param name="large" select="0"/>
         <xsl:with-param name="clockwise" select="1"/>
-        <xsl:with-param name="x" select="$waXOuterRadius"/>
-        <xsl:with-param name="y" select="$daYOuterRadius"/>
+        <xsl:with-param name="x" select="$dollarXOuterRadius"/>
+        <xsl:with-param name="y" select="-$daYOuterRadius"/>
+    </xsl:call-template>
+    <xsl:call-template name="line">
+        <xsl:with-param name="x" select="0"/>
+        <xsl:with-param name="y" select="-$thickness"/>
+    </xsl:call-template>
+    <xsl:call-template name="line">
+        <xsl:with-param name="x" select="$thickness"/>
+        <xsl:with-param name="y" select="0"/>
+    </xsl:call-template>
+    <xsl:call-template name="line">
+        <xsl:with-param name="x" select="0"/>
+        <xsl:with-param name="y" select="$thickness"/>
     </xsl:call-template>
     <xsl:call-template name="arc">
-        <xsl:with-param name="rx" select="$waXInnerRadius"/>
+        <xsl:with-param name="rx" select="$dollarXOuterRadius"/>
+        <xsl:with-param name="ry" select="$daYOuterRadius"/>
+        <xsl:with-param name="axisRotation" select="0"/>
+        <xsl:with-param name="large" select="0"/>
+        <xsl:with-param name="clockwise" select="1"/>
+        <xsl:with-param name="x" select="0"/>
+        <xsl:with-param name="y" select="2 * $daYOuterRadius"/>
+    </xsl:call-template>
+     <xsl:call-template name="line">
+        <xsl:with-param name="x" select="0"/>
+        <xsl:with-param name="y" select="2 * $daYInnerRadius"/>
+    </xsl:call-template>
+    <xsl:call-template name="arc">
+        <xsl:with-param name="rx" select="$dollarXInnerRadius"/>
         <xsl:with-param name="ry" select="$daYInnerRadius"/>
         <xsl:with-param name="axisRotation" select="0"/>
-        <xsl:with-param name="large" select="1"/>
+        <xsl:with-param name="large" select="0"/>
         <xsl:with-param name="clockwise" select="0"/>
-        <xsl:with-param name="x" select="$waXInnerRadius"/>
-        <xsl:with-param name="y" select="$daYInnerRadius"/>
+        <xsl:with-param name="x" select="$dollarXInnerRadius"/>
+        <xsl:with-param name="y" select="-$daYInnerRadius"/>
     </xsl:call-template>
+    
     <xsl:call-template name="line">
         <xsl:with-param name="x" select="$thickness"/>
         <xsl:with-param name="y" select="0"/>
     </xsl:call-template>
     
     <xsl:call-template name="end"/>
+    
+        <xsl:call-template name="Move">
+	        <xsl:with-param name="x" select="$xOffset + $preGuard + $dollarXOuterRadius "/>
+	        <xsl:with-param name="y" select="$yOffset + $latinAscent - $thickness"/>
+		</xsl:call-template>
+		<xsl:call-template name="line">
+            <xsl:with-param name="x" select="0"/>
+            <xsl:with-param name="y" select="-2 * $daYInnerRadius"/>
+        </xsl:call-template>
+        <xsl:call-template name="arc">
+            <xsl:with-param name="rx" select="$dollarXInnerRadius"/>
+            <xsl:with-param name="ry" select="$daYInnerRadius"/>
+            <xsl:with-param name="axisRotation" select="0"/>
+            <xsl:with-param name="large" select="0"/>
+            <xsl:with-param name="clockwise" select="0"/>
+            <xsl:with-param name="x" select="0"/>
+            <xsl:with-param name="y" select="2*$daYInnerRadius"/>
+        </xsl:call-template>
+		<xsl:call-template name="end"/>
+		
+		<xsl:call-template name="Move">
+	        <xsl:with-param name="x" select="$xOffset + $preGuard + $dollarXOuterRadius + $thickness"/>
+	        <xsl:with-param name="y" select="$yOffset + $latinAscent - 2 * $daYOuterRadius"/>
+		</xsl:call-template>
+        <xsl:call-template name="arc">
+            <xsl:with-param name="rx" select="$dollarXInnerRadius"/>
+            <xsl:with-param name="ry" select="$daYInnerRadius"/>
+            <xsl:with-param name="axisRotation" select="0"/>
+            <xsl:with-param name="large" select="0"/>
+            <xsl:with-param name="clockwise" select="0"/>
+            <xsl:with-param name="x" select="0"/>
+            <xsl:with-param name="y" select="-2*$daYInnerRadius"/>
+        </xsl:call-template>
+		<xsl:call-template name="line">
+            <xsl:with-param name="x" select="0"/>
+            <xsl:with-param name="y" select="2 * $daYInnerRadius"/>
+        </xsl:call-template>
+		<xsl:call-template name="end"/>
     </xsl:attribute>
     </xsl:element>
-    <xsl:element name="path" use-attribute-sets="pathAttribs">
-    	<xsl:attribute name="d">
-			<xsl:call-template name="Move">
-		    <xsl:with-param name="x" select="$xOffset + $preGuard + $waXOuterRadius - .5 * $thickness "/>
-		    <xsl:with-param name="y" select="$yOffset + $latinAscent + $thickness"/>
-			</xsl:call-template>
-			<xsl:text>l</xsl:text><xsl:value-of select="$thickness"/>
-			<xsl:text>,0</xsl:text>
-			<xsl:text>l0,</xsl:text><xsl:value-of select="-$latinAscent - 2 * $thickness"/>
-			<xsl:text>l</xsl:text><xsl:value-of select="-$thickness"/>
-			<xsl:text>,0</xsl:text>
-			<xsl:text>l0,</xsl:text><xsl:value-of select="$latinAscent + 2 * $thickness"/>
-			<xsl:call-template name="end"/>
-    	</xsl:attribute>
-    </xsl:element>
+    
+			
 </xsl:template>
 
 </xsl:stylesheet>
