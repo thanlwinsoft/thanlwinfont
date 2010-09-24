@@ -22,7 +22,7 @@
     <xsl:element name="path" use-attribute-sets="pathAttribs">
     <xsl:attribute name="d">
     <xsl:call-template name="Move">
-        <xsl:with-param name="x" select="$xOffset + $preGuard + $dotOuterRadius"/>
+        <xsl:with-param name="x" select="$xOffset + $preGuard + $latinDotRadius"/>
         <xsl:with-param name="y" select="$yOffset"/>
     </xsl:call-template>
 	<xsl:call-template name="arc">

@@ -17,7 +17,7 @@
 		<xsl:attribute name="transform">
 			<xsl:text>matrix(1 0 </xsl:text><xsl:value-of select="$slant"/>
 			<xsl:text> -1 0 </xsl:text>
-			<xsl:value-of select="$ascent"/><xsl:text>)</xsl:text>
+			<xsl:value-of select="$fontAscent"/><xsl:text>)</xsl:text>
 		</xsl:attribute>
 		<xsl:call-template name="u0022"/>
 	</xsl:copy>

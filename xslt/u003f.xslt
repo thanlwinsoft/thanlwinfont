@@ -12,13 +12,13 @@
 
 <xsl:template match="svg:g">
 	<xsl:copy use-attribute-sets="gAttribs">
-	<xsl:call-template name="u101b"/>
+	<xsl:call-template name="u003f"/>
 	</xsl:copy>
 </xsl:template>
 
 <!-- TODO use more arcs than corners, this is currently ugly -->
 
-<xsl:template name="u101b">
+<xsl:template name="u003f">
 	<xsl:param name="xOffset" select="0"/>
 	<xsl:param name="yOffset" select="0"/>
 

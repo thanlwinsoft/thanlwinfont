@@ -31,7 +31,7 @@
 			<xsl:text> </xsl:text>
 			<xsl:value-of select="-$medialScale"/><xsl:text> 0 </xsl:text>
 			<xsl:value-of select="0"/><xsl:text> </xsl:text>
-			<xsl:value-of select="$ascent"/><xsl:text>)</xsl:text>
+			<xsl:value-of select="$fontAscent"/><xsl:text>)</xsl:text>
 		</xsl:attribute>
 		<xsl:call-template name="u100d">
 			<xsl:with-param name="xOffset" select="-$narrowConsWidth - $medialPad div $medialScale"/>

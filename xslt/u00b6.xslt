@@ -34,17 +34,17 @@
         <xsl:with-param name="y" select="$yOffset + $latinAscent"/>
     </xsl:call-template>
     <xsl:call-template name="arc">
-        <xsl:with-param name="rx" select="$lcXOuterRadius"/>
-        <xsl:with-param name="ry" select="$lcYOuterRadius"/>
+        <xsl:with-param name="rx" select="$lcYInnerRadius"/>
+        <xsl:with-param name="ry" select="$lcYInnerRadius"/>
         <xsl:with-param name="axisRotation" select="0"/>
         <xsl:with-param name="large" select="0"/>
         <xsl:with-param name="clockwise" select="1"/>
         <xsl:with-param name="x" select="0"/>
-        <xsl:with-param name="y" select="-2 * $lcYOuterRadius"/>
+        <xsl:with-param name="y" select="-2 * $lcYInnerRadius"/>
     </xsl:call-template>
     <xsl:call-template name="line">
 	    <xsl:with-param name="x" select="0"/>
-        <xsl:with-param name="y" select="- ($latinAscent - 2 * $lcYOuterRadius)"/>
+        <xsl:with-param name="y" select="- ($latinAscent - 2 * $lcYInnerRadius)"/>
     </xsl:call-template>
     <xsl:call-template name="line">
 	    <xsl:with-param name="x" select="$thickness"/>

@@ -62,13 +62,7 @@
 <xsl:param name="cornerInnerRadius" select="$thickness * .5"/>
 <xsl:param name="cornerOuterRadius" select="$cornerInnerRadius  +$thickness"/>
 
-<xsl:param name="zaAngle" select="45 * $pi div 180"/>
-<xsl:param name="zaLowerAngle" select="45 * $pi div 180"/>
-<xsl:param name="zaTail" select="$waXInnerRadius + .5 * $thickness"/>
-<xsl:param name="zaInnerRadius" select="$thickness * 1.5"/>
-<xsl:param name="zaOuterRadius" select="$thickness + $zaInnerRadius"/>
-<xsl:param name="zaInnerTailRadius" select="$thickness * 2.5"/>
-<xsl:param name="zaOuterTailRadius" select="$thickness + $zaInnerTailRadius"/>
+
 <xsl:param name="narrowConsWidth" select="$preGuard + $postGuard + 2 * $waXOuterRadius"/>
 <xsl:param name="wideConsWidth" select="$preGuard + $postGuard + 4 * $waXOuterRadius - $thickness"/>
 <xsl:param name="thaGyiWidth" select="$preGuard + $postGuard + 6 * $waXOuterRadius - 2 * $thickness"/>
@@ -82,7 +76,7 @@
 <xsl:param name="medialScale" select=".5 * ($descent - $medialPad) div $waYOuterRadius"/>
 
 <xsl:param name="dotThickness" select="$thickness * $upperScale"/>
-<xsl:param name="dotInnerRadius" select="$dotThickness"/>
+<xsl:param name="dotInnerRadius" select=".5 * $lineSpacing"/>
 <xsl:param name="dotOuterRadius" select="$dotInnerRadius + $dotThickness"/>
 
 

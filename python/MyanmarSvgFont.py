@@ -14,10 +14,12 @@ narrowCons = [ 0x1001, 0x1002, 0x1004, 0x1005, 0x1007, 0x100e,\
     0x1012, 0x1013, 0x1014, 0x1015, 0x1016, 0x1017, 0x1019, 0x101b, 0x101d]
 wideCons = [0x1000, 0x1003, 0x1006, 0x100a, 0x1010, 0x1011,\
     0x1018, 0x101a, 0x101c, 0x101e, 0x101f, 0x1021]
-specialCons = [ 0x1009, 0x100f, 0x103f ]
+specialCons = [ 0x1009, 0x100f, 0x103f, 0x1025, 0x1026, 0x1029 ]
 tallCons = [0x1008, 0x100b, 0x100c, 0x100d, 0x1020]
 upperVowels = [0x102d, 0x102e, 0x1032]
 afterMedials = [0x103b, 0x103d, 0x103e]
+
+classCons = set(narrowCons).union(wideCons, specialCons, tallCons)
 classKinzi = [0x1004, 0x101b]
 classAsat = [0x103a]
 classMedialY = [0x103b, 0x105e, 0x105f]
@@ -49,6 +51,10 @@ vowelMarks = [ 0x102d, 0x102e, 0x1032, 0x1034, 0x1036 ]
 class MyanmarSvgFont(SvgFont.SvgFont):
     def __init__(self, xslParams, name, outname):
         SvgFont.SvgFont.__init__(self, xslParams, name, outname)
+        self.subDict["removeDottedCircle"] = len(self.substitutions)
+        self.substitutions.append([])
+        featureScriptLang = (("liga",(("mymr",("dflt", "DFLT", "BRM ")),)),)
+        self.font.addLookup("ligatures", "gsub_ligature", (), featureScriptLang)
 
     def setGlyphTypes(self):
         for i in range(len(cons)):
@@ -61,13 +67,15 @@ class MyanmarSvgFont(SvgFont.SvgFont):
             glyph = self.font.createChar(vowelMarks[i])
             glyph.glyphclass = "mark"
             
-    def addLigature(self, subtable, ligGlyphs, svgFile=None, glyphName=None):
+    def addLigature(self, subtable, ligGlyphs, svgFile=None, glyphName=None, precontext=[], postcontext=[]):
         ligName = ""
         for i in range(len(ligGlyphs)):
             if len(ligName) > 0:
                 ligName += "_" + ligGlyphs[i]
             else:
                 ligName = ligGlyphs[i]
+            if ligGlyphs[i] in self.glyphsWithDottedCircle:
+                ligGlyphs[i] = ligGlyphs[i] + "_mark"
         if glyphName is None:
             glyphName = ligName
         if svgFile is None:
@@ -76,13 +84,14 @@ class MyanmarSvgFont(SvgFont.SvgFont):
             glyph = self.importGlyph(svgFile, glyphName, -1)
             glyph.glyphclass = "baseligature"
             glyph.addPosSub(subtable, ligGlyphs)
+            self.substitutions[self.subDict[subtable]].append(SvgFont.Substitution(precontext, ligGlyphs, postcontext, [glyphName]))
         else:
             self.log.info(_("{0} not found").format(svgFile))
 
     def addMedialGlyphs(self):
-        featureScriptLang = (("liga",(("mymr",("dflt", "DFLT", "BRM ")),)),)
-        self.font.addLookup("medialLig", "gsub_ligature", (), featureScriptLang)
-        self.font.addLookupSubtable("medialLig", "medialLigSub")
+        self.subDict["medialLigSub"] = len(self.substitutions)
+        self.substitutions.append([])
+        self.font.addLookupSubtable("ligatures", "medialLigSub", "reorder")
 
         for i in range(len(cons)):
             codePoint = cons[i]
@@ -164,8 +173,10 @@ class MyanmarSvgFont(SvgFont.SvgFont):
 
 
     def addReorderedGlyphs(self):
+        self.subDict["reorder"] = len(self.substitutions)
+        self.substitutions.append([])
         featureScriptLang = (("liga",(("mymr",("dflt","DFLT","BRM ")),)),)
-        self.font.addLookupSubtable("medialLig", "reorder")
+        self.font.addLookupSubtable("ligatures", "reorder")
 
         for i in range(len(cons)):
             codePoint = cons[i]
@@ -223,7 +234,6 @@ class MyanmarSvgFont(SvgFont.SvgFont):
                 self.addLigature("reorder", [glyphName, "u103c", "u103d", vowel])
                 self.addLigature("reorder", [glyphName, "u103c", "u103e", vowel])
 
-        self.addLigature("reorder", ["u1029", "u1031"])
         self.addLigature("reorder", ["u1019", "u103c", "u103d", "u103e"])
 
         # a few stacks occur with e vowel
@@ -242,7 +252,7 @@ class MyanmarSvgFont(SvgFont.SvgFont):
         self.addLigature("reorder", ["u100f", "u1039", "u100f", "u1031"])        
         self.addLigature("reorder", ["u1014", "u1039", "u1010", "u103c","u1031"])
         self.addLigature("reorder", ["u1014", "u1039", "u1012", "u103c", "u1031"])
-        reorderedGlyphName = "u10104u1039u1012u103cu1031u102c"
+        reorderedGlyphName = "u1014u1039u1012u103cu1031u102c"
         self.addLigature("reorder", ["u1014", "u1039", "u1012", "u103c", "u1031", "u102c"], glyphName = reorderedGlyphName)
         self.addLigature("reorder", ["u1014", "u1039","u1012","u103c"])
         self.addLigature("reorder", ["u1014", "u1039", "u1010", "u1031", "u102c"])
@@ -359,7 +369,6 @@ class MyanmarSvgFont(SvgFont.SvgFont):
 
             self.addLigature("medialLigSub", [glyphName, "u1030"])
 
-        # add special characters with empty glyphs
         self.font.createChar(0x200b, "zwsp").width = 0
         self.font.createChar(0x200c, "zwnj").width = 0
         self.font.createChar(0x200d, "zwj").width = 0
@@ -368,30 +377,39 @@ class MyanmarSvgFont(SvgFont.SvgFont):
         self.font.createChar(0x202c, "pdf").width = 0
         self.font.createChar(0x2060, "wj").width = 0
 
-    def addMarkClass(self, markClasses, className, glyphs):
+    def addMarkClass(self, className, glyphs, acceptableBefore):
         glyphList = []
+        dottedGlyphList = []
         for g in glyphs:
-            gName = "u{0:04x}".format(g)
-            glyph = self.font.createChar(g, gName)
+            gName = "u{0:04x}_mark".format(g)
+            dottedName = "u25cc_u{0:04x}".format(g)
+            glyph = self.font.createChar(-1, gName)
             if (glyph.isWorthOutputting()):
                 glyphList.append(gName)
-                dottedCircleGlyph = self.importGlyph("{0}/u25cc_{1}.svg".format(self.svgDir, gName), "u25cc_" + gName, -1)
-                glyph.addPosSub("dottedCircleMark", ("u25cc_" + gName))
+                dottedGlyphList.append(dottedName)
+                dottedCircleGlyph = self.font.createChar(g, dottedName)
+                # dottedCircleGlyph = self.importGlyph("{0}/u25cc_{1}.svg".format(self.svgDir, gName), "u25cc_" + gName, -1)
+                # glyph.addPosSub("dottedCircleMark", ("u25cc_" + gName))
                 dottedCircleGlyph.addPosSub("removeDottedCircle", (gName))
 
         if (len(glyphList) > 0):
-            markClasses.append((className, tuple(glyphList)))
-        return markClasses
+            self.classes[className] = tuple(glyphList);
+            self.classes[className + "Dotted"] = tuple(dottedGlyphList);
+            for before in acceptableBefore:
+              sub = SvgFont.Substitution([before], [className + "Dotted"], [], [className])
+              self.substitutions[self.subDict['removeDottedCircle']].append(sub)
 
     def addSequenceChecks(self):
-        featureScriptLang = (("ccmp",(("mymr",("dflt", "DFLT", "BRM ")),)),)
-        self.font.addLookup("mark2DottedCircleMark", "gsub_single", (), featureScriptLang)
-        self.font.addLookupSubtable("mark2DottedCircleMark", "dottedCircleMark")
+        # It is better to avoid this lookup by making the dotted circle glyph
+        # be the default
+        # featureScriptLang = (("ccmp",(("mymr",("dflt", "DFLT", "BRM ")),)),)
+        # self.font.addLookup("mark2DottedCircleMark", "gsub_single", (), featureScriptLang)
+        # self.font.addLookupSubtable("mark2DottedCircleMark", "dottedCircleMark")
 
         lookupFontFile = self.params.get("Font", 'lookupFont')
         if os.access(lookupFontFile, os.R_OK):
             parentFont = fontforge.open(lookupFontFile)
-            self.font.importLookups(parentFont, "sequenceCheck","medialLig")
+            self.font.importLookups(parentFont, "sequenceCheck","ligatures")
         else:
             featureScriptLang = (("clig",(("mymr",("dflt","DFLT","BRM ")),)),)
             self.font.addLookup("sequenceCheck", "gsub_contextchain", (), featureScriptLang)
@@ -402,22 +420,24 @@ class MyanmarSvgFont(SvgFont.SvgFont):
             self.font.addLookup("dottedCircle", "gsub_ligature", (), ())
             self.font.addLookupSubtable("dottedCircle", "dottedCircleMark")
         
-        markClasses = []
-        markClasses = self.addMarkClass(markClasses, "classAsat", classAsat)
-        markClasses = self.addMarkClass(markClasses, "classMedialY",classMedialY)
-        markClasses = self.addMarkClass(markClasses, "classMedialR",classMedialR)
-        markClasses = self.addMarkClass(markClasses, "classMedialW",classMedialW)
-        markClasses = self.addMarkClass(markClasses, "classMedialH",classMedialH)
-        markClasses = self.addMarkClass(markClasses, "classEVowel",classEVowel)
-        markClasses = self.addMarkClass(markClasses, "classUVowel",classUVowel)
-        markClasses = self.addMarkClass(markClasses, "classLVowel",classLVowel)
-        markClasses = self.addMarkClass(markClasses, "classLDot",classLDot)
-        markClasses = self.addMarkClass(markClasses, "classKVowel",classKVowel)
-        markClasses = self.addMarkClass(markClasses, "classSVowel",classSVowel)
-        markClasses = self.addMarkClass(markClasses, "classAVowel",classAVowel)
-        markClasses = self.addMarkClass(markClasses, "classAnusvara",classAnusvara)
-        markClasses = self.addMarkClass(markClasses, "classPwoTone",classPwoTone)
-        markClasses = self.addMarkClass(markClasses, "classVisarga",classVisarga)
-        markClasses = self.addMarkClass(markClasses, "classRedup",classRedup)
+        consList = []
+        for c in classCons: consList.append("u{0:04x}".format(c))
+        self.classes["classCons"] = tuple(consList);
+        self.addMarkClass("classAsat", classAsat, ("classCons","classAVowel", "classMedialH", "classLDot"))
+        self.addMarkClass("classMedialY",classMedialY, ('classCons','classAsat'))
+        self.addMarkClass("classMedialR",classMedialR, ('classCons', 'classAsat'))
+        self.addMarkClass("classMedialW",classMedialW, ('classCons', 'classAsat', 'classMedialY', 'classMedialR'))
+        self.addMarkClass("classMedialH",classMedialH, ('classCons', 'classMedialY', 'classMedialR', 'classMedialW'))
+        self.addMarkClass("classEVowel",classEVowel, ('classCons', 'classMedialY', 'classMedialR', 'classMedialW', 'classMedialH', 'classEVowel'))
+        self.addMarkClass("classUVowel",classUVowel, ('classCons', 'classMedialY', 'classMedialR', 'classMedialW', 'classMedialH'))
+        self.addMarkClass("classLVowel",classLVowel, ('classCons', 'classMedialY', 'classMedialR', 'classMedialW', 'classMedialH', 'classUVowel'))
+        self.addMarkClass("classLDot",classLDot, ('classCons', 'classMedialY', 'classMedialR', 'classMedialW', 'classMedialH', 'classEVowel', 'classUVowel', 'classLVowel', 'classAVowel', 'classAnusvara'))
+        # self.addMarkClass("classKVowel",classKVowel, ('classCons', 'classMedialY', 'classMedialR', 'classMedialW', 'classMedialH'))
+        # self.addMarkClass("classSVowel",classSVowel, ('classCons', 'classMedialY', 'classMedialR', 'classMedialW', 'classMedialH'))
+        self.addMarkClass("classAVowel",classAVowel, ('classCons', 'classMedialY', 'classMedialR', 'classMedialW', 'classMedialH', 'classEVowel', 'classUVowel', 'classLVowel'))
+        self.addMarkClass("classAnusvara",classAnusvara, ('classCons', 'classMedialY', 'classMedialR', 'classMedialW', 'classMedialH', 'classUVowel', 'classLVowel'))
+        # self.addMarkClass("classPwoTone",classPwoTone, ('classCons', 'classMedialY', 'classMedialR', 'classMedialW', 'classMedialH'))
+        self.addMarkClass("classVisarga",classVisarga, ('classCons', 'classMedialY', 'classMedialR', 'classMedialW', 'classMedialH', 'classAsat', 'classEVowel', 'classUVowel', 'classLVowel', 'classAVowel', 'classAnusvara', 'classLDot'))
+        # self.addMarkClass("classRedup",classRedup, ('classCons', 'classMedialY', 'classMedialR', 'classMedialW', 'classMedialH))
             
 

@@ -31,7 +31,7 @@
 		<xsl:with-param name="yOffset" select="0"/>
 	</xsl:call-template>
 	<xsl:call-template name="u102c">
-		<xsl:with-param name="xOffset" select="2 * $narrowConsWidth"/>
+		<xsl:with-param name="xOffset" select="2 * $narrowConsWidth + $preGuard + $thickness + $postGuard"/>
 		<xsl:with-param name="yOffset" select="0"/>
 	</xsl:call-template>
 	</xsl:copy>
@@ -42,7 +42,7 @@
 			<xsl:text> 0 0 </xsl:text>
 			<xsl:value-of select="-$med1012Scale"/><xsl:text> </xsl:text>
 			<xsl:value-of select="0"/><xsl:text> </xsl:text>
-			<xsl:value-of select="$ascent"/><xsl:text>)</xsl:text>
+			<xsl:value-of select="$fontAscent"/><xsl:text>)</xsl:text>
 		</xsl:attribute>
 	<xsl:call-template name="u1012">
 		<xsl:with-param name="xOffset" select="($narrowConsWidth + $preGuard + $thickness + $postGuard + $waXOuterRadius) div $med1012Scale - $waXOuterRadius"/>

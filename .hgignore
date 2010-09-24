@@ -4,4 +4,12 @@ syntax:glob
 svg
 tmp
 *.pyc
+*.ttf
+*.gdl
+*names.txt
+*.pdf
+*.woff
+*.log
+gdlerr.txt
+param*.ini
 

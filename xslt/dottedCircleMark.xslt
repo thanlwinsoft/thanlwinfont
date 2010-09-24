@@ -15,15 +15,27 @@
 
 <xsl:choose>
 <xsl:when test="$mark = 'u103b'">
+<axsl:variable name="leftShift" select="0"/> 
 <axsl:variable name="markWidth" select="$yapinAdvance"/>
 </xsl:when>
 <xsl:when test="$mark = 'u102b'">
+<axsl:variable name="leftShift" select="0"/> 
 <axsl:variable name="markWidth" select="$u102bAdvance"/>
 </xsl:when>
 <xsl:when test="$mark = 'u102c'">
+<axsl:variable name="leftShift" select="0"/> 
 <axsl:variable name="markWidth" select="$u102cAdvance"/>
 </xsl:when>
+<xsl:when test="$mark = 'u1037'">
+<axsl:variable name="leftShift" select="-$waXOuterRadius"/> 
+<axsl:variable name="markWidth" select="0"/>
+</xsl:when>
+<xsl:when test="$mark = 'u1038'">
+<axsl:variable name="leftShift" select="0"/> 
+<axsl:variable name="markWidth" select="2 * $dotOuterRadius + $postGuard"/>
+</xsl:when>
 <xsl:otherwise>
+<axsl:variable name="leftShift" select="0"/> 
 <axsl:variable name="markWidth" select="0"/>
 </xsl:otherwise>
 </xsl:choose>
@@ -38,7 +50,7 @@
 	<axsl:copy use-attribute-sets="gAttribs">
 	    <axsl:call-template name="u25cc"/>
 		<axsl:call-template name="{$mark}">
-		    <axsl:with-param name="xOffset" select="$narrowConsWidth"/>
+		    <axsl:with-param name="xOffset" select="$narrowConsWidth + $leftShift"/>
 		    <axsl:with-param name="yOffset" select="0"/>
 		</axsl:call-template>
 	</axsl:copy>

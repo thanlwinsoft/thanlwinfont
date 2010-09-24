@@ -46,11 +46,11 @@
 		<axsl:with-param name="yOffset" select="0"/>
 	</axsl:call-template>
 	<axsl:call-template name="u1004_u103a_u1039">
-		<axsl:with-param name="xOffset" select="$advance - .5 * $waXOuterRadius"/>
+		<axsl:with-param name="xOffset" select="$advance - $upperScale * $waXOuterRadius"/>
 		<axsl:with-param name="yOffset" select="0"/>
 	</axsl:call-template>
 	<axsl:call-template name="{$vowel}">
-		<axsl:with-param name="xOffset" select="$advance + .5 * $waXOuterRadius"/>
+		<axsl:with-param name="xOffset" select="$advance + $upperScale * $waXOuterRadius"/>
 		<axsl:with-param name="yOffset" select="0"/>
 	</axsl:call-template>
 </axsl:template>

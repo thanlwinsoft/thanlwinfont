@@ -6,8 +6,7 @@
 
 <xsl:include href="param.xslt"/>
 <xsl:include href="path.xslt"/>
-
-<xsl:variable name="advance" select="$narrowConsWidth"/>
+<xsl:variable name="advance" select="round($narrowConsWidth + $postGuard  +2 * $thickness + $lineSpacing)"/>
 <xsl:variable name="overlap" select="0"/>
 <xsl:variable name="cutOuterDx" select="math:cos($myCutAngle) * $waYOuterRadius"/>
 <xsl:variable name="cutOuterDy" select="math:sin($myCutAngle) * $waYOuterRadius"/>
@@ -127,7 +126,7 @@
     <xsl:call-template name="end"/>
     
     <xsl:call-template name="Move">
-        <xsl:with-param name="x" select="$xOffset + 2 * $preGuard + 2 * $waXOuterRadius "/>
+        <xsl:with-param name="x" select="$xOffset + $preGuard + $postGuard + 2 * $waXOuterRadius "/>
         <xsl:with-param name="y" select="$yOffset + 2 * $waYOuterRadius"/>
     </xsl:call-template>
     <xsl:text>l0,</xsl:text><xsl:value-of select="-2 * $waYOuterRadius"/>
@@ -139,25 +138,10 @@
     <xsl:call-template name="end"/>
 
 	<xsl:call-template name="Move">
-        <xsl:with-param name="x" select="$xOffset + 2 * $preGuard + 2.5 * $waXOuterRadius + 2 * $postGuard"/>
-        <xsl:with-param name="y" select="$yOffset + 3 * $waYOuterRadius + $upperPad"/>
+        <xsl:with-param name="x" select="$xOffset + $preGuard  + $postGuard + 2 * $waXOuterRadius + $thickness + $lineSpacing"/>
+        <xsl:with-param name="y" select="$yOffset"/>
     </xsl:call-template>
-    <xsl:call-template name="arc">
-        <xsl:with-param name="rx" select="$upperScale * $waXOuterRadius"/>
-        <xsl:with-param name="ry" select="$upperScale * $waXOuterRadius"/>
-        <xsl:with-param name="axisRotation" select="0"/>
-        <xsl:with-param name="large" select="1"/>
-        <xsl:with-param name="clockwise" select="1"/>
-        <xsl:with-param name="x" select="-math:sqrt(2) * $upperScale * $waXOuterRadius"/>
-        <xsl:with-param name="y" select="-math:sqrt(2) * $upperScale * $waXOuterRadius"/>
-    </xsl:call-template>
-    <xsl:call-template name="corner">
-		<xsl:with-param name="x" select="($upperPad + $upperScale * $waXOuterRadius) div math:sqrt(2)"/>
-        <xsl:with-param name="y" select="-($upperPad + $upperScale * $waXOuterRadius) div math:sqrt(2)"/>
-		<xsl:with-param name="r" select="$cornerOuterRadius"/>
-		<xsl:with-param name="nextX" select="0"/>
-        <xsl:with-param name="nextY" select="- 2 * $waYOuterRadius"/>
-	</xsl:call-template>
+    
 	<xsl:text>l</xsl:text><xsl:value-of select="$thickness"/>
 	<xsl:text>,0</xsl:text>
 	<xsl:call-template name="corner">
@@ -176,6 +160,26 @@
         <xsl:with-param name="x" select="math:sqrt(2) * ($upperScale * $waXOuterRadius - $thickness)"/>
         <xsl:with-param name="y" select="math:sqrt(2) * ($upperScale * $waXOuterRadius - $thickness)"/>
     </xsl:call-template>
+    <xsl:call-template name="inner2outer">
+        <xsl:with-param name="cx" select="-$upperScale * $waXOuterRadius div math:sqrt(2)"/>
+        <xsl:with-param name="cy" select="-$upperScale * $waXOuterRadius div math:sqrt(2)"/>
+    </xsl:call-template>
+    <xsl:call-template name="arc">
+        <xsl:with-param name="rx" select="$upperScale * $waXOuterRadius"/>
+        <xsl:with-param name="ry" select="$upperScale * $waXOuterRadius"/>
+        <xsl:with-param name="axisRotation" select="0"/>
+        <xsl:with-param name="large" select="1"/>
+        <xsl:with-param name="clockwise" select="1"/>
+        <xsl:with-param name="x" select="-math:sqrt(2) * $upperScale * $waXOuterRadius"/>
+        <xsl:with-param name="y" select="-math:sqrt(2) * $upperScale * $waXOuterRadius"/>
+    </xsl:call-template>
+    <xsl:call-template name="corner">
+		<xsl:with-param name="x" select="($upperPad + $upperScale * $waXOuterRadius) div math:sqrt(2)"/>
+        <xsl:with-param name="y" select="-($upperPad + $upperScale * $waXOuterRadius) div math:sqrt(2)"/>
+		<xsl:with-param name="r" select="$cornerOuterRadius"/>
+		<xsl:with-param name="nextX" select="0"/>
+        <xsl:with-param name="nextY" select="- 2 * $waYOuterRadius"/>
+	</xsl:call-template>
     <xsl:call-template name="end"/>
     
     </xsl:attribute>

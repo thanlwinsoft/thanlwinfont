@@ -148,8 +148,6 @@
         <xsl:with-param name="y" select="-$daYInnerRadius"/>
     </xsl:call-template>
 	<xsl:call-template name="end"/>
-	
-    <xsl:call-template name="end"/>
     </xsl:attribute>
     </xsl:element>
 </xsl:template>

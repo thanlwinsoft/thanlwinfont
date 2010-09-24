@@ -22,6 +22,14 @@
 	<xsl:param name="xOffset" select="0"/>
 	<xsl:param name="yOffset" select="0"/>
 
+    <xsl:param name="zaAngle" select="45 * $pi div 180"/>
+    <xsl:param name="zaLowerAngle" select="45 * $pi div 180"/>
+    <xsl:param name="zaTail" select="$waXInnerRadius + .5 * $thickness"/>
+    <xsl:param name="zaInnerRadius" select="($waXInnerRadius - $thickness - .5 * $lineSpacing)"/>
+    <xsl:param name="zaOuterRadius" select="$thickness + $zaInnerRadius"/>
+    <xsl:param name="zaInnerTailRadius" select=".4 * (2 * $zaInnerRadius - $thickness)"/>
+    <xsl:param name="zaOuterTailRadius" select="$thickness + $zaInnerTailRadius"/>
+
 <xsl:variable name="cutOuterDx" select="math:cos($zaLowerAngle) * $waYOuterRadius"/>
 <xsl:variable name="cutOuterDy" select="math:sin($zaLowerAngle) * $waYOuterRadius"/>
 <xsl:variable name="cutInnerDx" select="math:cos($zaLowerAngle) * $waYInnerRadius"/>
@@ -70,13 +78,13 @@
         <xsl:with-param name="y" select="-2 * $zaInnerRadius * math:sin($hookStartAngle)"/>
     </xsl:call-template>
     <xsl:call-template name="arc">
-        <xsl:with-param name="rx" select=".5 * $zaInnerRadius"/>
-        <xsl:with-param name="ry" select=".5 * $zaInnerRadius"/>
+        <xsl:with-param name="rx" select="$zaInnerTailRadius"/>
+        <xsl:with-param name="ry" select="$zaInnerTailRadius"/>
         <xsl:with-param name="axisRotation" select="0"/>
         <xsl:with-param name="large" select="0"/>
         <xsl:with-param name="clockwise" select="0"/>
-        <xsl:with-param name="x" select="$zaInnerRadius* math:cos($hookStartAngle)"/>
-        <xsl:with-param name="y" select="$zaInnerRadius* math:sin($hookStartAngle)"/>
+        <xsl:with-param name="x" select="2 * $zaInnerTailRadius * math:cos($hookStartAngle)"/>
+        <xsl:with-param name="y" select="2 * $zaInnerTailRadius * math:sin($hookStartAngle)"/>
     </xsl:call-template>
     <xsl:text>l</xsl:text>
     <xsl:value-of select="$zaTail * math:cos($hookStartAngle)"/><xsl:text>,</xsl:text>
@@ -88,13 +96,13 @@
     <xsl:value-of select="-$zaTail * math:cos($hookStartAngle)"/><xsl:text>,</xsl:text>
     <xsl:value-of select="$zaTail * math:sin($hookStartAngle)"/>
     <xsl:call-template name="arc">
-        <xsl:with-param name="rx" select=".5 * $zaInnerRadius + $thickness"/>
-        <xsl:with-param name="ry" select=".5 * $zaInnerRadius + $thickness"/>
+        <xsl:with-param name="rx" select="$zaOuterTailRadius"/>
+        <xsl:with-param name="ry" select="$zaOuterTailRadius"/>
         <xsl:with-param name="axisRotation" select="0"/>
         <xsl:with-param name="large" select="1"/>
         <xsl:with-param name="clockwise" select="1"/>
-        <xsl:with-param name="x" select="-($zaOuterRadius + $thickness)* math:cos($hookStartAngle)"/>
-        <xsl:with-param name="y" select="-($zaOuterRadius + $thickness)* math:sin($hookStartAngle)"/>
+        <xsl:with-param name="x" select="- 2 * ($zaOuterTailRadius)* math:cos($hookStartAngle)"/>
+        <xsl:with-param name="y" select="- 2 * ($zaOuterTailRadius)* math:sin($hookStartAngle)"/>
     </xsl:call-template>
     <xsl:call-template name="arc">
         <xsl:with-param name="rx" select="$zaOuterRadius"/>

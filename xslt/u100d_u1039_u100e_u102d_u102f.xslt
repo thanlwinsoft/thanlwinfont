@@ -34,7 +34,7 @@
 		<xsl:attribute name="transform">
 			<xsl:text>matrix(</xsl:text><xsl:value-of select="$medialScale"/>
 			<xsl:text> 0 0 </xsl:text><xsl:value-of select="-$medialScale"/>
-			<xsl:text> 0 </xsl:text><xsl:value-of select="$ascent"/>
+			<xsl:text> 0 </xsl:text><xsl:value-of select="$fontAscent"/>
 			<xsl:text>)</xsl:text>
 		</xsl:attribute>
 		<xsl:call-template name="u100d">

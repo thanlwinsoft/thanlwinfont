@@ -31,6 +31,10 @@
 <xsl:variable name="hookInnerDx" select="math:cos($hookStartAngle) * $waYInnerRadius"/>
 <xsl:variable name="hookInnerDy" select="math:sin($hookStartAngle) * $waYInnerRadius"/>
 
+<xsl:variable name="hatoSpace" select="$descent - $hookOuterDy  +$hookInnerDy - ($hookInnerRadius + $hookOuterRadius) * math:cos($hookStartAngle) div math:tan($hookStartAngle) - 2 * $hookInnerRadius * math:sin($hookStartAngle) - $thickness"/>
+
+<xsl:variable name="hatoHeight" select="$hatoSpace - $lineSpacing"/>
+
     <xsl:element name="path" use-attribute-sets="pathAttribs">
     <xsl:attribute name="d">
     <xsl:call-template name="Move">
@@ -157,23 +161,23 @@
     
     <xsl:call-template name="Move">
         <xsl:with-param name="x" select="$xOffset + $waXOuterRadius + $preGuard + .5 * $thickness"/>
-        <xsl:with-param name="y" select="$yOffset - $medialPad - ($descent - $medialPad) + 1.5 * $thickness  + $cornerOuterRadius + $thickness"/>
+        <xsl:with-param name="y" select="$yOffset - $descent + .5 * $lineSpacing + $thickness + $hatoHeight"/>
     </xsl:call-template>
 	
 	<xsl:call-template name="corner">
 		<xsl:with-param name="x" select="0"/>
-        <xsl:with-param name="y" select="-$cornerOuterRadius - $thickness"/>
+        <xsl:with-param name="y" select="-$hatoHeight"/>
 		<xsl:with-param name="r" select="$cornerOuterRadius"/>
-		<xsl:with-param name="nextX" select="- $cornerOuterRadius - $thickness"/>
+		<xsl:with-param name="nextX" select="- $cornerOuterRadius - $lineSpacing"/>
         <xsl:with-param name="nextY" select="0"/>
 	</xsl:call-template>
 	<xsl:text>l0,</xsl:text><xsl:value-of select="$thickness"/>
 	<xsl:call-template name="corner">
-		<xsl:with-param name="x" select="$cornerInnerRadius + $thickness"/>
+		<xsl:with-param name="x" select="$cornerInnerRadius + $lineSpacing"/>
         <xsl:with-param name="y" select="0"/>
 		<xsl:with-param name="r" select="$cornerInnerRadius"/>
 		<xsl:with-param name="nextX" select="0"/>
-        <xsl:with-param name="nextY" select="$cornerOuterRadius"/>
+        <xsl:with-param name="nextY" select="$hatoHeight - $thickness"/>
 	</xsl:call-template>
 
 	<xsl:call-template name="end"/>

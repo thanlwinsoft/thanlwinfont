@@ -88,9 +88,15 @@ classMarks:=$(classAsat) $(classMedialY) $(classMedialW) $(classMedialH) $(class
 
 upperVowel:=u102d u102e u1032
 
-all: font bold light
+all: medium bold light
 
 font: thanlwin$(VARIANT).sfd
+
+medium:
+	mkdir -p svg/Medium
+	rm -f xslt/param.xslt
+	VARIANT=Medium make -e font
+	rm -f xslt/param.xslt
 
 bold:
 	mkdir -p svg/Bold
@@ -106,6 +112,7 @@ light:
 
 thanlwin$(VARIANT).sfd : svg $(wildcard python/*.py) $(wildcard $(SVG_DIR)/*.svg) thanlwin-lookups.sfd $(INI_FILE)
 	python/thanlwinfont.py $(INI_FILE) svg/$(VARIANT) thanlwin$(VARIANT)
+	grcompiler -w5503 thanlwin$(VARIANT).gdl thanlwin$(VARIANT).ttf thanlwin$(VARIANT)Gr.ttf
 
 svg: xslt/param.xslt $(subst .xslt,.svg,$(subst xslt/,$(SVG_DIR)/,$(wildcard xslt/u*.xslt) $(tests))) medials ereorder yayit yapin kinzi misc tallConsVowel dottedcircle
 
@@ -801,7 +808,7 @@ $(SVG_DIR)/u1014_u1039_u1013_u102d_u102f.svg :: xslt/u1014_alt.xslt xslt/u1013.x
 
 
 clean:
-	rm -rf $(SVG_DIR)/*.svg
+	rm -rf svg/*/*.svg
 	rm -rf tmp
 
 

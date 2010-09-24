@@ -37,7 +37,7 @@
 			<xsl:text> 0 0 </xsl:text>
 			<xsl:value-of select="-$med1012Scale"/><xsl:text> </xsl:text>
 			<xsl:value-of select="0"/><xsl:text> </xsl:text>
-			<xsl:value-of select="$ascent"/><xsl:text>)</xsl:text>
+			<xsl:value-of select="$fontAscent"/><xsl:text>)</xsl:text>
 		</xsl:attribute>
 	<xsl:call-template name="u1012">
 		<xsl:with-param name="xOffset" select="($narrowConsWidth + $preGuard + $thickness + $postGuard + $waXOuterRadius) div $med1012Scale - $waXOuterRadius"/>

@@ -28,7 +28,7 @@
 			<xsl:text> 0 0 </xsl:text>
 			<xsl:value-of select="-$med1012Scale"/><xsl:text> </xsl:text>
 			<xsl:value-of select="0"/><xsl:text> </xsl:text>
-			<xsl:value-of select="$ascent"/><xsl:text>)</xsl:text>
+			<xsl:value-of select="$fontAscent"/><xsl:text>)</xsl:text>
 		</xsl:attribute>
 	<xsl:call-template name="u1010">
 		<xsl:with-param name="xOffset" select="($wideBelowDx + $waXOuterRadius) div $med1012Scale - 2 * $waXOuterRadius + .5 * $thickness"/>

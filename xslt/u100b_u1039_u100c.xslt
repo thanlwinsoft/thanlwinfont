@@ -152,6 +152,18 @@
         <xsl:with-param name="x" select="-2 * $hookOuterDx"/>
         <xsl:with-param name="y" select="0"/>
     </xsl:call-template>
+    <xsl:call-template name="line">
+        <xsl:with-param name="x" select="-$lineSpacing * math:sin($hookStartAngle)"/>
+        <xsl:with-param name="y" select="$lineSpacing * math:cos($hookStartAngle)"/>
+    </xsl:call-template>
+    <xsl:call-template name="line">
+        <xsl:with-param name="x" select="$thickness * math:cos($hookStartAngle)"/>
+        <xsl:with-param name="y" select="$thickness * math:sin($hookStartAngle)"/>
+    </xsl:call-template>
+    <xsl:call-template name="line">
+        <xsl:with-param name="x" select="$lineSpacing * math:sin($hookStartAngle)"/>
+        <xsl:with-param name="y" select="-$lineSpacing * math:cos($hookStartAngle)"/>
+    </xsl:call-template>
     <xsl:call-template name="end"/>
     </xsl:attribute>
     </xsl:element>

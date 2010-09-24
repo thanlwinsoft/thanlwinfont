@@ -22,7 +22,7 @@
     <xsl:attribute name="d">
     <xsl:call-template name="Move">
         <xsl:with-param name="x" select="$xOffset + $dotOuterRadius"/>
-        <xsl:with-param name="y" select="$yOffset + $dotOuterRadius"/>
+        <xsl:with-param name="y" select="$yOffset + $lineSpacing"/>
     </xsl:call-template>
 	<xsl:call-template name="arc">
         <xsl:with-param name="rx" select="$dotOuterRadius"/>
@@ -33,9 +33,9 @@
         <xsl:with-param name="x" select="-1"/>
         <xsl:with-param name="y" select="0"/>
     </xsl:call-template>
-	<xsl:call-template name="move">
-        <xsl:with-param name="x" select="0"/>
-        <xsl:with-param name="y" select="$dotThickness"/>
+	<xsl:call-template name="Move">
+        <xsl:with-param name="x" select="$xOffset + $dotOuterRadius"/>
+        <xsl:with-param name="y" select="$yOffset + $dotOuterRadius - $dotInnerRadius + $lineSpacing"/>
     </xsl:call-template>
     <xsl:call-template name="arc">
         <xsl:with-param name="rx" select="$dotInnerRadius"/>
@@ -50,7 +50,7 @@
 
     <xsl:call-template name="Move">
         <xsl:with-param name="x" select="$xOffset + $dotOuterRadius"/>
-        <xsl:with-param name="y" select="$yOffset + 2 * $waYOuterRadius - 3 * $dotOuterRadius"/>
+        <xsl:with-param name="y" select="$yOffset + 2 * $waYOuterRadius - $lineSpacing - 2 * $dotOuterRadius"/>
     </xsl:call-template>
 	<xsl:call-template name="arc">
         <xsl:with-param name="rx" select="$dotOuterRadius"/>
@@ -61,9 +61,9 @@
         <xsl:with-param name="x" select="-1"/>
         <xsl:with-param name="y" select="0"/>
     </xsl:call-template>
-	<xsl:call-template name="move">
-        <xsl:with-param name="x" select="0"/>
-        <xsl:with-param name="y" select="$dotThickness"/>
+	<xsl:call-template name="Move">
+        <xsl:with-param name="x" select="$xOffset + $dotOuterRadius"/>
+        <xsl:with-param name="y" select="$yOffset + 2 * $waYOuterRadius - $lineSpacing - $dotOuterRadius - $dotInnerRadius"/>
     </xsl:call-template>
     <xsl:call-template name="arc">
         <xsl:with-param name="rx" select="$dotInnerRadius"/>

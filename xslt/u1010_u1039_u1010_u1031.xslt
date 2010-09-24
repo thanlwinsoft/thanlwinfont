@@ -30,7 +30,7 @@
 			<xsl:text> 0 0 </xsl:text>
 			<xsl:value-of select="-$medialScale"/><xsl:text> </xsl:text>
 			<xsl:value-of select="0"/><xsl:text> </xsl:text>
-			<xsl:value-of select="$ascent"/><xsl:text>)</xsl:text>
+			<xsl:value-of select="$fontAscent"/><xsl:text>)</xsl:text>
 		</xsl:attribute>
 		<xsl:call-template name="u1010">
 			<xsl:with-param name="xOffset" select="(2 * $waXOuterRadius - $thickness) *(1 div $medialScale - 1) + $narrowConsWidth div $medialScale"/>

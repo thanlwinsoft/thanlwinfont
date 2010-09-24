@@ -26,11 +26,13 @@
 </xsl:template>
 
 <xsl:template name="u103f">
+	<xsl:param name="xOffset" select="0"/>
+	<xsl:param name="yOffset" select="0"/>
     <xsl:element name="path" use-attribute-sets="pathAttribs">
     <xsl:attribute name="d">
     <xsl:call-template name="Move">
-        <xsl:with-param name="x" select="$preGuard+2 * $waXOuterRadius - 0.5 * $thickness"/>
-        <xsl:with-param name="y" select="$waYOuterRadius - $intersectDy "/>
+        <xsl:with-param name="x" select="$xOffset + $preGuard+2 * $waXOuterRadius - 0.5 * $thickness"/>
+        <xsl:with-param name="y" select="$yOffset + $waYOuterRadius - $intersectDy "/>
     </xsl:call-template>
 	<xsl:call-template name="arc">
         <xsl:with-param name="rx" select="$waXOuterRadius"/>
@@ -96,8 +98,8 @@
 	<xsl:call-template name="end" />
 	
 	<xsl:call-template name="Move">
-        <xsl:with-param name="x" select="$preGuard+4 * $waXOuterRadius - 1.5 * $thickness"/>
-        <xsl:with-param name="y" select="$waYOuterRadius - $intersectDy "/>
+        <xsl:with-param name="x" select="$xOffset + $preGuard+4 * $waXOuterRadius - 1.5 * $thickness"/>
+        <xsl:with-param name="y" select="$yOffset + $waYOuterRadius - $intersectDy "/>
     </xsl:call-template>
 	<xsl:call-template name="arc">
         <xsl:with-param name="rx" select="$waXOuterRadius"/>
