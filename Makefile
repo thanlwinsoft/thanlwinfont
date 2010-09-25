@@ -9,6 +9,9 @@ PARAMS:=xslt/param$(VARIANT).xslt xslt/paramDefaults.xslt xslt/path.xslt
 INI_FILE:=param$(VARIANT).ini
 SVG_DIR:=svg/$(VARIANT)
 
+FAMILY:=thanlwin
+ALL_FONTS:=$(FAMILY)Medium $(FAMILY)Bold $(FAMILY)Light
+
 $(SVG_DIR)/%.svg : xslt/%.xslt $(PARAMS) xslt/path.xslt blank.svg
 	xsltproc -o $@ $< blank.svg
 #	eog $@ &
@@ -90,7 +93,7 @@ upperVowel:=u102d u102e u1032
 
 all: medium bold light
 
-font: thanlwin$(VARIANT).sfd
+font: $(FAMILY)$(VARIANT).sfd
 
 medium:
 	@mkdir -p svg/Medium
@@ -110,10 +113,14 @@ light:
 	VARIANT=Light make -s -e font
 	@rm -f xslt/param.xslt
 
-thanlwin$(VARIANT).sfd : svg $(wildcard python/*.py) $(wildcard $(SVG_DIR)/*.svg) thanlwin-lookups.sfd $(INI_FILE)
-	python/thanlwinfont.py $(INI_FILE) svg/$(VARIANT) thanlwin$(VARIANT)
-	grcompiler -w5503 thanlwin$(VARIANT).gdl thanlwin$(VARIANT).ttf thanlwin$(VARIANT)Gr.ttf
-	mv thanlwin$(VARIANT)Gr.ttf thanlwin$(VARIANT).ttf
+archive: medium bold light
+	zip $(FAMILY)fonts.zip $(patsubst %,%.ttf,$(ALL_FONTS)) OFL.txt
+	hg archive -ttbz2 $(FAMILY)fontsrc.tar.bz2
+
+$(FAMILY)$(VARIANT).sfd : svg $(wildcard python/*.py) $(wildcard $(SVG_DIR)/*.svg) $(FAMILY)-lookups.sfd $(INI_FILE)
+	python/thanlwinfont.py $(INI_FILE) svg/$(VARIANT) $(FAMILY)$(VARIANT)
+	grcompiler -w5503 $(FAMILY)$(VARIANT).gdl $(FAMILY)$(VARIANT).ttf $(FAMILY)$(VARIANT)Gr.ttf
+	mv $(FAMILY)$(VARIANT)Gr.ttf $(FAMILY)$(VARIANT).ttf
 
 svg: xslt/param.xslt $(subst .xslt,.svg,$(subst xslt/,$(SVG_DIR)/,$(wildcard xslt/u*.xslt) $(tests))) medials ereorder yayit yapin kinzi misc tallConsVowel dottedcircle
 

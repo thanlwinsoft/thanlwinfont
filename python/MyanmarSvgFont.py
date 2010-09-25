@@ -20,6 +20,7 @@ upperVowels = [0x102d, 0x102e, 0x1032]
 afterMedials = [0x103b, 0x103d, 0x103e]
 
 classCons = set(narrowCons).union(wideCons, specialCons, tallCons)
+classNumbers = [0x1040, 0x1041, 0x1042, 0x1043, 0x1044, 0x1045, 0x1046, 0x1047, 0x1048, 0x1049]
 classKinzi = [0x1004, 0x101b]
 classAsat = [0x103a]
 classMedialY = [0x103b, 0x105e, 0x105f]
@@ -428,13 +429,17 @@ class MyanmarSvgFont(SvgFont.SvgFont):
         consList = []
         for c in classCons: consList.append("u{0:04x}".format(c))
         self.classes["classCons"] = tuple(consList);
+        numList = []
+        for c in classNumbers: numList.append("u{0:04x}".format(c))
+        self.classes["classNumbers"] = tuple(numList);
+        
         self.addMarkClass("classAsat", classAsat, ("classCons","classAVowel", "classMedialH", "classLDot"))
         self.addMarkClass("classMedialY",classMedialY, ('classCons','classAsat'))
-        self.addMarkClass("classMedialR",classMedialR, ('classCons', 'classAsat'))
+        self.addMarkClass("classMedialR",classMedialR, ('classCons',))
         self.addMarkClass("classMedialW",classMedialW, ('classCons', 'classAsat', 'classMedialY', 'classMedialR'))
         self.addMarkClass("classMedialH",classMedialH, ('classCons', 'classMedialY', 'classMedialR', 'classMedialW'))
         self.addMarkClass("classEVowel",classEVowel, ('classCons', 'classMedialY', 'classMedialR', 'classMedialW', 'classMedialH', 'classEVowel'))
-        self.addMarkClass("classUVowel",classUVowel, ('classCons', 'classMedialY', 'classMedialR', 'classMedialW', 'classMedialH'))
+        self.addMarkClass("classUVowel",classUVowel, ('classCons', 'classNumbers', 'classMedialY', 'classMedialR', 'classMedialW', 'classMedialH'))
         self.addMarkClass("classLVowel",classLVowel, ('classCons', 'classMedialY', 'classMedialR', 'classMedialW', 'classMedialH', 'classUVowel'))
         self.addMarkClass("classLDot",classLDot, ('classCons', 'classMedialY', 'classMedialR', 'classMedialW', 'classMedialH', 'classEVowel', 'classUVowel', 'classLVowel', 'classAVowel', 'classAnusvara'))
         # self.addMarkClass("classKVowel",classKVowel, ('classCons', 'classMedialY', 'classMedialR', 'classMedialW', 'classMedialH'))
