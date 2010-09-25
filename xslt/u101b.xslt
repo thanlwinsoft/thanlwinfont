@@ -23,6 +23,9 @@
 	<xsl:param name="xOffset" select="0"/>
 	<xsl:param name="yOffset" select="0"/>
 
+  <xsl:variable name="psi" select="math:acos( (3 * ($waYOuterRadius * $waYOuterRadius) - ($waXInnerRadius * $waXInnerRadius) ) div (2 * $waYOuterRadius * $waYOuterRadius * math:sqrt(2)))"/>
+  <xsl:variable name="innerAngle" select="math:acos($waXOuterRadius div (math:sqrt(2) * $waXInnerRadius))"/>
+
 	<xsl:variable name="loopInnerDiameter" select="$waXInnerRadius * math:sqrt(2) - 2 * $thickness"/>
 	<xsl:variable name="loopInnerDelta" select="$loopInnerDiameter div math:sqrt(2)"/>
     <xsl:element name="path" use-attribute-sets="pathAttribs">
@@ -61,8 +64,25 @@
         <xsl:with-param name="axisRotation" select="0"/>
         <xsl:with-param name="large" select="1"/>
         <xsl:with-param name="clockwise" select="1"/>
-        <xsl:with-param name="x" select="-$waXInnerRadius -.5 * ($waXOuterRadius - $loopInnerDelta)"/>
-        <xsl:with-param name="y" select="-$waYInnerRadius +.5 * ($waYOuterRadius - $loopInnerDelta) - $thickness"/>
+        <xsl:with-param name="x" select="-$waXInnerRadius - $waXOuterRadius * (1 - math:cos($pi div 4 + $psi))"/>
+        <xsl:with-param name="y" select="-$waXOuterRadius * (1 - math:sin($pi div 4 + $psi))"/>
+    </xsl:call-template>
+    
+    <xsl:call-template name="arc">
+        <xsl:with-param name="rx" select="$waXOuterRadius"/>
+        <xsl:with-param name="ry" select="$waYOuterRadius"/>
+        <xsl:with-param name="axisRotation" select="0"/>
+        <xsl:with-param name="large" select="0"/>
+        <xsl:with-param name="clockwise" select="0"/>
+        <xsl:with-param name="x" select="$waXOuterRadius * (1 - math:cos($pi div 4 + $psi))"/>
+        <xsl:with-param name="y" select="-$waXOuterRadius * math:sin($pi div 4 + $psi)"/>
+    </xsl:call-template>
+    <xsl:call-template name="end"/>
+    
+    <xsl:if test="2 * $waXInnerRadius &gt; math:sqrt(2) * $waXOuterRadius">
+	<xsl:call-template name="Move">
+        <xsl:with-param name="x" select="$xOffset + $preGuard + $waXInnerRadius * math:cos($innerAngle + $pi div 4)"/>
+        <xsl:with-param name="y" select="$yOffset + $waYInnerRadius * math:sin($innerAngle + $pi div 4)"/>
     </xsl:call-template>
     <xsl:call-template name="arc">
         <xsl:with-param name="rx" select="$waXInnerRadius"/>
@@ -70,21 +90,20 @@
         <xsl:with-param name="axisRotation" select="0"/>
         <xsl:with-param name="large" select="0"/>
         <xsl:with-param name="clockwise" select="1"/>
-        <xsl:with-param name="x" select="-$loopInnerDelta"/>
-        <xsl:with-param name="y" select="$loopInnerDelta"/>
+        <xsl:with-param name="x" select="$waXInnerRadius * (math:cos($pi div 4 - $innerAngle) - math:cos($pi div 4 + $innerAngle) )"/>
+        <xsl:with-param name="y" select="$waXInnerRadius * (math:sin($pi div 4 - $innerAngle) - math:sin($pi div 4 + $innerAngle) )"/>
     </xsl:call-template>
-    <xsl:text>l</xsl:text><xsl:value-of select="-.5 * ($waXOuterRadius - $loopInnerDelta)" />
-    <xsl:text>,</xsl:text><xsl:value-of select=".5 * ($waYOuterRadius - $loopInnerDelta)" />
     <xsl:call-template name="arc">
-        <xsl:with-param name="rx" select="$waXOuterRadius"/>
-        <xsl:with-param name="ry" select="$waYOuterRadius"/>
+        <xsl:with-param name="rx" select="$waXInnerRadius"/>
+        <xsl:with-param name="ry" select="$waYInnerRadius"/>
         <xsl:with-param name="axisRotation" select="0"/>
         <xsl:with-param name="large" select="0"/>
-        <xsl:with-param name="clockwise" select="0"/>
-        <xsl:with-param name="x" select="$waXOuterRadius"/>
-        <xsl:with-param name="y" select="-$waYOuterRadius"/>
+        <xsl:with-param name="clockwise" select="1"/>
+        <xsl:with-param name="x" select="-$waXInnerRadius * (math:cos($pi div 4 - $innerAngle) - math:cos($pi div 4 + $innerAngle) )"/>
+        <xsl:with-param name="y" select="- $waXInnerRadius * (math:sin($pi div 4 - $innerAngle) - math:sin($pi div 4 + $innerAngle) )"/>
     </xsl:call-template>
     <xsl:call-template name="end"/>
+    </xsl:if>
     </xsl:attribute>
     </xsl:element>
 </xsl:template>

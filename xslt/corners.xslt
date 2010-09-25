@@ -19,7 +19,7 @@
 	<xsl:param name="xOffset" select="0"/>
     <xsl:element name="path" use-attribute-sets="pathAttribs">
     <xsl:attribute name="d">
-    <xsl:message>a</xsl:message>
+    <!--<xsl:message>a</xsl:message>-->
     <xsl:call-template name="Move">
         <xsl:with-param name="x" select="200"/>
         <xsl:with-param name="y" select="200"/>
@@ -31,7 +31,7 @@
 		<xsl:with-param name="nextX" select="50"/>
         <xsl:with-param name="nextY" select="-50"/>
 	</xsl:call-template>
-	<xsl:message>b</xsl:message>
+<!--	<xsl:message>b</xsl:message>-->
 	<xsl:call-template name="Move">
         <xsl:with-param name="x" select="200"/>
         <xsl:with-param name="y" select="250"/>
@@ -43,7 +43,7 @@
 		<xsl:with-param name="nextX" select="50"/>
         <xsl:with-param name="nextY" select="100"/>
 	</xsl:call-template>
-	<xsl:message>c</xsl:message>
+<!--	<xsl:message>c</xsl:message>-->
 	<xsl:call-template name="Move">
         <xsl:with-param name="x" select="200"/>
         <xsl:with-param name="y" select="500"/>
@@ -55,7 +55,7 @@
 		<xsl:with-param name="nextX" select="50"/>
         <xsl:with-param name="nextY" select="-100"/>
 	</xsl:call-template>
-	<xsl:message>d</xsl:message>
+<!--	<xsl:message>d</xsl:message>-->
 	<xsl:call-template name="Move">
         <xsl:with-param name="x" select="200"/>
         <xsl:with-param name="y" select="600"/>
@@ -67,7 +67,7 @@
 		<xsl:with-param name="nextX" select="25"/>
         <xsl:with-param name="nextY" select="50"/>
 	</xsl:call-template>
-	<xsl:message>e</xsl:message>
+<!--	<xsl:message>e</xsl:message>-->
 	<xsl:call-template name="Move">
         <xsl:with-param name="x" select="300"/>
         <xsl:with-param name="y" select="100"/>
@@ -79,7 +79,7 @@
 		<xsl:with-param name="nextX" select="50"/>
         <xsl:with-param name="nextY" select="50"/>
 	</xsl:call-template>
-	<xsl:message>f</xsl:message>
+<!--	<xsl:message>f</xsl:message>-->
 	<xsl:call-template name="Move">
         <xsl:with-param name="x" select="300"/>
         <xsl:with-param name="y" select="350"/>
@@ -91,7 +91,7 @@
 		<xsl:with-param name="nextX" select="100"/>
         <xsl:with-param name="nextY" select="-200"/>
 	</xsl:call-template>
-	<xsl:message>g</xsl:message>	
+<!--	<xsl:message>g</xsl:message>	-->
 	<xsl:call-template name="Move">
         <xsl:with-param name="x" select="300"/>
         <xsl:with-param name="y" select="400"/>
@@ -103,7 +103,7 @@
 		<xsl:with-param name="nextX" select="0"/>
         <xsl:with-param name="nextY" select="100"/>
 	</xsl:call-template>
-	<xsl:message>h</xsl:message>	
+<!--	<xsl:message>h</xsl:message>	-->
 	<xsl:call-template name="Move">
         <xsl:with-param name="x" select="300"/>
         <xsl:with-param name="y" select="700"/>
@@ -115,7 +115,7 @@
 		<xsl:with-param name="nextX" select="0"/>
         <xsl:with-param name="nextY" select="-50"/>
 	</xsl:call-template>
-	<xsl:message>i</xsl:message>	
+<!--	<xsl:message>i</xsl:message>	-->
 	<xsl:call-template name="Move">
         <xsl:with-param name="x" select="350"/>
         <xsl:with-param name="y" select="700"/>

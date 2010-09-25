@@ -37,7 +37,6 @@
 <xsl:variable name="loopInnerIntersectDx" select="math:cos($loopIntersectInternalAngle) * $waXInnerRadius"/>
 <xsl:variable name="loopInnerIntersectDy" select="math:sin($loopIntersectInternalAngle) * $waXInnerRadius"/>
 
-	<xsl:message terminate="no"><xsl:value-of select="$cutOuterDy"/></xsl:message>
     <xsl:element name="path" use-attribute-sets="pathAttribs">
     <xsl:attribute name="d">
     <xsl:call-template name="Move">

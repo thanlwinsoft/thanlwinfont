@@ -7,7 +7,7 @@
 <xsl:include href="param.xslt"/>
 <xsl:include href="path.xslt"/>
 
-<xsl:variable name="u1030TallAdvance" select="$preGuard + $postGuard + $lineSpacing + 3 * $thickness + $cornerOuterRadius"/>
+<xsl:variable name="u1030TallAdvance" select="$preGuard + $postGuard + $lineSpacing + 2 * $thickness + $cornerOuterRadius"/>
 <xsl:variable name="advance" select="$u1030TallAdvance"/>
 <xsl:variable name="overlap" select="0"/>
 

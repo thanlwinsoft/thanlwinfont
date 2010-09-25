@@ -29,7 +29,6 @@
 <xsl:variable name="hookOuterDy" select="math:sin($hookStartAngle) * $waYOuterRadius"/>
 <xsl:variable name="hookInnerDx" select="math:cos($hookStartAngle) * $waYInnerRadius"/>
 <xsl:variable name="hookInnerDy" select="math:sin($hookStartAngle) * $waYInnerRadius"/>
-	<xsl:message terminate="no"><xsl:value-of select="$cutOuterDy"/></xsl:message>
     <xsl:element name="path" use-attribute-sets="pathAttribs">
     <xsl:attribute name="d">
     <xsl:call-template name="Move">

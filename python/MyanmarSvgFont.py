@@ -104,7 +104,9 @@ class MyanmarSvgFont(SvgFont.SvgFont):
             self.addLigature("medialLigSub", ["u1039", glyphName, "u102d", "u102f"])
 
             self.addLigature("medialLigSub", ["u1039", glyphName, "u1030"])
-            
+        
+        self.addLigature("medialLigSub", ["u1039", "u1010", "u103d"])
+
         self.addLigature("medialLigSub", ["u103b", "u103d"])
         
         self.addLigature("medialLigSub", ["u103b", "u103e"])
@@ -225,6 +227,7 @@ class MyanmarSvgFont(SvgFont.SvgFont):
             self.addLigature("reorder", [glyphName, "u103c", "u103e", "u102f"])
             self.addLigature("reorder", [glyphName, "u103c", "u103e", "u1030"])
             self.addLigature("reorder", [glyphName, "u103c", "u103e", "u102d", "u102f"])
+            self.addLigature("reorder", [glyphName, "u103c", "u103e", "u102f", "u1036"])
 
             self.addLigature("reorder", [glyphName, "u103c", "u102f", "u1036", "u1037"])
 
@@ -237,6 +240,8 @@ class MyanmarSvgFont(SvgFont.SvgFont):
         self.addLigature("reorder", ["u1019", "u103c", "u103d", "u103e"])
 
         # a few stacks occur with e vowel
+        self.addLigature("reorder", ["u1000", "u1039", "u1000", "u1031"])
+        self.addLigature("reorder", ["u1000", "u1039", "u1001", "u1031"])
         self.addLigature("reorder", ["u1005", "u1039", "u1005", "u1031"])
         self.addLigature("reorder", ["u1005", "u1039", "u1006", "u1031"])
         self.addLigature("reorder", ["u1007", "u1039", "u1008", "u1031"])

@@ -7,7 +7,7 @@
 <xsl:include href="param.xslt"/>
 <xsl:include href="path.xslt"/>
 
-<xsl:variable name="advance" select="$wideConsWidth + $preGuard + $thickness + $postGuard"/>
+<xsl:variable name="advance" select="round(2 * $preGuard + 4 * $waXOuterRadius + 3 * $waXOuterRadius * $upperScale div math:sqrt(2) - $waXOuterRadius - $thickness + $upperPad)"/>
 <xsl:variable name="overlap" select="0"/>
 <xsl:variable name="intersectAngle"
 	select="math:acos(($waXOuterRadius - .5 * $thickness) div $waXOuterRadius)"/>
@@ -133,8 +133,8 @@
     </xsl:call-template>
 
 	<xsl:call-template name="Move">
-        <xsl:with-param name="x" select="$xOffset + 2 * $preGuard+4 * $waXOuterRadius + $postGuard"/>
-        <xsl:with-param name="y" select="$yOffset + 3 * $waYOuterRadius + $upperPad"/>
+        <xsl:with-param name="x" select="$xOffset + 2 * $preGuard + 4 * $waXOuterRadius + 3 * $waXOuterRadius * $upperScale div math:sqrt(2) - $waXOuterRadius - $thickness + $upperPad"/>
+        <xsl:with-param name="y" select="$yOffset + $waYOuterRadius * (2 + $medialScale + $medialScale div math:sqrt(2)) + $medialPad"/>
     </xsl:call-template>
     <xsl:call-template name="arc">
         <xsl:with-param name="rx" select="$upperScale * $waXOuterRadius"/>
@@ -146,8 +146,8 @@
         <xsl:with-param name="y" select="-math:sqrt(2) * $upperScale * $waXOuterRadius"/>
     </xsl:call-template>
     <xsl:call-template name="corner">
-		<xsl:with-param name="x" select="($upperPad + $upperScale * $waXOuterRadius) div math:sqrt(2)"/>
-        <xsl:with-param name="y" select="-($upperPad + $upperScale * $waXOuterRadius) div math:sqrt(2)"/>
+		<xsl:with-param name="x" select="($upperScale * $waXOuterRadius) * (1 - 1 div math:sqrt(2)) + $upperPad"/>
+        <xsl:with-param name="y" select="-($upperScale * $waXOuterRadius) * ( 1 - 1 div math:sqrt(2)) - $upperPad"/>
 		<xsl:with-param name="r" select="$cornerOuterRadius"/>
 		<xsl:with-param name="nextX" select="0"/>
         <xsl:with-param name="nextY" select="-$descent - 2 * $waYOuterRadius"/>
@@ -158,8 +158,8 @@
 		<xsl:with-param name="x" select="0"/>
         <xsl:with-param name="y" select="$descent + 2 * $waYOuterRadius+ .5 * $thickness div math:sqrt(2)"/>
 		<xsl:with-param name="r" select="$cornerInnerRadius"/>
-		<xsl:with-param name="nextX" select="-($upperPad + $upperScale * $waXOuterRadius + .5 * $thickness) div math:sqrt(2)"/>
-        <xsl:with-param name="nextY" select="($upperPad + $upperScale * $waXOuterRadius + .5 * $thickness) div math:sqrt(2)"/>
+		<xsl:with-param name="nextX" select="-(($upperScale * $waXOuterRadius) * (1 - 1 div math:sqrt(2)) + $upperPad + .5 * $thickness div math:sqrt(2))"/>
+        <xsl:with-param name="nextY" select="($upperScale * $waXOuterRadius) * ( 1 - 1 div math:sqrt(2)) + $upperPad + .5 * $thickness div math:sqrt(2)"/>
 	</xsl:call-template>
 	<xsl:call-template name="arc">
         <xsl:with-param name="rx" select="$upperScale * $waXOuterRadius - $thickness"/>

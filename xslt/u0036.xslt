@@ -24,7 +24,6 @@
 	<xsl:variable name="ellipseOuterRadius" select="($latinAscent - $waYOuterRadius)"/>
 	<xsl:variable name="ellipseInnerRadius" select="$ellipseOuterRadius - $thickness"/>
 	<xsl:variable name="cosSquared" select="($ellipseInnerRadius * $ellipseInnerRadius - $waXOuterRadius * $waXOuterRadius) div ((($ellipseInnerRadius div $waXInnerRadius)*($ellipseInnerRadius div $waXInnerRadius) -  1 ) * $waXOuterRadius * $waXOuterRadius)"/>
-	<xsl:message><xsl:value-of select="$cosSquared"/></xsl:message>
 	<xsl:variable name="joinAngle" select="math:acos(math:sqrt($cosSquared))"/>
 	<xsl:variable name="endAngle" select=".4 * $pi"/>
 	<xsl:element name="path" use-attribute-sets="pathAttribs">

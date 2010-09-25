@@ -33,7 +33,7 @@
 			<axsl:text><xsl:text> </xsl:text></axsl:text>
 			<axsl:value-of select="$medialScale"/><axsl:text><xsl:text> 0 </xsl:text></axsl:text>
 			<axsl:value-of select="0"/><axsl:text><xsl:text> </xsl:text></axsl:text>
-			<axsl:value-of select="$ascent"/><axsl:text><xsl:text>)</xsl:text></axsl:text>
+			<axsl:value-of select="$fontAscent"/><axsl:text><xsl:text>)</xsl:text></axsl:text>
 		</axsl:attribute>
 		<axsl:call-template name="{concat('u1039_', $base)}"/>
 	</axsl:copy>

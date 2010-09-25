@@ -31,7 +31,7 @@
 <axsl:variable name="overlap" select="0"/>
 <xsl:choose>
 <xsl:when test="$upperVowel = 'u102c'">
-<axsl:variable name="advance" select="$widthOffset + $preGuard + $thickness + 2 * $postGuard + $u102cAdvance"/>
+<axsl:variable name="advance" select="$widthOffset + $preGuard + $thickness + $postGuard + $u102cAdvance"/>
 </xsl:when>
 <xsl:otherwise>
 <axsl:variable name="advance" select="$widthOffset + $preGuard + $thickness + 2 * $postGuard"/>

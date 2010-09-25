@@ -88,7 +88,7 @@
 	<xsl:call-template name="end"/>
 	
 	<xsl:call-template name="Move">
-        <xsl:with-param name="x" select="$xOffset + $waXOuterRadius + $cornerOuterRadius + $preGuard + $thickness"/>
+        <xsl:with-param name="x" select="$xOffset + $waXOuterRadius + $postGuard + 2 * $preGuard + 1.5 * $thickness"/>
         <xsl:with-param name="y" select="$yOffset - $medialPad"/>
     </xsl:call-template>
 	

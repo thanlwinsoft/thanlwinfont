@@ -4,7 +4,7 @@
 # This license is available with a FAQ at:http://scripts.sil.org/OFL
 #
 
-VARIANT:=Medium
+VARIANT:=
 PARAMS:=xslt/param$(VARIANT).xslt xslt/paramDefaults.xslt xslt/path.xslt
 INI_FILE:=param$(VARIANT).ini
 SVG_DIR:=svg/$(VARIANT)
@@ -93,26 +93,27 @@ all: medium bold light
 font: thanlwin$(VARIANT).sfd
 
 medium:
-	mkdir -p svg/Medium
-	rm -f xslt/param.xslt
-	VARIANT=Medium make -e font
-	rm -f xslt/param.xslt
+	@mkdir -p svg/Medium
+	@rm -f xslt/param.xslt
+	VARIANT=Medium make -s -e font
+	@rm -f xslt/param.xslt
 
 bold:
-	mkdir -p svg/Bold
-	rm -f xslt/param.xslt
-	VARIANT=Bold make -e font
-	rm -f xslt/param.xslt
+	@mkdir -p svg/Bold
+	@rm -f xslt/param.xslt
+	VARIANT=Bold make -s -e font
+	@rm -f xslt/param.xslt
 
 light:
-	mkdir -p svg/Light
-	rm -f xslt/param.xslt
-	VARIANT=Light make -e font
-	rm -f xslt/param.xslt
+	@mkdir -p svg/Light
+	@rm -f xslt/param.xslt
+	VARIANT=Light make -s -e font
+	@rm -f xslt/param.xslt
 
 thanlwin$(VARIANT).sfd : svg $(wildcard python/*.py) $(wildcard $(SVG_DIR)/*.svg) thanlwin-lookups.sfd $(INI_FILE)
 	python/thanlwinfont.py $(INI_FILE) svg/$(VARIANT) thanlwin$(VARIANT)
 	grcompiler -w5503 thanlwin$(VARIANT).gdl thanlwin$(VARIANT).ttf thanlwin$(VARIANT)Gr.ttf
+	mv thanlwin$(VARIANT)Gr.ttf thanlwin$(VARIANT).ttf
 
 svg: xslt/param.xslt $(subst .xslt,.svg,$(subst xslt/,$(SVG_DIR)/,$(wildcard xslt/u*.xslt) $(tests))) medials ereorder yayit yapin kinzi misc tallConsVowel dottedcircle
 
@@ -141,7 +142,7 @@ $(eval $(call tallMedial,u100d))
 medials : $(patsubst %, $(SVG_DIR)/u1039_%.svg, $(medialCons) $(rotatedMedialCons)) $(patsubst %, $(SVG_DIR)/u1039_%_u102f.svg, $(medialCons)) $(patsubst %, $(SVG_DIR)/u1039_%_u102d_u102f.svg, $(medialCons)) $(patsubst %, $(SVG_DIR)/u1039_%_u1030.svg, $(medialCons)) narrowwidestack
 
 
-ereorder:: $(patsubst %, $(SVG_DIR)/%_u1031.svg, $(allCons) u1029 u25cc u103f)
+ereorder:: $(patsubst %, $(SVG_DIR)/%_u1031.svg, $(allCons) u1029 u25cc u103f u100b_u1039_u100c)
 
 # $(patsubst %, $(SVG_DIR)/%_u103c_u1031.svg, $(wideCons) $(narrowCons)) $(patsubst %, $(SVG_DIR)/%_u103c_u1031_u102c.svg, $(wideCons) $(narrowCons)) $(patsubst %, $(SVG_DIR)/%_u103c_u103d_u1031.svg, $(wideCons) $(narrowCons)) $(patsubst %, $(SVG_DIR)/%_u103c_u103d_u1031_u102c.svg, $(wideCons) $(narrowCons)) $(patsubst %, $(SVG_DIR)/%_u103c_u103e_u1031.svg, $(wideCons) $(narrowCons)) $(patsubst %, $(SVG_DIR)/%_u103c_u103e_u1031_u102c.svg, $(wideCons) $(narrowCons)) $(patsubst %, $(SVG_DIR)/%_u103b_u1031.svg, $(takesMedialEVowel)) $(patsubst %, $(SVG_DIR)/%_u103b_u103d_u1031.svg, $(takesMedialEVowel) u1014 u100a u101b) $(patsubst %, $(SVG_DIR)/%_u103b_u103e_u1031.svg, $(takesMedialEVowel)) $(patsubst %, $(SVG_DIR)/%_u103b_u103d_u103e_u1031.svg, $(takesMedialEVowel)) $(patsubst %, $(SVG_DIR)/%_u103d_u1031.svg, $(takesMedialEVowel) u1014 u100a u101b) $(patsubst %, $(SVG_DIR)/%_u103e_u1031.svg, $(takesMedialEVowel) u1014 u100a u101b) $(patsubst %, $(SVG_DIR)/%_u103d_u103e_u1031.svg, $(takesMedialEVowel) u1014 u100a u101b) $(SVG_DIR)/u1005_u1039_u1006_u1031.svg $(SVG_DIR)/u1014_u1039_u1010_u1031.svg $(SVG_DIR)/u1014_u1039_u1012_u1031.svg $(SVG_DIR)/u1014_u1039_u1013_u1031.svg $(SVG_DIR)/u1017_u1039_u1017_u1031.svg $(SVG_DIR)/u1019_u1039_u1019_u1031.svg $(SVG_DIR)/u100b_u1039_u100c_u1031.svg
 
@@ -226,6 +227,8 @@ $(SVG_DIR)/$(1)_u1039_$(3)_u1031_u102c.svg : xslt/$(2).xslt xslt/u1031.xslt xslt
 ereorder :: $(SVG_DIR)/$(1)_u1039_$(3)_u1031.svg $(SVG_DIR)/$(1)_u1039_$(3)_u1031_u102c.svg
 endef
 
+$(eval $(call eStack,u1000,u1000,u1000))
+$(eval $(call eStack,u1000,u1000,u1001))
 $(eval $(call eStack,u1005,u1005,u1005))
 $(eval $(call eStack,u1005,u1005,u1006))
 $(eval $(call eStack,u100f,u100f,u100f))
@@ -395,6 +398,19 @@ endef
 $(foreach cons,$(wideCons),$(eval $(call yayitConsHatoOVowel,$(cons),u103c_wide_upper_u103e)))
 
 $(foreach cons,$(narrowCons),$(eval $(call yayitConsHatoOVowel,$(cons),u103c_narrow_upper_u103e)))
+
+define yayitConsHatoOm
+$(SVG_DIR)/$(1)_u103c_u103e_u102f_u1036.svg : xslt/$(1).xslt xslt/$(2).xslt xslt/u1036.xslt xslt/u102f_tall.xslt xslt/yayitConsUpperLowerVowel.xslt Makefile $(PARAMS)
+	mkdir -p tmp
+	xsltproc -o tmp/$(1)_u103c_u103e_u102f_u1036.xslt --stringparam yayit $(2) --stringparam base $(1) --stringparam upperVowel u1036 --stringparam lowerVowel u102f_tall xslt/yayitConsUpperLowerVowel.xslt blank.svg
+	xsltproc -o $$@  tmp/$(1)_u103c_u103e_u102f_u1036.xslt blank.svg
+
+yayit :: $(SVG_DIR)/$(1)_u103c_u103e_u102f_u1036.svg
+endef
+
+$(foreach cons,$(wideCons),$(eval $(call yayitConsHatoOm,$(cons),u103c_wide_u103e)))
+
+$(foreach cons,$(narrowCons),$(eval $(call yayitConsHatoOm,$(cons),u103c_narrow_u103e)))
 
 kinzi: $(patsubst %, $(SVG_DIR)/u1004_u103a_u1039_%_u1031.svg, $(takesKinzi)) $(patsubst %, $(SVG_DIR)/u1004_u103a_u1039_%.svg, $(takesKinzi)) $(patsubst %, $(SVG_DIR)/u1004_u103a_u1039_%_u102d.svg, $(takesKinzi)) $(patsubst %, $(SVG_DIR)/u1004_u103a_u1039_%_u102e.svg, $(takesKinzi)) $(patsubst %, $(SVG_DIR)/u1004_u103a_u1039_%_u1036.svg, $(takesKinzi)) $(patsubst %, $(SVG_DIR)/u1004_u103a_u1039_%_u103b_u1031.svg, $(takesKinzi))
 

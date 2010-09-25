@@ -27,10 +27,8 @@
 			<axsl:value-of select="$wideConsWidth + $waXInnerRadius"/>
 		</axsl:when>
 		<axsl:when test="$isWide &gt; 0"><axsl:value-of select="$wideConsWidth"/>
-		<axsl:message>Wide</axsl:message>
 		</axsl:when>
 		<axsl:otherwise><axsl:value-of select="$narrowConsWidth"/>
-		<axsl:message>Narrow<axsl:value-of select="$isWide"/></axsl:message>
 		</axsl:otherwise>
 	</axsl:choose>
 </axsl:variable>

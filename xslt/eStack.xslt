@@ -35,6 +35,10 @@
 	<axsl:variable name="wideConsBelowOverlap" select="0"/>
 	<axsl:variable name="advance" select="$u102cAdvance + 2 * $narrowConsWidth"/>
 </xsl:when>
+<xsl:when test="($upperCons = 'u1000')">
+	<axsl:variable name="wideConsBelowOverlap" select="- $narrowConsWidth + .5 * ($wideConsWidth)"/>
+	<axsl:variable name="advance" select="$wideConsWidth + $narrowConsWidth"/>
+</xsl:when>
 <xsl:when test="($upperCons = 'u100f')">
 	<axsl:variable name="wideConsBelowOverlap" select="- $narrowConsWidth + .5 * ($waXInnerRadius + $wideConsWidth)"/>
 	<axsl:variable name="advance" select="$wideConsWidth + $waXInnerRadius + $narrowConsWidth"/>
@@ -62,18 +66,29 @@
 			<axsl:with-param name="xOffset" select="$narrowConsWidth"/>
 			<axsl:with-param name="yOffset" select="0"/>
 		</axsl:call-template>
-		<xsl:if test="string-length($aVowel) and $upperCons != 'u100f'">
-		<axsl:call-template name="{$aVowel}">
-			<axsl:with-param name="xOffset" select="2 * $narrowConsWidth"/>
-			<axsl:with-param name="yOffset" select="0"/>
-		</axsl:call-template>
-		</xsl:if>
-		<xsl:if test="string-length($aVowel) and $upperCons = 'u100f'">
-		<axsl:call-template name="{$aVowel}">
-			<axsl:with-param name="xOffset" select="$narrowConsWidth + $wideConsWidth + $waXInnerRadius"/>
-			<axsl:with-param name="yOffset" select="0"/>
-		</axsl:call-template>
-		</xsl:if>
+		<xsl:if test="string-length($aVowel)">
+		<xsl:choose>
+		  <xsl:when test="$upperCons = 'u1000'">
+		  <axsl:call-template name="{$aVowel}">
+			  <axsl:with-param name="xOffset" select="$narrowConsWidth + $wideConsWidth"/>
+			  <axsl:with-param name="yOffset" select="0"/>
+		  </axsl:call-template>
+		  </xsl:when>
+		  <xsl:when test="$upperCons = 'u100f'">
+		  <axsl:call-template name="{$aVowel}">
+			  <axsl:with-param name="xOffset" select="$narrowConsWidth + $wideConsWidth + $waXInnerRadius"/>
+			  <axsl:with-param name="yOffset" select="0"/>
+		  </axsl:call-template>
+		  </xsl:when>
+		  <xsl:otherwise>
+		  <axsl:call-template name="{$aVowel}">
+			  <axsl:with-param name="xOffset" select="2 * $narrowConsWidth"/>
+			  <axsl:with-param name="yOffset" select="0"/>
+		  </axsl:call-template>
+		  </xsl:otherwise>
+	  </xsl:choose>
+	  </xsl:if>
+		
 	</axsl:copy>
 	<axsl:element name="svg:g" use-attribute-sets="gMedialAttribs">
 		<axsl:call-template name="{concat('u1039_', $lowerCons)}">
@@ -90,6 +105,12 @@
 		<xsl:choose>
 		<xsl:when test="$lowerCons = 'u1010' or $lowerCons = 'u1006'">
 		<axsl:with-param name="xOffset" select="($xOffset div $medialScale) -$wideConsWidth + $postGuard div $medialScale -$postGuard div $medialScale"/>
+		</xsl:when>
+		<xsl:when test="$lowerCons = 'u1000' and $upperCons = 'u1000'">
+		<axsl:with-param name="xOffset" select="($xOffset div $medialScale) -$preGuard - 2 * $waXOuterRadius + .5 * $thickness"/>
+		</xsl:when>
+		<xsl:when test="$lowerCons = 'u1001' and $upperCons = 'u1000'">
+		<axsl:with-param name="xOffset" select="($xOffset div $medialScale) -$preGuard - $waXOuterRadius + ($waXOuterRadius - .5 * $thickness) div $medialScale"/>
 		</xsl:when>
 		<xsl:when test="$lowerCons = 'u100f' and $upperCons = 'u100f'">
 		<axsl:with-param name="xOffset" select="($xOffset div $medialScale) -$preGuard - 2 * $waXOuterRadius - .5 * $waXOuterRadius + $thickness"/>

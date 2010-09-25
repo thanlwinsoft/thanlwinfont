@@ -104,7 +104,6 @@
 	<xsl:param name="clockwise" select="1"/>
 	<xsl:param name="dxSign" select="-1 * $cx div math:abs($cx)"/>
 	<xsl:param name="dySign" select="-1 * $cy div math:abs($cy)"/>
-	<xsl:message terminate="no"><xsl:value-of select="$hookOuterRadius"/></xsl:message>
 	<xsl:call-template name="arc">
 		<xsl:with-param name="rx" select="$hookOuterRadius"/>
 		<xsl:with-param name="ry" select="$hookOuterRadius"/>
@@ -135,7 +134,6 @@
 	<xsl:param name="clockwise" select="1"/>
 	<xsl:param name="dxSign" select="-1 * $cx div math:abs($cx)"/>
 	<xsl:param name="dySign" select="-1 * $cy div math:abs($cy)"/>
-	<xsl:message terminate="no"><xsl:value-of select="$hookOuterRadius"/></xsl:message>
 	<xsl:call-template name="arc">
 		<xsl:with-param name="rx" select="$hookInnerRadius"/>
 		<xsl:with-param name="ry" select="$hookInnerRadius"/>

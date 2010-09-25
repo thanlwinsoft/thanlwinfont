@@ -195,7 +195,7 @@ class SvgFont(object) :
 
         gdlFile.write("table(glyph);\n")
         for c in self.classes:
-          print c + " " + str(self.classes[c])
+          # print c + " " + str(self.classes[c])
           glyphList = self.classes[c][0]
           for i in range(1, len(self.classes[c])):
               glyphList = glyphList + ", " + self.classes[c][i]

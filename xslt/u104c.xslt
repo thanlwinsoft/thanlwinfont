@@ -33,7 +33,6 @@
 
 <xsl:template name="u104c">
 	<xsl:param name="xOffset" select="0"/>
-	<xsl:message terminate="no"><xsl:value-of select="$cutOuterDy"/></xsl:message>
     <xsl:element name="path" use-attribute-sets="pathAttribs">
     <xsl:attribute name="d">
     <xsl:call-template name="Move">
