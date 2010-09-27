@@ -69,6 +69,7 @@
 
 <xsl:param name="lineSpacing" select="60"/>
 <xsl:param name="yayitHookDepth" select="60"/>
+<xsl:param name="yayitHookBottomDepth" select="$descent - $medialPad"/>
 <xsl:param name="yapinDepth" select=".5*$descent"/>
 <xsl:param name="upperPad" select="50"/>
 <xsl:param name="upperScale" select=".5 * ($ascent - $upperPad - 2 * $waYOuterRadius) div $waYOuterRadius"/>

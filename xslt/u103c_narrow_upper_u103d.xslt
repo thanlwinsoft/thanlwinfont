@@ -43,7 +43,7 @@
 		<xsl:with-param name="x" select="0"/>
         <xsl:with-param name="y" select="-$descent"/>
 		<xsl:with-param name="r" select="$cornerOuterRadius"/>
-		<xsl:with-param name="nextX" select="$waXOuterRadius + $cornerOuterRadius"/>
+		<xsl:with-param name="nextX" select="$waXOuterRadius + $thickness + $preGuard + $postGuard"/>
         <xsl:with-param name="nextY" select="0"/>
 	</xsl:call-template>
 	<xsl:call-template name="arc">
@@ -57,7 +57,7 @@
     </xsl:call-template>
 	
 	<xsl:call-template name="corner">
-		<xsl:with-param name="x" select="-$waXOuterRadius - $cornerInnerRadius + $waXOuterRadius * $medialScale * math:sin($intersectAngle)"/>
+		<xsl:with-param name="x" select="-$waXOuterRadius - $postGuard - $preGuard + $waXOuterRadius * $medialScale * math:sin($intersectAngle)"/>
         <xsl:with-param name="y" select="0"/>
 		<xsl:with-param name="r" select="$cornerInnerRadius"/>
 		<xsl:with-param name="nextX" select="0"/>
@@ -72,7 +72,7 @@
 	</xsl:call-template>
 	<xsl:call-template name="end"/>
 	<xsl:call-template name="Move">
-        <xsl:with-param name="x" select="$xOffset + $waXOuterRadius +$preGuard + $cornerOuterRadius"/>
+        <xsl:with-param name="x" select="$xOffset + $waXOuterRadius + 2 * $preGuard + $postGuard + $thickness"/>
         <xsl:with-param name="y" select="$yOffset - $descent + $waThickness"/>
     </xsl:call-template>
     <xsl:call-template name="arc">

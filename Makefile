@@ -8,6 +8,7 @@ VARIANT:=
 PARAMS:=xslt/param$(VARIANT).xslt xslt/paramDefaults.xslt xslt/path.xslt
 INI_FILE:=param$(VARIANT).ini
 SVG_DIR:=svg/$(VARIANT)
+SILENT:=-s
 
 FAMILY:=thanlwin
 ALL_FONTS:=$(FAMILY)Medium $(FAMILY)Bold $(FAMILY)Light
@@ -98,19 +99,19 @@ font: $(FAMILY)$(VARIANT).sfd
 medium:
 	@mkdir -p svg/Medium
 	@rm -f xslt/param.xslt
-	VARIANT=Medium make -s -e font
+	VARIANT=Medium make $(SILENT) -e font
 	@rm -f xslt/param.xslt
 
 bold:
 	@mkdir -p svg/Bold
 	@rm -f xslt/param.xslt
-	VARIANT=Bold make -s -e font
+	VARIANT=Bold make $(SILENT) -e font
 	@rm -f xslt/param.xslt
 
 light:
 	@mkdir -p svg/Light
 	@rm -f xslt/param.xslt
-	VARIANT=Light make -s -e font
+	VARIANT=Light make $(SILENT) -e font
 	@rm -f xslt/param.xslt
 
 archive: medium bold light
