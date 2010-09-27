@@ -677,7 +677,7 @@ endef
 
 $(foreach mark,$(classMarks),$(eval $(call dottedCircleMark,$(mark))))
 
-misc:: $(SVG_DIR)/u1014_u103b.svg $(SVG_DIR)/u1014_u103d.svg $(SVG_DIR)/u1014_u103e.svg $(SVG_DIR)/u1014_u103b_u103d.svg $(SVG_DIR)/u1014_u103b_u103e.svg $(SVG_DIR)/u1014_u103b_u103d_u103e.svg $(SVG_DIR)/u1014_u103d_u103e.svg $(SVG_DIR)/u1014_u103d_u1031.svg $(SVG_DIR)/u1014_u103e_u1031.svg $(SVG_DIR)/u1014_u103b_u103d_u1031.svg $(SVG_DIR)/u1014_u103b_u103e_u1031.svg $(SVG_DIR)/u1014_u103b_u103d_u103e_u1031.svg $(SVG_DIR)/u1014_u103d_u103e_u1031.svg $(SVG_DIR)/u1014_u102f.svg $(SVG_DIR)/u1014_u102d_u102f.svg $(SVG_DIR)/u1014_u103e_u102d_u102f.svg $(SVG_DIR)/u1014_u1030.svg $(SVG_DIR)/u100a_u103b.svg $(SVG_DIR)/u100a_u103d.svg $(SVG_DIR)/u100a_u103e.svg $(SVG_DIR)/u100a_u103b_u103d.svg $(SVG_DIR)/u100a_u103b_u103e.svg $(SVG_DIR)/u100a_u103b_u103d_u103e.svg $(SVG_DIR)/u100a_u103d_u103e.svg $(SVG_DIR)/u100a_u102f.svg $(SVG_DIR)/u100a_u102d_u102f.svg $(SVG_DIR)/u100a_u103e_u102d_u102f.svg $(SVG_DIR)/u100a_u1030.svg $(SVG_DIR)/u101b_u102f.svg $(SVG_DIR)/u101b_u102d_u102f.svg $(SVG_DIR)/u101b_u1030.svg $(SVG_DIR)/u1014_u103e_u102f.svg $(SVG_DIR)/u1014_u103e_u1030.svg $(SVG_DIR)/u100a_u103e_u102f.svg $(SVG_DIR)/u100a_u103e_u1030.svg $(SVG_DIR)/u101b_u103e_u102f.svg $(SVG_DIR)/u101b_u103e_u1030.svg $(SVG_DIR)/u1014_u103b_u102f.svg $(SVG_DIR)/u1014_u103b_u1030.svg $(SVG_DIR)/u101b_u103b_u102f.svg $(SVG_DIR)/u101b_u103b_u1030.svg $(SVG_DIR)/u100a_u103b_u102f.svg $(SVG_DIR)/u100a_u103b_u1030.svg $(SVG_DIR)/u1014_u103e_u102d_u102f.svg $(SVG_DIR)/u100a_u103e_u102d_u102f.svg $(SVG_DIR)/u101b_u103e_u102d_u102f.svg $(SVG_DIR)/u1014_u103e_u102f_u1036.svg $(SVG_DIR)/u100a_u103e_u102f_u1036.svg $(SVG_DIR)/u101b_u103e_u102f_u1036.svg
+misc:: $(SVG_DIR)/u1014_u103b.svg $(SVG_DIR)/u1014_u103d.svg $(SVG_DIR)/u1014_u103e.svg $(SVG_DIR)/u1014_u103b_u103d.svg $(SVG_DIR)/u1014_u103b_u103e.svg $(SVG_DIR)/u1014_u103b_u103d_u103e.svg $(SVG_DIR)/u1014_u103d_u103e.svg $(SVG_DIR)/u1014_u103d_u1031.svg $(SVG_DIR)/u1014_u103e_u1031.svg $(SVG_DIR)/u1014_u103b_u103d_u1031.svg $(SVG_DIR)/u1014_u103b_u103e_u1031.svg $(SVG_DIR)/u1014_u103b_u103d_u103e_u1031.svg $(SVG_DIR)/u1014_u103d_u103e_u1031.svg $(SVG_DIR)/u1014_u102f.svg $(SVG_DIR)/u1014_u102d_u102f.svg $(SVG_DIR)/u1014_u103a_u102f.svg $(SVG_DIR)/u1014_u103e_u102d_u102f.svg $(SVG_DIR)/u1014_u1030.svg $(SVG_DIR)/u100a_u103b.svg $(SVG_DIR)/u100a_u103d.svg $(SVG_DIR)/u100a_u103e.svg $(SVG_DIR)/u100a_u103b_u103d.svg $(SVG_DIR)/u100a_u103b_u103e.svg $(SVG_DIR)/u100a_u103b_u103d_u103e.svg $(SVG_DIR)/u100a_u103d_u103e.svg $(SVG_DIR)/u100a_u102f.svg $(SVG_DIR)/u100a_u102d_u102f.svg $(SVG_DIR)/u100a_u103e_u102d_u102f.svg $(SVG_DIR)/u100a_u1030.svg $(SVG_DIR)/u101b_u102f.svg $(SVG_DIR)/u101b_u102d_u102f.svg $(SVG_DIR)/u101b_u1030.svg $(SVG_DIR)/u1014_u103e_u102f.svg $(SVG_DIR)/u1014_u103e_u1030.svg $(SVG_DIR)/u100a_u103e_u102f.svg $(SVG_DIR)/u100a_u103e_u1030.svg $(SVG_DIR)/u101b_u103e_u102f.svg $(SVG_DIR)/u101b_u103e_u1030.svg $(SVG_DIR)/u1014_u103b_u102f.svg $(SVG_DIR)/u1014_u103b_u1030.svg $(SVG_DIR)/u101b_u103b_u102f.svg $(SVG_DIR)/u101b_u103b_u1030.svg $(SVG_DIR)/u100a_u103b_u102f.svg $(SVG_DIR)/u100a_u103b_u1030.svg $(SVG_DIR)/u1014_u103e_u102d_u102f.svg $(SVG_DIR)/u100a_u103e_u102d_u102f.svg $(SVG_DIR)/u101b_u103e_u102d_u102f.svg $(SVG_DIR)/u1014_u103e_u102f_u1036.svg $(SVG_DIR)/u100a_u103e_u102f_u1036.svg $(SVG_DIR)/u101b_u103e_u102f_u1036.svg
 
 define nyanaLowerVowel
 $(SVG_DIR)/$(1)_$(3).svg : xslt/$(2).xslt xslt/$(3).xslt xslt/nyanaLowerVowel.xslt Makefile $(PARAMS)
@@ -739,6 +739,12 @@ $(SVG_DIR)/u1014_u102d_u102f.svg : xslt/u1014_alt.xslt xslt/u102d.xslt xslt/u102
 	mkdir -p tmp
 	xsltproc -o tmp/u1014_u102d_u102f.xslt --stringparam cons u1014 --stringparam consTemplate u1014_alt --stringparam upperVowel u102d --stringparam lowerVowel u102f xslt/nyanaUpperLowerVowel.xslt blank.svg
 	xsltproc -o $@ tmp/u1014_u102d_u102f.xslt blank.svg
+
+$(SVG_DIR)/u1014_u103a_u102f.svg : xslt/u1014_alt.xslt xslt/u103a.xslt xslt/u102f.xslt
+	mkdir -p tmp
+	xsltproc -o tmp/u1014_u103a_u102f.xslt --stringparam cons u1014 --stringparam consTemplate u1014_alt --stringparam upperVowel u103a --stringparam lowerVowel u102f xslt/nyanaUpperLowerVowel.xslt blank.svg
+	xsltproc -o $@ tmp/u1014_u103a_u102f.xslt blank.svg
+
 
 $(SVG_DIR)/u100a_u102d_u102f.svg : xslt/u100a_alt.xslt xslt/u102d.xslt xslt/u102f.xslt
 	mkdir -p tmp
