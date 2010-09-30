@@ -10,6 +10,8 @@
 <xsl:param name="fontWeight" select="300"/>
 <!-- define a few parameters which are only used by the python script -->
 
+<xsl:param name="localizedFamilyName" select="'သံလွင်စာလုံးဖျော့'"/>
+<xsl:param name="enFamilyName" select="'ThanLwin Light'"/>
 <xsl:param name="enSubFamily" select="'Light'"/>
 <xsl:param name="enFullName" select="'ThanLwin Light'"/>
 

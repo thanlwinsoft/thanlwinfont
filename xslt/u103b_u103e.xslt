@@ -30,7 +30,7 @@
 	<xsl:variable name="yapinJoinHeight" select=".5*($yapinInnerDy + $yapinOuterDy)"/>
 	<xsl:variable name="yapinWidth" select="$waXOuterRadius + $thickness"/>
 
-	<xsl:variable name="hatoAngle" select="$pi div 4"/>
+	<xsl:variable name="hatoAngle" select="$pi div 6"/>
 	<xsl:variable name="hatoLength" select="4 * $thickness"/>
     <xsl:element name="path" use-attribute-sets="pathAttribs">
     <xsl:attribute name="d">
@@ -38,22 +38,15 @@
         <xsl:with-param name="x" select="$xOffset -$waXOuterRadius +$yapinInnerDx - $postGuard"/>
         <xsl:with-param name="y" select="$yOffset + $yapinJoinHeight"/>
     </xsl:call-template>
-	<xsl:call-template name="corner">
-		<xsl:with-param name="x" select="0"/>
-        <xsl:with-param name="y" select="-$yapinJoinHeight - $yapinDepth + $thickness div math:cos($hatoAngle)"/>
-		<xsl:with-param name="r" select="$cornerInnerRadius"/>
-		<xsl:with-param name="nextX" select="-.5* ($hatoLength ) * math:sin($hatoAngle)"/>
-        <xsl:with-param name="nextY" select="-.5* ($hatoLength ) * math:cos($hatoAngle)"/>
-    </xsl:call-template>
     <xsl:call-template name="corner">
-		<xsl:with-param name="x" select="-.5* ($hatoLength ) * math:sin($hatoAngle)"/>
-        <xsl:with-param name="y" select="-.5* ($hatoLength ) * math:cos($hatoAngle)"/>
-		<xsl:with-param name="r" select="$cornerInnerRadius"/>
-		<xsl:with-param name="nextX" select="- $thickness * math:cos($hatoAngle)"/>
+		    <xsl:with-param name="x" select="- ($hatoLength ) * math:sin($hatoAngle)"/>
+        <xsl:with-param name="y" select="-($hatoLength ) * math:cos($hatoAngle)"/>
+		    <xsl:with-param name="r" select="$cornerInnerRadius"/>
+		    <xsl:with-param name="nextX" select="- $thickness * math:cos($hatoAngle)"/>
         <xsl:with-param name="nextY" select="$thickness * math:sin($hatoAngle)"/>
     </xsl:call-template>
-    <xsl:text>l</xsl:text><xsl:value-of select="-$thickness * math:cos($hatoAngle)"/>
-	<xsl:text>,</xsl:text><xsl:value-of select="-$thickness * math:sin($hatoAngle)"/>
+    <xsl:text>l</xsl:text><xsl:value-of select="-$thickness * math:sin($hatoAngle)"/>
+	<xsl:text>,</xsl:text><xsl:value-of select="-$thickness * math:cos($hatoAngle)"/>
 	<xsl:call-template name="corner">
 		<xsl:with-param name="x" select="2 * $thickness * math:cos($hatoAngle)"/>
         <xsl:with-param name="y" select="-2 * $thickness * math:sin($hatoAngle)"/>
@@ -63,10 +56,18 @@
     </xsl:call-template>
     
     <xsl:call-template name="corner">
-		<xsl:with-param name="x" select=".5* ($hatoLength) * math:sin($hatoAngle)"/>
+		    <xsl:with-param name="x" select=".5* ($hatoLength) * math:sin($hatoAngle)"/>
         <xsl:with-param name="y" select=".5* ($hatoLength) * math:cos($hatoAngle)"/>
-    	<xsl:with-param name="r" select="$cornerInnerRadius"/>
-		<xsl:with-param name="nextX" select=".5*$yapinWidth"/>
+    	  <xsl:with-param name="r" select="$cornerInnerRadius"/>
+    	  <xsl:with-param name="nextX" select="0"/>
+        <xsl:with-param name="nextY" select="0.5*(-$yapinJoinHeight - $yapinDepth + $thickness div math:sin($hatoAngle))"/>
+    </xsl:call-template>
+    
+    <xsl:call-template name="corner">	
+    	  <xsl:with-param name="x" select="0"/>
+        <xsl:with-param name="y" select="0.5*(-$yapinJoinHeight - $yapinDepth + $thickness div math:sin($hatoAngle))"/>
+        <xsl:with-param name="r" select="$cornerInnerRadius"/>
+		    <xsl:with-param name="nextX" select=".5*$yapinWidth"/>
         <xsl:with-param name="nextY" select=".5*(- $descent + $yapinDepth)"/>
 	</xsl:call-template>
 	<xsl:call-template name="corner">

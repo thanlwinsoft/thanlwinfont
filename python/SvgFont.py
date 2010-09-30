@@ -88,12 +88,15 @@ class SvgFont(object) :
             glyph.correctDirection()
             glyph.addExtrema()
             glyph.round()
+            preHintValidationState = glyph.validate()
+            #glyph.autoInstr()
+            glyph.autoHint()
             validationState = glyph.validate()
             self.glyphCount += 1
             if validationState:
                 if validationState != 4: # ignore 4, since it is so common
-                    print "Glyph failed to validate: {0} {1:x}".format(glyphName, validationState)
-                self.log.warn("Glyph {0} failed to validate".format(glyphName))
+                    print "Glyph failed to validate: {0} {1:x} ({2:x})".format(glyphName, validationState, preHintValidationState)
+                    self.log.warn("Glyph {0} failed to validate:  {1:x} ({2:x}".format(glyphName, validationState, preHintValidationState))
             else:
                 # print "Glyph validated: " + glyphName
                 pass

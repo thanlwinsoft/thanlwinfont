@@ -9,6 +9,7 @@ PARAMS:=xslt/param$(VARIANT).xslt xslt/paramDefaults.xslt xslt/path.xslt
 INI_FILE:=param$(VARIANT).ini
 SVG_DIR:=svg/$(VARIANT)
 SILENT:=-s
+VERSION:=$(shell xsltproc xslt/fontVersion.xslt blank.svg)
 
 FAMILY:=thanlwin
 ALL_FONTS:=$(FAMILY)Medium $(FAMILY)Bold $(FAMILY)Light
@@ -114,9 +115,9 @@ light:
 	VARIANT=Light make $(SILENT) -e font
 	@rm -f xslt/param.xslt
 
-archive: medium bold light
-	zip $(FAMILY)fonts.zip $(patsubst %,%.ttf,$(ALL_FONTS)) OFL.txt
-	hg archive -ttbz2 $(FAMILY)fontsrc.tar.bz2
+archive: medium bold light  
+	zip $(FAMILY)fonts-$(VERSION).zip $(patsubst %,%.ttf %.woff,$(ALL_FONTS)) OFL.txt
+	hg archive -ttbz2 $(FAMILY)fontsrc-$(VERSION).tar.bz2
 
 $(FAMILY)$(VARIANT).sfd : svg $(wildcard python/*.py) $(wildcard $(SVG_DIR)/*.svg) $(FAMILY)-lookups.sfd $(INI_FILE)
 	python/thanlwinfont.py $(INI_FILE) svg/$(VARIANT) $(FAMILY)$(VARIANT)
@@ -703,7 +704,12 @@ $(foreach vowel,$(afterMedials) $(lowerVowels) u103e_u102f u103e_u1030,$(eval $(
 
 $(foreach vowel,$(afterMedials) $(lowerVowels) u103e_u102f u103e_u1030,$(eval $(call nyanaLowerVowel,u100a,u100a_alt,$(vowel))))
 
-$(foreach vowel,$(afterMedials) $(lowerVowels) u103e_u102f u103e_u1030,$(eval $(call nyanaLowerVowel,u101b,u101b_alt,$(vowel))))
+# no yapin with ra
+$(foreach vowel,$(lowerVowels) u103e_u102f u103e_u1030,$(eval $(call nyanaLowerVowel,u101b,u101b_alt,$(vowel))))
+
+$(foreach vowel,u103d u103d_u103e,$(eval $(call nyanaLowerVowel,u101b,u101b,$(vowel))))
+
+$(foreach vowel,u103e,$(eval $(call nyanaLowerVowel,u101b,u101b_long,$(vowel))))
 
 define nyanaHatoUpperLowerVowel
 $(SVG_DIR)/$(1)_u103e_u102d_u102f.svg : xslt/$(2).xslt xslt/$(3).xslt xslt/nyanaUpperLowerVowel.xslt Makefile $(PARAMS) xslt/u102d.xslt
@@ -840,5 +846,6 @@ $(SVG_DIR)/u1014_u1039_u1013_u102d_u102f.svg :: xslt/u1014_alt.xslt xslt/u1013.x
 clean:
 	rm -rf svg/*/*.svg
 	rm -rf tmp
+	rm *.ini
 
 

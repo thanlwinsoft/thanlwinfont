@@ -440,15 +440,20 @@ class MyanmarSvgFont(SvgFont.SvgFont):
         self.addMarkClass("classMedialW",classMedialW, ('classCons', 'classAsat', 'classMedialY', 'classMedialR'))
         self.addMarkClass("classMedialH",classMedialH, ('classCons', 'classMedialY', 'classMedialR', 'classMedialW'))
         self.addMarkClass("classEVowel",classEVowel, ('classCons', 'classMedialY', 'classMedialR', 'classMedialW', 'classMedialH', 'classEVowel'))
-        self.addMarkClass("classUVowel",classUVowel, ('classCons', 'classNumbers', 'classMedialY', 'classMedialR', 'classMedialW', 'classMedialH'))
+        self.addMarkClass("classUVowel",classUVowel, ('classCons', 'u1041', 'u1042', 'u1043', 'u1044', 'u1045', 'u1046', 'u1047', 'u1048', 'u1049', 'classMedialY', 'classMedialR', 'classMedialW', 'classMedialH'))
         self.addMarkClass("classLVowel",classLVowel, ('classCons', 'classAsat', 'classMedialY', 'classMedialR', 'classMedialW', 'classMedialH', 'classUVowel'))
         self.addMarkClass("classLDot",classLDot, ('classCons', 'classMedialY', 'classMedialR', 'classMedialW', 'classMedialH', 'classEVowel', 'classUVowel', 'classLVowel', 'classAVowel', 'classAnusvara'))
         # self.addMarkClass("classKVowel",classKVowel, ('classCons', 'classMedialY', 'classMedialR', 'classMedialW', 'classMedialH'))
         # self.addMarkClass("classSVowel",classSVowel, ('classCons', 'classMedialY', 'classMedialR', 'classMedialW', 'classMedialH'))
-        self.addMarkClass("classAVowel",classAVowel, ('classCons', 'classMedialY', 'classMedialR', 'classMedialW', 'classMedialH', 'classEVowel', 'classUVowel', 'classLVowel'))
+        self.addMarkClass("classAVowel",classAVowel, ('classCons', 'u1041', 'u1042', 'u1043', 'u1044', 'u1045', 'u1046', 'u1047', 'u1048', 'u1049', 'classMedialY', 'classMedialR', 'classMedialW', 'classMedialH', 'classEVowel', 'classUVowel', 'classLVowel'))
         self.addMarkClass("classAnusvara",classAnusvara, ('classCons', 'classMedialY', 'classMedialR', 'classMedialW', 'classMedialH', 'classUVowel', 'classLVowel'))
         # self.addMarkClass("classPwoTone",classPwoTone, ('classCons', 'classMedialY', 'classMedialR', 'classMedialW', 'classMedialH'))
         self.addMarkClass("classVisarga",classVisarga, ('classCons', 'classMedialY', 'classMedialR', 'classMedialW', 'classMedialH', 'classAsat', 'classEVowel', 'classUVowel', 'classLVowel', 'classAVowel', 'classAnusvara', 'classLDot'))
         # self.addMarkClass("classRedup",classRedup, ('classCons', 'classMedialY', 'classMedialR', 'classMedialW', 'classMedialH))
-            
+        
+        # special case for currency with u102d or u102b
+        sub = SvgFont.Substitution(['classNumbers', 'classNumbers'], ['u25cc_u102d'], [], ['u102d_mark'])
+        self.substitutions[self.subDict['removeDottedCircle']].append(sub)
+        sub = SvgFont.Substitution(['classNumbers', 'classNumbers'], ['u25cc_u102b'], [], ['u102b_mark'])
+        self.substitutions[self.subDict['removeDottedCircle']].append(sub)
 
