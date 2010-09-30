@@ -51,8 +51,8 @@
 		<xsl:with-param name="x" select="2 * $thickness * math:cos($hatoAngle)"/>
         <xsl:with-param name="y" select="-2 * $thickness * math:sin($hatoAngle)"/>
         <xsl:with-param name="r" select="$cornerInnerRadius"/>
-        <xsl:with-param name="nextX" select=".5* ($hatoLength) * math:sin($hatoAngle)"/>
-        <xsl:with-param name="nextY" select=".5* ($hatoLength) * math:cos($hatoAngle)"/>
+        <xsl:with-param name="nextX" select="($thickness - $thickness div math:tan($hatoAngle) + .5*$hatoLength) * math:sin($hatoAngle)"/>
+        <xsl:with-param name="nextY" select="($thickness - $thickness div math:tan($hatoAngle) + .5*$hatoLength) * math:cos($hatoAngle)"/>
     </xsl:call-template>
     
     <xsl:call-template name="corner">

@@ -24,6 +24,8 @@
 <xsl:variable name="daYOuterRadius" select=".5 * $waYOuterRadius + .25 * $thickness"/>
 <xsl:variable name="daYInnerRadius" select="$daYOuterRadius - $thickness"/>
 
+<xsl:variable name="topIntersectAngle" select="math:acos(($waXOuterRadius - .5 * $thickness) div $waXOuterRadius)"/>
+
 <xsl:variable name="circleIntersectAngle"
 	select="math:acos(($waXOuterRadius - .5 * $thickness) div $waXOuterRadius)"/>
 
@@ -51,55 +53,22 @@
         <xsl:with-param name="rx" select="$waXOuterRadius"/>
         <xsl:with-param name="ry" select="$daYOuterRadius"/>
         <xsl:with-param name="axisRotation" select="0"/>
-        <xsl:with-param name="large" select="1"/>
+        <xsl:with-param name="large" select="0"/>
         <xsl:with-param name="clockwise" select="0"/>
-        <xsl:with-param name="x" select="$waXOuterRadius + $daIntersectDx"/>
-        <xsl:with-param name="y" select="-$daIntersectDy"/>
+        <xsl:with-param name="x" select="2 * $waXOuterRadius - .5 * $thickness"/>
+        <xsl:with-param name="y" select="$daYOuterRadius * math:sin($topIntersectAngle)"/>
     </xsl:call-template>
-    <xsl:call-template name="arc">
-        <xsl:with-param name="rx" select="$waXOuterRadius"/>
-        <xsl:with-param name="ry" select="$daYOuterRadius"/>
-        <xsl:with-param name="axisRotation" select="0"/>
-        <xsl:with-param name="large" select="1"/>
-        <xsl:with-param name="clockwise" select="0"/>
-        <xsl:with-param name="x" select="-$waXOuterRadius - $daIntersectDx"/>
-        <xsl:with-param name="y" select="-$daIntersectDy"/>
-    </xsl:call-template>
-    <xsl:text>l</xsl:text><xsl:value-of select="$thickness"/><xsl:text>,0</xsl:text>
-    <xsl:call-template name="arc">
-        <xsl:with-param name="rx" select="$waXInnerRadius"/>
-        <xsl:with-param name="ry" select="$daYInnerRadius"/>
-        <xsl:with-param name="axisRotation" select="0"/>
-        <xsl:with-param name="large" select="1"/>
-        <xsl:with-param name="clockwise" select="1"/>
-        <xsl:with-param name="x" select="$waXInnerRadius"/>
-        <xsl:with-param name="y" select="$daYInnerRadius"/>
-    </xsl:call-template>
-    <xsl:text>l0,</xsl:text><xsl:value-of select="$thickness"/>
-    <xsl:call-template name="arc">
-        <xsl:with-param name="rx" select="$waXInnerRadius"/>
-        <xsl:with-param name="ry" select="$daYInnerRadius"/>
-        <xsl:with-param name="axisRotation" select="0"/>
-        <xsl:with-param name="large" select="1"/>
-        <xsl:with-param name="clockwise" select="1"/>
-        <xsl:with-param name="x" select="-$waXInnerRadius"/>
-        <xsl:with-param name="y" select="$daYInnerRadius"/>
-    </xsl:call-template>
-    <xsl:call-template name="end"/>
-    <xsl:call-template name="Move">
-        <xsl:with-param name="x" select="$xOffset + $preGuard + 2 * $waXOuterRadius - $thickness"/>
-        <xsl:with-param name="y" select="$yOffset + $waYOuterRadius + $daYInnerRadius + 0.5 * $thickness"/>
-    </xsl:call-template>
+    
     <xsl:call-template name="arc">
         <xsl:with-param name="rx" select="$waXOuterRadius"/>
         <xsl:with-param name="ry" select="$daYOuterRadius"/>
         <xsl:with-param name="axisRotation" select="0"/>
         <xsl:with-param name="large" select="0"/>
         <xsl:with-param name="clockwise" select="0"/>
-        <xsl:with-param name="x" select="$waXOuterRadius"/>
-        <xsl:with-param name="y" select="$daYOuterRadius"/>
+        <xsl:with-param name="x" select="$waXOuterRadius - .5 * $thickness"/>
+        <xsl:with-param name="y" select="$daYOuterRadius * (1 - math:sin($topIntersectAngle))"/>
     </xsl:call-template>
-	<xsl:call-template name="arc">
+	  <xsl:call-template name="arc">
         <xsl:with-param name="rx" select="$waXOuterRadius"/>
         <xsl:with-param name="ry" select="$waYOuterRadius"/>
         <xsl:with-param name="axisRotation" select="0"/>
@@ -137,7 +106,47 @@
         <xsl:with-param name="x" select="-$waXInnerRadius"/>
         <xsl:with-param name="y" select="-$daYInnerRadius"/>
     </xsl:call-template>
-	<xsl:call-template name="end"/>
+    
+    
+    <xsl:call-template name="arc">
+        <xsl:with-param name="rx" select="$waXOuterRadius"/>
+        <xsl:with-param name="ry" select="$daYOuterRadius"/>
+        <xsl:with-param name="axisRotation" select="0"/>
+        <xsl:with-param name="large" select="0"/>
+        <xsl:with-param name="clockwise" select="0"/>
+        <xsl:with-param name="x" select="- $waXOuterRadius + $daIntersectDx"/>
+        <xsl:with-param name="y" select="-$daIntersectDy"/>
+    </xsl:call-template>
+    <xsl:call-template name="arc">
+        <xsl:with-param name="rx" select="$waXOuterRadius"/>
+        <xsl:with-param name="ry" select="$daYOuterRadius"/>
+        <xsl:with-param name="axisRotation" select="0"/>
+        <xsl:with-param name="large" select="1"/>
+        <xsl:with-param name="clockwise" select="0"/>
+        <xsl:with-param name="x" select="-$waXOuterRadius - $daIntersectDx"/>
+        <xsl:with-param name="y" select="-$daIntersectDy"/>
+    </xsl:call-template>
+    <xsl:text>l</xsl:text><xsl:value-of select="$thickness"/><xsl:text>,0</xsl:text>
+    <xsl:call-template name="arc">
+        <xsl:with-param name="rx" select="$waXInnerRadius"/>
+        <xsl:with-param name="ry" select="$daYInnerRadius"/>
+        <xsl:with-param name="axisRotation" select="0"/>
+        <xsl:with-param name="large" select="1"/>
+        <xsl:with-param name="clockwise" select="1"/>
+        <xsl:with-param name="x" select="$waXInnerRadius"/>
+        <xsl:with-param name="y" select="$daYInnerRadius"/>
+    </xsl:call-template>
+    <xsl:text>l0,</xsl:text><xsl:value-of select="$thickness"/>
+    <xsl:call-template name="arc">
+        <xsl:with-param name="rx" select="$waXInnerRadius"/>
+        <xsl:with-param name="ry" select="$daYInnerRadius"/>
+        <xsl:with-param name="axisRotation" select="0"/>
+        <xsl:with-param name="large" select="1"/>
+        <xsl:with-param name="clockwise" select="1"/>
+        <xsl:with-param name="x" select="-$waXInnerRadius"/>
+        <xsl:with-param name="y" select="$daYInnerRadius"/>
+    </xsl:call-template>
+    <xsl:call-template name="end"/>
 	
 	<xsl:if test="2 * $waXInnerRadius &gt; math:sqrt(2) * $waXOuterRadius">
 	<xsl:call-template name="Move">
