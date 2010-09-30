@@ -116,7 +116,7 @@ light:
 	@rm -f xslt/param.xslt
 
 archive: medium bold light  
-	zip $(FAMILY)fonts-$(VERSION).zip $(patsubst %,%.ttf %.woff,$(ALL_FONTS)) OFL.txt
+	zip $(FAMILY)fonts-$(VERSION).zip $(patsubst %,%.ttf,$(ALL_FONTS)) $(patsubst %,%.woff,$(ALL_FONTS)) OFL.txt
 	hg archive -ttbz2 $(FAMILY)fontsrc-$(VERSION).tar.bz2
 
 $(FAMILY)$(VARIANT).sfd : svg $(wildcard python/*.py) $(wildcard $(SVG_DIR)/*.svg) $(FAMILY)-lookups.sfd $(INI_FILE)
