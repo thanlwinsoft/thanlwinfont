@@ -13,7 +13,7 @@
 <xsl:param name="baseline" select="$descent"/>
 <xsl:param name="preGuard" select="40" />
 <xsl:param name="postGuard" select="40"/>
-<xsl:param name="thickness" select="60"/>
+<xsl:param name="thickness" select="70"/>
 <xsl:param name="fontWeight" select="500"/>
 <xsl:param name="cubicCircleFactor" select=".5"/>
 <xsl:param name="waXOuterRadius" select="250"/>

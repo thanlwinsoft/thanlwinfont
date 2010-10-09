@@ -251,6 +251,8 @@ class SvgFont(object) :
         self.font.generate(self.ttfFile, flags=('opentype','apple','dummy-dsig')) # ,'dummy-dsig'
         woffFile = self.outName + ".woff"
         self.font.generate(woffFile, flags=('opentype','apple'))
+        attFile = self.outName + "AAT.ttf"
+        self.font.generate(attFile, flags=('apple')) # for debug aat
         self.font.save(self.sfdFile)
         self.font.saveNamelist(self.outName + "names.txt")
         self.outputGdl()

@@ -6,7 +6,7 @@
 
 <xsl:import href="paramDefaults.xslt"/>
 
-<xsl:param name="thickness" select="80"/>
+<xsl:param name="thickness" select="90"/>
 <xsl:param name="fontWeight" select="700"/>
 <!-- define a few parameters which are only used by the python script -->
 

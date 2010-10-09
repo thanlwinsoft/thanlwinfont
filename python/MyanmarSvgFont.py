@@ -54,7 +54,9 @@ class MyanmarSvgFont(SvgFont.SvgFont):
         SvgFont.SvgFont.__init__(self, xslParams, name, outname)
         self.subDict["removeDottedCircle"] = len(self.substitutions)
         self.substitutions.append([])
+        # liga and clig are not processed in the correct order by the old harfbuzz code
         featureScriptLang = (("liga",(("mymr",("dflt", "DFLT", "BRM ")),)),)
+#        featureScriptLang = (("liga",(("mymr",("dflt", "DFLT", "BRM ")),)),)
         self.font.addLookup("ligatures", "gsub_ligature", (), featureScriptLang)
 
     def setGlyphTypes(self):
@@ -178,7 +180,6 @@ class MyanmarSvgFont(SvgFont.SvgFont):
     def addReorderedGlyphs(self):
         self.subDict["reorder"] = len(self.substitutions)
         self.substitutions.append([])
-        featureScriptLang = (("liga",(("mymr",("dflt","DFLT","BRM ")),)),)
         self.font.addLookupSubtable("ligatures", "reorder")
 
         for i in range(len(cons)):
@@ -280,8 +281,6 @@ class MyanmarSvgFont(SvgFont.SvgFont):
         
 
     def addSpecialLigatures(self):
-        #featureScriptLang = (("clig",(("mymr",("dflt")),)),)
-        #self.font.addLookupSubtable("medialLig", "miscLig")
         
         self.addLigature("medialLigSub", ["u102b", "u103a"])
         self.addLigature("medialLigSub", ["u102b", "u1037", "u103a"])
@@ -376,13 +375,13 @@ class MyanmarSvgFont(SvgFont.SvgFont):
 
             self.addLigature("medialLigSub", [glyphName, "u1030"])
 
-        self.font.createChar(0x200b, "zwsp").width = 0
-        self.font.createChar(0x200c, "zwnj").width = 0
-        self.font.createChar(0x200d, "zwj").width = 0
-        self.font.createChar(0x200e, "lrm").width = 0
-        self.font.createChar(0x200f, "rlm").width = 0
-        self.font.createChar(0x202c, "pdf").width = 0
-        self.font.createChar(0x2060, "wj").width = 0
+#        self.font.createChar(0x200b, "zwsp").width = 0
+#        self.font.createChar(0x200c, "zwnj").width = 0
+#        self.font.createChar(0x200d, "zwj").width = 0
+#        self.font.createChar(0x200e, "lrm").width = 0
+#        self.font.createChar(0x200f, "rlm").width = 0
+#        self.font.createChar(0x202c, "pdf").width = 0
+#        self.font.createChar(0x2060, "wj").width = 0
 
     def addMarkClass(self, className, glyphs, acceptableBefore):
         glyphList = []
@@ -417,6 +416,7 @@ class MyanmarSvgFont(SvgFont.SvgFont):
         if os.access(lookupFontFile, os.R_OK):
             parentFont = fontforge.open(lookupFontFile)
             self.font.importLookups(parentFont, "sequenceCheck","ligatures")
+            self.font.importLookups(parentFont, "macUtn11Check","ligatures")
         else:
             featureScriptLang = (("clig",(("mymr",("dflt","DFLT","BRM ")),)),)
             self.font.addLookup("sequenceCheck", "gsub_contextchain", (), featureScriptLang)
