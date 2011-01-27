@@ -38,6 +38,10 @@ classAnusvara = [0x1032, 0x1036]
 classPwoTone = [0x1064, 0x1069, 0x106a, 0x106b, 0x106c, 0x106d]
 classVisarga = [0x1038, 0x1087, 0x1088, 0x1089, 0x108a, 0x108b, 0x108c, 0x108d, 0x108f, 0x109a, 0x109b, 0x109c]
 classRedup = [0xaa70]
+classAllMarks = set(classAsat).union(classMedialY, classMedialR, classMedialW,
+    classMedialH, classEVowel, classUVowel, classLVowel, classLDot, classKVowel,
+    classSVowel, classAVowel, classAnusvara, classPwoTone, classVisarga,
+    classRedup)
 cons = []
 cons.extend(wideCons)
 cons.extend(narrowCons)
@@ -55,7 +59,7 @@ class MyanmarSvgFont(SvgFont.SvgFont):
         self.subDict["removeDottedCircle"] = len(self.substitutions)
         self.substitutions.append([])
         # liga and clig are not processed in the correct order by the old harfbuzz code
-        featureScriptLang = (("liga",(("mymr",("dflt", "DFLT", "BRM ")),)),)
+        featureScriptLang = (("clig",(("mymr",("dflt", "BRM ")),)),)
 #        featureScriptLang = (("liga",(("mymr",("dflt", "DFLT", "BRM ")),)),)
         self.font.addLookup("ligatures", "gsub_ligature", (), featureScriptLang)
 
@@ -259,6 +263,7 @@ class MyanmarSvgFont(SvgFont.SvgFont):
         self.addLigature("reorder", ["u100f", "u1039", "u100f", "u1031"])        
         self.addLigature("reorder", ["u1014", "u1039", "u1010", "u103c","u1031"])
         self.addLigature("reorder", ["u1014", "u1039", "u1012", "u103c", "u1031"])
+        self.addLigature("reorder", ["u1014", "u1039", "u1010", "u103d"])
         reorderedGlyphName = "u1014u1039u1012u103cu1031u102c"
         self.addLigature("reorder", ["u1014", "u1039", "u1012", "u103c", "u1031", "u102c"], glyphName = reorderedGlyphName)
         self.addLigature("reorder", ["u1014", "u1039","u1012","u103c"])
@@ -375,13 +380,13 @@ class MyanmarSvgFont(SvgFont.SvgFont):
 
             self.addLigature("medialLigSub", [glyphName, "u1030"])
 
-#        self.font.createChar(0x200b, "zwsp").width = 0
-#        self.font.createChar(0x200c, "zwnj").width = 0
-#        self.font.createChar(0x200d, "zwj").width = 0
-#        self.font.createChar(0x200e, "lrm").width = 0
-#        self.font.createChar(0x200f, "rlm").width = 0
-#        self.font.createChar(0x202c, "pdf").width = 0
-#        self.font.createChar(0x2060, "wj").width = 0
+        self.font.createChar(0x200b, "zwsp").width = 0
+        self.font.createChar(0x200c, "zwnj").width = 0
+        self.font.createChar(0x200d, "zwj").width = 0
+        self.font.createChar(0x200e, "lrm").width = 0
+        self.font.createChar(0x200f, "rlm").width = 0
+        self.font.createChar(0x202c, "pdf").width = 0
+        self.font.createChar(0x2060, "wj").width = 0
 
     def addMarkClass(self, className, glyphs, acceptableBefore):
         glyphList = []
@@ -418,7 +423,8 @@ class MyanmarSvgFont(SvgFont.SvgFont):
             self.font.importLookups(parentFont, "sequenceCheck","ligatures")
             self.font.importLookups(parentFont, "macUtn11Check","ligatures")
         else:
-            featureScriptLang = (("clig",(("mymr",("dflt","DFLT","BRM ")),)),)
+            #featureScriptLang = (("clig",(("mymr",("dflt","DFLT","BRM ")),)),)
+            featureScriptLang = (("clig",(("mymr",("dflt","BRM ")),)),)
             self.font.addLookup("sequenceCheck", "gsub_contextchain", (), featureScriptLang)
             print "{0} was not found. Please recreate the sequenceCheck lookups by hand.".format(lookupFontFile)
             # currently the python interface isn't powerful enough to add the
@@ -456,4 +462,21 @@ class MyanmarSvgFont(SvgFont.SvgFont):
         self.substitutions[self.subDict['removeDottedCircle']].append(sub)
         sub = SvgFont.Substitution(['classNumbers', 'classNumbers'], ['u25cc_u102b'], [], ['u102b_mark'])
         self.substitutions[self.subDict['removeDottedCircle']].append(sub)
+
+    def isBase(self, glyphName):
+        if glyphName[0:5] == 'kinzi': return True # kinzi base lig
+        if glyphName[0:5] == 'pinsw': return False # kinzi base lig
+        firstUnicode = int(glyphName[1:5], 16)
+        if firstUnicode in classCons or firstUnicode in classNumbers :
+            return True
+        return False
+        
+    def isMark(self, glyphName):
+        if glyphName[0:5] == 'kinzi': return False # kinzi base lig
+        if glyphName[0:5] == 'pinsw': return True # kinzi base lig
+        firstUnicode = int(glyphName[1:5], 16)
+        if firstUnicode in classAllMarks:
+            return True
+        return False
+
 

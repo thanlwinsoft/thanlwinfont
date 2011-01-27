@@ -8,11 +8,11 @@ VARIANT:=
 PARAMS:=xslt/param$(VARIANT).xslt xslt/paramDefaults.xslt xslt/path.xslt
 INI_FILE:=param$(VARIANT).ini
 SVG_DIR:=svg/$(VARIANT)
-SILENT:=-s
+#SILENT:=-s
 VERSION:=$(shell xsltproc xslt/fontVersion.xslt blank.svg)
 
 FAMILY:=thanlwin
-ALL_FONTS:=$(FAMILY)Medium $(FAMILY)Bold $(FAMILY)Light
+ALL_FONTS:=$(FAMILY)Medium $(FAMILY)Bold $(FAMILY)Light $(FAMILY)Fixed $(FAMILY)FixedBold
 
 $(SVG_DIR)/%.svg : xslt/%.xslt $(PARAMS) xslt/path.xslt blank.svg
 	xsltproc -o $@ $< blank.svg
@@ -93,7 +93,7 @@ classMarks:=$(classAsat) $(classMedialY) $(classMedialW) $(classMedialH) $(class
 
 upperVowel:=u102d u102e u1032
 
-all: medium bold light
+all: medium bold light fixed fixedbold
 
 font: $(FAMILY)$(VARIANT).sfd
 
@@ -115,20 +115,36 @@ light:
 	VARIANT=Light make $(SILENT) -e font
 	@rm -f xslt/param.xslt
 
-archive: medium bold light  
+fixed:
+	@mkdir -p svg/Fixed
+	@rm -f xslt/param.xslt
+	VARIANT=Fixed make $(SILENT) -e font
+	@rm -f xslt/param.xslt
+
+fixedbold:
+	@mkdir -p svg/FixedBold
+	@rm -f xslt/param.xslt
+	VARIANT=FixedBold make $(SILENT) -e font
+	@rm -f xslt/param.xslt
+
+archive: medium bold light fixed fixedbold
 	zip $(FAMILY)fonts-$(VERSION).zip $(patsubst %,%.ttf,$(ALL_FONTS)) $(patsubst %,%.woff,$(ALL_FONTS)) OFL.txt
 	hg archive -ttbz2 $(FAMILY)fontsrc-$(VERSION).tar.bz2
 
+install: medium bold light fixed fixedbold
+	cp $(patsubst %,%.ttf,$(ALL_FONTS)) ~/.fonts
+	fc-cache
+
 $(FAMILY)$(VARIANT).sfd : svg $(wildcard python/*.py) $(wildcard $(SVG_DIR)/*.svg) $(FAMILY)-lookups.sfd $(INI_FILE)
 	python/thanlwinfont.py $(INI_FILE) svg/$(VARIANT) $(FAMILY)$(VARIANT)
-	grcompiler -w5503 $(FAMILY)$(VARIANT).gdl $(FAMILY)$(VARIANT).ttf $(FAMILY)$(VARIANT)Gr.ttf
+	grcompiler -v3 -w5503 $(FAMILY)$(VARIANT).gdl $(FAMILY)$(VARIANT).ttf $(FAMILY)$(VARIANT)Gr.ttf
 	mv $(FAMILY)$(VARIANT)Gr.ttf $(FAMILY)$(VARIANT).ttf
 
 svg: xslt/param.xslt $(subst .xslt,.svg,$(subst xslt/,$(SVG_DIR)/,$(wildcard xslt/u*.xslt) $(tests))) medials ereorder yayit yapin kinzi misc tallConsVowel dottedcircle
 
 xslt/param.xslt :
 	rm -f xslt/param.xslt
-	ln -s param$(VARIANT).xslt xslt/param.xslt
+	cd xslt && ln -s param$(VARIANT).xslt param.xslt
 
 define rotatedMedial
 $(SVG_DIR)/u1039_$(1).svg : xslt/$(1).xslt xslt/generateRotatedMedial.xslt Makefile $(PARAMS)

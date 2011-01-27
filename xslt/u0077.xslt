@@ -5,7 +5,17 @@
 	xmlns:math="http://exslt.org/math">
 
 <!-- advance must be greater than zero -->
-<xsl:variable name="advance" select="$wideConsWidth"/>
+<xsl:variable name="advance" >
+<xsl:choose>
+<xsl:when test="$fixedWidth &gt; 0">
+<xsl:value-of select="$fixedWidth"/>
+</xsl:when>
+<xsl:otherwise>
+<xsl:value-of select="$wideConsWidth"/>
+</xsl:otherwise>
+</xsl:choose>
+</xsl:variable>
+
 <xsl:variable name="overlap" select="0"/>
 <xsl:include href="param.xslt"/>
 <xsl:include href="path.xslt"/>
@@ -26,21 +36,31 @@
         <xsl:with-param name="x" select="$xOffset + $preGuard "/>
         <xsl:with-param name="y" select="$yOffset + 2 * $waYOuterRadius"/>
     </xsl:call-template>
-    <xsl:variable name="lineAngle" select="math:atan(2 * $waYOuterRadius div ($waXOuterRadius))"/>
+    <xsl:variable name="legXWidth">
+    <xsl:choose>
+    <xsl:when test="$fixedWidth &gt; 0">
+    <xsl:value-of select=".25 * $lcWidth + .25 * $thickness"/>
+    </xsl:when>
+    <xsl:otherwise>
+    <xsl:value-of select="$waXOuterRadius"/>
+    </xsl:otherwise>
+    </xsl:choose>
+    </xsl:variable>
+    <xsl:variable name="lineAngle" select="math:atan(2 * $waYOuterRadius div ($legXWidth))"/>
 	<xsl:call-template name="line">
-        <xsl:with-param name="x" select="$waXOuterRadius"/>
+        <xsl:with-param name="x" select="$legXWidth"/>
         <xsl:with-param name="y" select="-2 * $waYOuterRadius"/>
     </xsl:call-template>
 	<xsl:call-template name="line">
-        <xsl:with-param name="x" select="$waXOuterRadius - .5 * $thickness div math:sin($lineAngle)"/>
-        <xsl:with-param name="y" select="math:tan($lineAngle) * ($waXOuterRadius - .5 * $thickness div math:sin($lineAngle))"/>
+        <xsl:with-param name="x" select="$legXWidth - .5 * $thickness div math:sin($lineAngle)"/>
+        <xsl:with-param name="y" select="math:tan($lineAngle) * ($legXWidth - .5 * $thickness div math:sin($lineAngle))"/>
     </xsl:call-template>
     <xsl:call-template name="line">
-        <xsl:with-param name="x" select="$waXOuterRadius - .5 * $thickness div math:sin($lineAngle)"/>
-        <xsl:with-param name="y" select="-math:tan($lineAngle) * ($waXOuterRadius - .5 * $thickness div math:sin($lineAngle))"/>
+        <xsl:with-param name="x" select="$legXWidth - .5 * $thickness div math:sin($lineAngle)"/>
+        <xsl:with-param name="y" select="-math:tan($lineAngle) * ($legXWidth - .5 * $thickness div math:sin($lineAngle))"/>
     </xsl:call-template>
     <xsl:call-template name="line">
-        <xsl:with-param name="x" select="$waXOuterRadius"/>
+        <xsl:with-param name="x" select="$legXWidth"/>
         <xsl:with-param name="y" select="2 * $waYOuterRadius"/>
     </xsl:call-template>
     
@@ -51,25 +71,25 @@
     </xsl:call-template>
     
     <xsl:call-template name="line">
-        <xsl:with-param name="x" select="-($waXOuterRadius - $thickness div math:sin($lineAngle))"/>
-        <xsl:with-param name="y" select="-math:tan($lineAngle) * ($waXOuterRadius - $thickness div math:sin($lineAngle))"/>
+        <xsl:with-param name="x" select="-($legXWidth - $thickness div math:sin($lineAngle))"/>
+        <xsl:with-param name="y" select="-math:tan($lineAngle) * ($legXWidth - $thickness div math:sin($lineAngle))"/>
     </xsl:call-template>
     
     <xsl:call-template name="line">
-        <xsl:with-param name="x" select="-($waXOuterRadius - $thickness div math:sin($lineAngle))"/>
-        <xsl:with-param name="y" select="math:tan($lineAngle) * ($waXOuterRadius - $thickness div math:sin($lineAngle))"/>
+        <xsl:with-param name="x" select="-($legXWidth - $thickness div math:sin($lineAngle))"/>
+        <xsl:with-param name="y" select="math:tan($lineAngle) * ($legXWidth - $thickness div math:sin($lineAngle))"/>
     </xsl:call-template>
     <xsl:call-template name="line">
         <xsl:with-param name="x" select="-$thickness div math:sin($lineAngle)"/>
         <xsl:with-param name="y" select="0"/>
     </xsl:call-template>
     <xsl:call-template name="line">
-        <xsl:with-param name="x" select="-($waXOuterRadius - $thickness div math:sin($lineAngle))"/>
-        <xsl:with-param name="y" select="-math:tan($lineAngle) * ($waXOuterRadius - $thickness div math:sin($lineAngle))"/>
+        <xsl:with-param name="x" select="-($legXWidth - $thickness div math:sin($lineAngle))"/>
+        <xsl:with-param name="y" select="-math:tan($lineAngle) * ($legXWidth - $thickness div math:sin($lineAngle))"/>
     </xsl:call-template>
     <xsl:call-template name="line">
-        <xsl:with-param name="x" select="-($waXOuterRadius - $thickness div math:sin($lineAngle))"/>
-        <xsl:with-param name="y" select="math:tan($lineAngle) * ($waXOuterRadius - $thickness div math:sin($lineAngle))"/>
+        <xsl:with-param name="x" select="-($legXWidth - $thickness div math:sin($lineAngle))"/>
+        <xsl:with-param name="y" select="math:tan($lineAngle) * ($legXWidth - $thickness div math:sin($lineAngle))"/>
     </xsl:call-template>
     <xsl:call-template name="line">
         <xsl:with-param name="x" select="-$thickness div math:sin($lineAngle)"/>

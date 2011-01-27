@@ -7,7 +7,16 @@
 <xsl:include href="param.xslt"/>
 <xsl:include href="path.xslt"/>
 
-<xsl:variable name="advance" select="$wideConsWidth"/>
+<xsl:variable name="advance" >
+<xsl:choose>
+<xsl:when test="$fixedWidth &gt; 0">
+<xsl:value-of select="$fixedWidth"/>
+</xsl:when>
+<xsl:otherwise>
+<xsl:value-of select="$wideConsWidth"/>
+</xsl:otherwise>
+</xsl:choose>
+</xsl:variable>
 <xsl:variable name="overlap" select="0"/>
 
 <xsl:template match="svg:g">
@@ -20,7 +29,18 @@
 	<xsl:param name="xOffset" select="0"/>
 	<xsl:param name="yOffset" select="0"/>
     <xsl:element name="path" use-attribute-sets="pathAttribs">
-    <xsl:variable name="mAngle" select="math:atan(($latinAscent - $thickness) div (2 * $waXOuterRadius - $thickness))"/>
+    
+    <xsl:variable name="arcWidth" >
+        <xsl:choose>
+        <xsl:when test="$fixedWidth &gt; 0">
+        <xsl:value-of select=".5 * $lcWidth - .5 * $thickness"/>
+        </xsl:when>
+        <xsl:otherwise>
+        <xsl:value-of select="2 * $waXOuterRadius - $thickness"/>
+        </xsl:otherwise>
+        </xsl:choose>
+    </xsl:variable>
+    <xsl:variable name="mAngle" select="math:atan(($latinAscent - $thickness) div ($arcWidth))"/>
     <xsl:variable name="dyTop" select="$thickness div math:cos($mAngle)"/>
     <xsl:variable name="dxBottom" select=".5 * $thickness div math:sin($mAngle)"/>
     <xsl:variable name="dyBottom" select="$dxBottom * math:tan($mAngle)"/>
@@ -34,11 +54,11 @@
         <xsl:with-param name="y" select="0"/>
     </xsl:call-template>
     <xsl:call-template name="line">
-    	<xsl:with-param name="x" select="2 * $waXOuterRadius - 1.5 * $thickness"/>
+    	<xsl:with-param name="x" select="$arcWidth - .5 * $thickness"/>
         <xsl:with-param name="y" select="-$latinAscent  +$dyBottom"/>
     </xsl:call-template>
     <xsl:call-template name="line">
-    	<xsl:with-param name="x" select="2 * $waXOuterRadius - 1.5 * $thickness"/>
+    	<xsl:with-param name="x" select="$arcWidth - .5 * $thickness"/>
         <xsl:with-param name="y" select="$latinAscent -$dyBottom"/>
     </xsl:call-template>
     <xsl:call-template name="line">
@@ -58,7 +78,7 @@
         <xsl:with-param name="y" select="$latinAscent - $dyTop"/>
     </xsl:call-template>
     <xsl:call-template name="line">
-    	<xsl:with-param name="x" select="-(2 * $waXOuterRadius - 1.5 * $thickness - $dxBottom)"/>
+    	<xsl:with-param name="x" select="-($arcWidth - .5 * $thickness - $dxBottom)"/>
         <xsl:with-param name="y" select="- $latinAscent + $dyTop"/>
     </xsl:call-template>
     <xsl:call-template name="line">
@@ -66,7 +86,7 @@
         <xsl:with-param name="y" select="0"/>
     </xsl:call-template>
     <xsl:call-template name="line">
-    	<xsl:with-param name="x" select="-(2 * $waXOuterRadius - 1.5 * $thickness - $dxBottom)"/>
+    	<xsl:with-param name="x" select="-($arcWidth - .5 * $thickness - $dxBottom)"/>
         <xsl:with-param name="y" select=" $latinAscent - $dyTop"/>
     </xsl:call-template>
     <xsl:call-template name="line">

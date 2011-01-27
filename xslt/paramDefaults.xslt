@@ -18,13 +18,14 @@
 <xsl:param name="cubicCircleFactor" select=".5"/>
 <xsl:param name="waXOuterRadius" select="250"/>
 <xsl:param name="waYOuterRadius" select="250"/>
+<xsl:param name="fixedWidth" select="0" />
 
 <!-- define a few parameters which are only used by the python script -->
 <xsl:param name="lookupFont" select="'thanlwin-lookups.sfd'"/><!-- some lookups are cloned from this -->
 <xsl:param name="minCodePoint" select="32"/><!-- in decimal otherwise it won't parse -->
 <xsl:param name="maxCodePoint" select="9676"/>
 <xsl:param name="copyright" select="'Keith Stribley 2010 (ThanLwinSoft.org)'"/>
-<xsl:param name="version" select="0.001"/>
+<xsl:param name="version" select="0.002"/>
 <xsl:param name="designer" select="'Keith Stribley'"/>
 <xsl:param name="vendor" select="'ThanLwinSoft.org'"/>
 <xsl:param name="vendorUrl" select="'http://www.thanlwinsoft.org'"/>

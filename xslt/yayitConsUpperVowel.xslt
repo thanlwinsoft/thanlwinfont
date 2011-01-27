@@ -34,7 +34,7 @@
 <axsl:variable name="advance" select="$widthOffset + $preGuard + $thickness + $postGuard + $u102cAdvance"/>
 </xsl:when>
 <xsl:otherwise>
-<axsl:variable name="advance" select="$widthOffset + $preGuard + $thickness + 2 * $postGuard"/>
+<axsl:variable name="advance" select="$widthOffset + $preGuard + $thickness + $postGuard"/>
 </xsl:otherwise>
 </xsl:choose>
 

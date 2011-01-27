@@ -7,6 +7,7 @@
 # This license is available with a FAQ at: http://scripts.sil.org/OFL
 #
 import fontforge
+import psMat
 import xml.dom
 import xml.dom.minidom
 import sys
@@ -60,7 +61,10 @@ class SvgFont(object) :
         self.font.os2_winascent = self.params.getint("Font", "ascent") - self.font.ascent
         self.font.os2_windescent = self.params.getint("Font", "descent") - self.font.descent
         self.font.os2_family_class = self.params.getint("Font", "familyClass")
-        
+        self.fixedWidth = int(self.params.get("Font", "fixedWidth"))
+        self.font.os2_panose = (2, 0, 6, 3, 0, 0, 0, 0, 0, 0)
+        if self.fixedWidth > 0: self.font.os2_panose = (2, 0, 6, 9, 0, 0, 0, 0, 0, 0)
+
         self.font.em = int(self.params.get("Font", "emWidth"))
         logFile =  codecs.open(outname +".log", "w", "UTF-8")
         logging.basicConfig(filemode="r", level=logging.DEBUG, stream=logFile)
@@ -85,6 +89,8 @@ class SvgFont(object) :
         else:
             glyph.importOutlines(svgFile)
             glyph.width = self.getSvgAdvance(svgFile)
+            if (self.fixedWidth > 0 and glyph.width > 1):
+                self.fixGlyphWidth(glyph, glyphName)
             glyph.correctDirection()
             glyph.addExtrema()
             glyph.round()
@@ -101,6 +107,24 @@ class SvgFont(object) :
                 # print "Glyph validated: " + glyphName
                 pass
         return glyph
+
+    def fixGlyphWidth(self, glyph, glyphName):
+        modifiedWidth = self.fixedWidth
+        while modifiedWidth < glyph.width :
+            modifiedWidth += self.fixedWidth
+        deltaWidth = modifiedWidth - glyph.width
+        if self.isBase(glyphName):
+            # right align
+            matrix = psMat.translate(deltaWidth)
+        else :
+            if self.isMark(glyphName):
+                # left align
+                matrix = psMat.identity()
+            else:
+                # centre
+                matrix = psMat.translate(.5 * deltaWidth)
+        glyph.transform(matrix)
+        glyph.width = modifiedWidth
 
     def addCharGlyphs(self):
         minCodePoint = self.params.getint("Font", "minCodePoint")

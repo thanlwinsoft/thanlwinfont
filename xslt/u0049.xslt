@@ -6,8 +6,17 @@
 
 <xsl:include href="param.xslt"/>
 <xsl:include href="path.xslt"/>
+<xsl:variable name="advance">
+<xsl:choose>
+    <xsl:when test="$fixedWidth &gt; 0">
+    <xsl:value-of select="$fixedWidth"/>
+    </xsl:when>
+    <xsl:otherwise>
+    <xsl:value-of select="round($preGuard + 3 * $thickness + $postGuard)"/>
+    </xsl:otherwise>
+</xsl:choose>
+</xsl:variable>
 
-<xsl:variable name="advance" select="round($preGuard + 3 * $thickness + $postGuard)"/>
 <xsl:variable name="overlap" select="0"/>
 
 <xsl:template match="svg:g">
@@ -21,10 +30,20 @@
 	<xsl:param name="yOffset" select="0"/>
     <xsl:element name="path" use-attribute-sets="pathAttribs">
     <xsl:attribute name="d">
-    <xsl:call-template name="Move">
-        <xsl:with-param name="x" select="$xOffset + $preGuard"/>
-        <xsl:with-param name="y" select="$yOffset + $latinAscent"/>
-    </xsl:call-template>
+    <xsl:choose>
+        <xsl:when test="$fixedWidth &gt; 0">
+            <xsl:call-template name="Move">
+                <xsl:with-param name="x" select="$xOffset + round(.5 * $fixedWidth - 1.5 * $thickness)"/>
+                <xsl:with-param name="y" select="$yOffset + $latinAscent"/>
+            </xsl:call-template>
+        </xsl:when>
+        <xsl:otherwise>
+            <xsl:call-template name="Move">
+                <xsl:with-param name="x" select="$xOffset + $preGuard"/>
+                <xsl:with-param name="y" select="$yOffset + $latinAscent"/>
+            </xsl:call-template>
+        </xsl:otherwise>
+    </xsl:choose>
     <xsl:text>l</xsl:text><xsl:value-of select="3 * $thickness"/>
     <xsl:text>,0</xsl:text>
 	<xsl:text>l0,</xsl:text><xsl:value-of select="-$thickness "/>

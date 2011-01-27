@@ -43,7 +43,7 @@
 	</axsl:choose>
 </axsl:variable>
 <axsl:variable name="overlap" select="0"/>
-<axsl:variable name="advance" select="$widthOffset + $preGuard +  $thickness + 2 * $postGuard + $tallWidth"/>
+<axsl:variable name="advance" select="$widthOffset + $preGuard +  $thickness + $postGuard + $tallWidth"/>
 
 <axsl:include href="../xslt/param.xslt"/>
 <axsl:include href="../xslt/path.xslt"/>
@@ -70,7 +70,7 @@
 		<axsl:with-param name="yOffset" select="$yOffset"/>
 	</axsl:call-template>
 	<axsl:call-template name="{$lowerVowel}">
-		<axsl:with-param name="xOffset" select="$xOffset + $widthOffset + $preGuard + $thickness + 2 * $postGuard"/>
+		<axsl:with-param name="xOffset" select="$xOffset + $widthOffset + $preGuard + $thickness + $postGuard"/>
 		<axsl:with-param name="yOffset" select="$yOffset"/>
 	</axsl:call-template>
 </axsl:template>

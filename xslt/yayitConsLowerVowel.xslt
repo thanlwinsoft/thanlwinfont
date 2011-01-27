@@ -46,13 +46,13 @@
 <axsl:variable name="overlap" select="0"/>
 <xsl:choose>
 <xsl:when test="$lowerVowel = 'u1030_tall'">
-<axsl:variable name="advance" select="$widthOffset + $preGuard + $thickness + 2 * $postGuard + $tallWidth"/>
+<axsl:variable name="advance" select="$widthOffset + $preGuard + $thickness + $postGuard + $tallWidth"/>
 </xsl:when>
 <xsl:when test="$lowerVowel = 'u102c'">
 <axsl:variable name="advance" select="$widthOffset + $preGuard + $thickness + $postGuard + $tallWidth"/>
 </xsl:when>
 <xsl:otherwise>
-<axsl:variable name="advance" select="$widthOffset + $preGuard + $thickness + 2 * $postGuard + $tallWidth"/>
+<axsl:variable name="advance" select="$widthOffset + $preGuard + $thickness + $postGuard + $tallWidth"/>
 </xsl:otherwise>
 </xsl:choose>
 
@@ -83,7 +83,7 @@
 		<axsl:with-param name="yOffset" select="$yOffset"/>
 		</xsl:when>
 		<xsl:otherwise>
-		<axsl:with-param name="xOffset" select="$xOffset + $widthOffset + $preGuard + $thickness + 2 * $postGuard"/>
+		<axsl:with-param name="xOffset" select="$xOffset + $widthOffset + $preGuard + $thickness + $postGuard"/>
 		<axsl:with-param name="yOffset" select="$yOffset"/>
 		</xsl:otherwise>
 	</xsl:choose>

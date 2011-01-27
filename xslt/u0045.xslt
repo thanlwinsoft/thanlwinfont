@@ -43,7 +43,7 @@
         <xsl:with-param name="y" select="-$capitalYInnerRadius + .5 * $thickness"/>
     </xsl:call-template>
     <xsl:call-template name="line">
-    	<xsl:with-param name="x" select="$waXInnerRadius"/>
+    	<xsl:with-param name="x" select="1.5 * $waXInnerRadius"/>
         <xsl:with-param name="y" select="0"/>
     </xsl:call-template>
     <xsl:call-template name="line">
@@ -51,7 +51,7 @@
         <xsl:with-param name="y" select="-$thickness"/>
     </xsl:call-template>
     <xsl:call-template name="line">
-    	<xsl:with-param name="x" select="-$waXInnerRadius"/>
+    	<xsl:with-param name="x" select="-1.5 * $waXInnerRadius"/>
         <xsl:with-param name="y" select="0"/>
     </xsl:call-template>
     <xsl:call-template name="line">

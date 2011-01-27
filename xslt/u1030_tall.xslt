@@ -32,9 +32,9 @@
 	<xsl:text>l0,</xsl:text><xsl:value-of select="2 * $waYOuterRadius + $descent"/>
 	<xsl:call-template name="end"/>
 	
-	<xsl:call-template name="move">
-        <xsl:with-param name="x" select="$thickness + $lineSpacing"/>
-        <xsl:with-param name="y" select="0"/>
+	<xsl:call-template name="Move">
+        <xsl:with-param name="x" select="$xOffset + $preGuard + $thickness + $lineSpacing"/>
+        <xsl:with-param name="y" select="$yOffset + 2 * $waYOuterRadius"/>
     </xsl:call-template>
 
 	<xsl:call-template name="corner">
