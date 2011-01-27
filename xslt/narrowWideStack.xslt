@@ -7,11 +7,12 @@
 <xsl:output method="xml" indent="yes"/>
 
 <xsl:param name="upper"/>
-<xsl:param name="upperTemplate" select="$lower"/>
+<xsl:param name="upperTemplate" select="$upper"/>
 <xsl:param name="lower"/>
 <xsl:param name="lowerTemplate" select="$lower"/>
 <xsl:param name="upperVowel" select="''"/>
 <xsl:param name="tallVowel" select="''"/>
+<xsl:param name="augamyint" select="''"/> 
 
 
 <xsl:template match="/">
@@ -21,6 +22,9 @@
 </xsl:if>
 <xsl:if test="string-length($tallVowel) &gt; 0">
 <axsl:import href="{concat('../xslt/',$tallVowel,'.xslt')}"/>
+</xsl:if>
+<xsl:if test="string-length($augamyint) &gt; 0">
+<axsl:import href="{concat('../xslt/',$augamyint,'.xslt')}"/>
 </xsl:if>
 <axsl:import href="{concat('../xslt/',$upperTemplate,'.xslt')}"/>
 <axsl:import href="{concat('../xslt/',$lowerTemplate,'.xslt')}"/>
@@ -76,6 +80,12 @@
 		<xsl:if test="string-length($tallVowel) &gt; 0">
 		<axsl:call-template name="{$tallVowel}">
 			<axsl:with-param name="xOffset" select="2 * $medialDx + $narrowConsWidth"/>
+			<axsl:with-param name="yOffset" select="0"/>
+		</axsl:call-template>		
+		</xsl:if>
+		<xsl:if test="string-length($augamyint) &gt; 0">
+		<axsl:call-template name="{$augamyint}">
+			<axsl:with-param name="xOffset" select="$medialDx + $narrowConsWidth + .5 * $u102cAdvance"/>
 			<axsl:with-param name="yOffset" select="0"/>
 		</axsl:call-template>		
 		</xsl:if>

@@ -22,6 +22,7 @@ afterMedials = [0x103b, 0x103d, 0x103e]
 classCons = set(narrowCons).union(wideCons, specialCons, tallCons)
 classNumbers = [0x1040, 0x1041, 0x1042, 0x1043, 0x1044, 0x1045, 0x1046, 0x1047, 0x1048, 0x1049]
 classKinzi = [0x1004, 0x101b]
+classVirama = [0x1039]
 classAsat = [0x103a]
 classMedialY = [0x103b, 0x105e, 0x105f]
 classMedialR = [0x103c]
@@ -38,7 +39,7 @@ classAnusvara = [0x1032, 0x1036]
 classPwoTone = [0x1064, 0x1069, 0x106a, 0x106b, 0x106c, 0x106d]
 classVisarga = [0x1038, 0x1087, 0x1088, 0x1089, 0x108a, 0x108b, 0x108c, 0x108d, 0x108f, 0x109a, 0x109b, 0x109c]
 classRedup = [0xaa70]
-classAllMarks = set(classAsat).union(classMedialY, classMedialR, classMedialW,
+classAllMarks = set(classAsat).union(classVirama, classMedialY, classMedialR, classMedialW,
     classMedialH, classEVowel, classUVowel, classLVowel, classLDot, classKVowel,
     classSVowel, classAVowel, classAnusvara, classPwoTone, classVisarga,
     classRedup)
@@ -113,6 +114,10 @@ class MyanmarSvgFont(SvgFont.SvgFont):
             self.addLigature("medialLigSub", ["u1039", glyphName, "u1030"])
         
         self.addLigature("medialLigSub", ["u1039", "u1010", "u103d"])
+        
+        self.addLigature("medialLigSub", ["u103b", "u102d"])
+        
+        self.addLigature("medialLigSub", ["u103b", "u102e"])
 
         self.addLigature("medialLigSub", ["u103b", "u103d"])
         
@@ -178,6 +183,7 @@ class MyanmarSvgFont(SvgFont.SvgFont):
                 self.addLigature("medialLigSub",[narrowGlyph,"u1039",wideGlyph,"u102e"])
                 self.addLigature("medialLigSub",[narrowGlyph,"u1039",wideGlyph,"u102f"])
                 self.addLigature("medialLigSub",[narrowGlyph,"u1039",wideGlyph,"u1030"])
+                self.addLigature("medialLigSub",[narrowGlyph,"u1039",wideGlyph,"u102c","u1037"])
                 self.addLigature("medialLigSub",[narrowGlyph,"u1039",wideGlyph,"u102d","u102f"])
 
 

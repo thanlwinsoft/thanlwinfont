@@ -549,6 +549,11 @@ $(SVG_DIR)/$(1)_u1039_$(3)_u102c.svg : xslt/$(2).xslt xslt/$(4).xslt xslt/narrow
 	xsltproc -o tmp/$(1)_u1039_$(3)_u102c.xslt --stringparam upper $(1) --stringparam upperTemplate $(2) --stringparam lower $(3) --stringparam lowerTemplate $(4) --stringparam upperVowel u102c xslt/narrowWideStack.xslt blank.svg
 	xsltproc -o $$@ tmp/$(1)_u1039_$(3)_u102c.xslt blank.svg
 
+$(SVG_DIR)/$(1)_u1039_$(3)_u102c_u1037.svg : xslt/$(2).xslt xslt/$(4).xslt xslt/narrowWideStack.xslt $(PARAMS) Makefile xslt/u102c.xslt xslt/u1037.xslt
+	mkdir -p tmp
+	xsltproc -o tmp/$(1)_u1039_$(3)_u102c_u1037.xslt --stringparam upper $(1) --stringparam upperTemplate $(2) --stringparam lower $(3) --stringparam lowerTemplate $(4) --stringparam upperVowel u102c --stringparam augamyint u1037 xslt/narrowWideStack.xslt blank.svg
+	xsltproc -o $$@ tmp/$(1)_u1039_$(3)_u102c_u1037.xslt blank.svg
+
 $(SVG_DIR)/$(1)_u1039_$(3)_u102d.svg : xslt/$(2).xslt xslt/$(4).xslt xslt/narrowWideStack.xslt $(PARAMS) Makefile xslt/u102d.xslt
 	mkdir -p tmp
 	xsltproc -o tmp/$(1)_u1039_$(3)_u102d.xslt --stringparam upper $(1) --stringparam upperTemplate $(2) --stringparam lower $(3) --stringparam lowerTemplate $(4) --stringparam upperVowel u102d xslt/narrowWideStack.xslt blank.svg
@@ -565,7 +570,7 @@ $(SVG_DIR)/$(1)_u1039_$(3)_u102d_u102f.svg : xslt/$(2).xslt xslt/$(4).xslt xslt/
 	xsltproc -o tmp/$(1)_u1039_$(3)_u102d_u102f.xslt --stringparam upper $(1) --stringparam upperTemplate $(2) --stringparam lower $(3) --stringparam lowerTemplate $(4) --stringparam upperVowel u102d --stringparam tallVowel u102f_tall xslt/narrowWideStack.xslt blank.svg
 	xsltproc -o $$@ tmp/$(1)_u1039_$(3)_u102d_u102f.xslt blank.svg
 	
-narrowwidestack :: $(SVG_DIR)/$(1)_u1039_$(3).svg $(SVG_DIR)/$(1)_u1039_$(3)_u102c.svg $(SVG_DIR)/$(1)_u1039_$(3)_u102d.svg $(SVG_DIR)/$(1)_u1039_$(3)_u102e.svg $(SVG_DIR)/$(1)_u1039_$(3)_u102f.svg $(SVG_DIR)/$(1)_u1039_$(3)_u1030.svg $(SVG_DIR)/$(1)_u1039_$(3)_u102d_u102f.svg
+narrowwidestack :: $(SVG_DIR)/$(1)_u1039_$(3).svg $(SVG_DIR)/$(1)_u1039_$(3)_u102c.svg $(SVG_DIR)/$(1)_u1039_$(3)_u102c_u1037.svg $(SVG_DIR)/$(1)_u1039_$(3)_u102d.svg $(SVG_DIR)/$(1)_u1039_$(3)_u102e.svg $(SVG_DIR)/$(1)_u1039_$(3)_u102f.svg $(SVG_DIR)/$(1)_u1039_$(3)_u1030.svg $(SVG_DIR)/$(1)_u1039_$(3)_u102d_u102f.svg
 endef
 
 $(foreach narrow,$(narrowCons),$(foreach wide,$(wideCons),$(eval $(call narrowWideStack,$(narrow),$(narrow),$(wide),$(wide)))))

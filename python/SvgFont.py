@@ -42,9 +42,9 @@ class SvgFont(object) :
         self.font.sfnt_names = (('English (US)', 'Copyright', self.params.get("Font", 'copyright')), \
             ('English (US)', 'Family', self.font.familyname), ('English (US)', 'SubFamily', subFamily), \
             ('English (US)', 'UniqueID', u'FontForge 2.0 : ' + self.font.fullname + ": " + datetime.datetime.now().isoformat()),\
-            ('English (US)', 'Fullname', self.font.fullname), \
+            ('English (US)', 'Fullname', self.font.fullname),\
             ('English (US)', 'Version', 'Version {0:09.3f}'.format(float(self.params.get("Font", 'version')))),\
-            ('English (US)', 'PostScriptName', self.font.fontname),\
+#            ('English (US)', 'PostScriptName', self.font.fontname),\
             ('English (US)', 'License', "Open Font License"), ('English (US)', 'License URL', 'http://scripts.sil.org/OFL'))
         langCode = int(self.params.get("Font", "localizedLang"))   
         self.font.appendSFNTName(langCode, 1, self.params.get("Font", "localizedFamilyName").encode('UTF-8'))
@@ -116,6 +116,7 @@ class SvgFont(object) :
         if self.isBase(glyphName):
             # right align
             matrix = psMat.translate(deltaWidth)
+            # print "base " + glyphName + " translate by " + str(deltaWidth)
         else :
             if self.isMark(glyphName):
                 # left align
