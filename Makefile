@@ -33,6 +33,12 @@ $(SVG_DIR)/u1039_%_u102d_u102f.svg : xslt/%.xslt xslt/generateMedialu102d_u102f.
 	xsltproc -o $(subst .xslt,_u102d_u102f.xslt,$(subst xslt/,tmp/u1039_, $<))  --stringparam base $(subst .xslt,,$(subst xslt/,,$<)) xslt/generateMedialu102d_u102f.xslt blank.svg
 	xsltproc -o $@  $(subst .xslt,_u102d_u102f.xslt,$(subst xslt/,tmp/u1039_, $<)) blank.svg
 
+$(SVG_DIR)/u1039_%_u102f_u1036.svg : xslt/%.xslt xslt/generateMedialu102f_u1036.xslt Makefile xslt/u102f_tall.xslt xslt/u1036.xslt $(PARAMS)
+	mkdir -p tmp
+	xsltproc -o $(subst .xslt,_u102f_u1036.xslt,$(subst xslt/,tmp/u1039_, $<))  --stringparam base $(subst .xslt,,$(subst xslt/,,$<)) xslt/generateMedialu102f_u1036.xslt blank.svg
+	xsltproc -o $@  $(subst .xslt,_u102f_u1036.xslt,$(subst xslt/,tmp/u1039_, $<)) blank.svg
+
+
 $(SVG_DIR)/u1039_%_u1030.svg : xslt/%.xslt xslt/generateMedialu1030.xslt Makefile xslt/u1030_tall.xslt $(PARAMS)
 	mkdir -p tmp
 	xsltproc -o $(subst .xslt,_u1030.xslt,$(subst xslt/,tmp/u1039_, $<))  --stringparam base $(subst .xslt,,$(subst xslt/,,$<)) xslt/generateMedialu1030.xslt blank.svg
@@ -42,6 +48,11 @@ $(SVG_DIR)/%_u1031.svg : xslt/%.xslt xslt/u1031.xslt xslt/eVowelCons.xslt Makefi
 	mkdir -p tmp
 	xsltproc -o $(subst .xslt,_u1031.xslt,$(subst xslt/,tmp/, $<))  --stringparam base $(subst .xslt,,$(subst xslt/,,$<)) xslt/eVowelCons.xslt blank.svg
 	xsltproc -o $@  $(subst .xslt,_u1031.xslt,$(subst xslt/,tmp/, $<)) blank.svg
+
+$(SVG_DIR)/%_u1031_u1037.svg : xslt/%.xslt xslt/u1031.xslt xslt/u1037.xslt xslt/eVowelCons.xslt Makefile $(PARAMS) 
+	mkdir -p tmp
+	xsltproc -o $(subst .xslt,_u1031_u1037.xslt,$(subst xslt/,tmp/, $<))  --stringparam base $(subst .xslt,,$(subst xslt/,,$<)) xslt/eVowelCons1037.xslt blank.svg
+	xsltproc -o $@  $(subst .xslt,_u1031_u1037.xslt,$(subst xslt/,tmp/, $<)) blank.svg
 
 %.ini : xslt/%.xslt xslt/param2ini.xslt xslt/paramDefaults.xslt
 	mkdir -p tmp
@@ -164,10 +175,11 @@ $(eval $(call tallMedial,u100b))
 
 $(eval $(call tallMedial,u100d))
 
-medials : $(patsubst %, $(SVG_DIR)/u1039_%.svg, $(medialCons) $(rotatedMedialCons)) $(patsubst %, $(SVG_DIR)/u1039_%_u102f.svg, $(medialCons)) $(patsubst %, $(SVG_DIR)/u1039_%_u102d_u102f.svg, $(medialCons)) $(patsubst %, $(SVG_DIR)/u1039_%_u1030.svg, $(medialCons)) narrowwidestack
+medials : $(patsubst %, $(SVG_DIR)/u1039_%.svg, $(medialCons) $(rotatedMedialCons)) $(patsubst %, $(SVG_DIR)/u1039_%_u102f.svg, $(medialCons)) $(patsubst %, $(SVG_DIR)/u1039_%_u102d_u102f.svg, $(medialCons)) $(patsubst %, $(SVG_DIR)/u1039_%_u102f_u1036.svg, $(medialCons)) $(patsubst %, $(SVG_DIR)/u1039_%_u1030.svg, $(medialCons)) narrowwidestack
 
+ereorder1037:: $(patsubst %, $(SVG_DIR)/%_u1031_u1037.svg, $(allCons) u25cc u103f u100b_u1039_u100c)
 
-ereorder:: $(patsubst %, $(SVG_DIR)/%_u1031.svg, $(allCons) u1029 u25cc u103f u100b_u1039_u100c)
+ereorder:: $(patsubst %, $(SVG_DIR)/%_u1031.svg, $(allCons) u1029 u25cc u103f u100b_u1039_u100c) ereorder1037
 
 # $(patsubst %, $(SVG_DIR)/%_u103c_u1031.svg, $(wideCons) $(narrowCons)) $(patsubst %, $(SVG_DIR)/%_u103c_u1031_u102c.svg, $(wideCons) $(narrowCons)) $(patsubst %, $(SVG_DIR)/%_u103c_u103d_u1031.svg, $(wideCons) $(narrowCons)) $(patsubst %, $(SVG_DIR)/%_u103c_u103d_u1031_u102c.svg, $(wideCons) $(narrowCons)) $(patsubst %, $(SVG_DIR)/%_u103c_u103e_u1031.svg, $(wideCons) $(narrowCons)) $(patsubst %, $(SVG_DIR)/%_u103c_u103e_u1031_u102c.svg, $(wideCons) $(narrowCons)) $(patsubst %, $(SVG_DIR)/%_u103b_u1031.svg, $(takesMedialEVowel)) $(patsubst %, $(SVG_DIR)/%_u103b_u103d_u1031.svg, $(takesMedialEVowel) u1014 u100a u101b) $(patsubst %, $(SVG_DIR)/%_u103b_u103e_u1031.svg, $(takesMedialEVowel)) $(patsubst %, $(SVG_DIR)/%_u103b_u103d_u103e_u1031.svg, $(takesMedialEVowel)) $(patsubst %, $(SVG_DIR)/%_u103d_u1031.svg, $(takesMedialEVowel) u1014 u100a u101b) $(patsubst %, $(SVG_DIR)/%_u103e_u1031.svg, $(takesMedialEVowel) u1014 u100a u101b) $(patsubst %, $(SVG_DIR)/%_u103d_u103e_u1031.svg, $(takesMedialEVowel) u1014 u100a u101b) $(SVG_DIR)/u1005_u1039_u1006_u1031.svg $(SVG_DIR)/u1014_u1039_u1010_u1031.svg $(SVG_DIR)/u1014_u1039_u1012_u1031.svg $(SVG_DIR)/u1014_u1039_u1013_u1031.svg $(SVG_DIR)/u1017_u1039_u1017_u1031.svg $(SVG_DIR)/u1019_u1039_u1019_u1031.svg $(SVG_DIR)/u100b_u1039_u100c_u1031.svg
 
@@ -475,13 +487,18 @@ endef
 
 $(foreach cons,$(takesKinzi),$(eval $(call eVowelConsKinziMedial,$(cons),u103b)))
 
-yapin: $(SVG_DIR)/u103b_u102d_u102f.svg $(SVG_DIR)/u103b_u102f.svg $(SVG_DIR)/u103b_u1030.svg $(SVG_DIR)/u103b_u103d_u102d_u102f.svg $(SVG_DIR)/u103b_u103d_u102f.svg $(SVG_DIR)/u103b_u103d_u1030.svg $(SVG_DIR)/u103b_u103e_u102d_u102f.svg $(SVG_DIR)/u103b_u103e_u102f.svg $(SVG_DIR)/u103b_u103e_u1030.svg  $(SVG_DIR)/u103b_u103d_u103e_u102d_u102f.svg $(SVG_DIR)/u103b_u103d_u103e_u102f.svg $(SVG_DIR)/u103b_u103d_u103e_u1030.svg $(SVG_DIR)/u103b_u102f_u1036.svg $(SVG_DIR)/u103b_u103d_u102f_u1036.svg $(SVG_DIR)/u103b_u103e_u102f_u1036.svg $(SVG_DIR)/u103b_u103d_u103e_u102f_u1036.svg $(SVG_DIR)/u103b_u1036.svg $(SVG_DIR)/u103b_u102f_u1036.svg $(SVG_DIR)/u103b_u103e_u1036.svg $(SVG_DIR)/u103b_u103d_u103e_u1036.svg $(SVG_DIR)/u103b_u1036_u1037.svg $(SVG_DIR)/u103b_u102f_u1036_u1037.svg $(SVG_DIR)/u103b_u103e_u1036_u1037.svg $(SVG_DIR)/u103b_u103d_u103e_u1036_u1037.svg $(SVG_DIR)/u103b_u102f_u1036_u1037.svg $(SVG_DIR)/u103b_u103d_u102f_u1036_u1037.svg $(SVG_DIR)/u103b_u103e_u102f_u1036_u1037.svg $(SVG_DIR)/u103b_u103d_u103e_u102f_u1036_u1037.svg
+yapin: $(SVG_DIR)/u103b_u102d_u102f.svg $(SVG_DIR)/u103b_u102f.svg $(SVG_DIR)/u103b_u1030.svg $(SVG_DIR)/u103b_u103d_u102d_u102f.svg $(SVG_DIR)/u103b_u103d_u102f.svg $(SVG_DIR)/u103b_u103d_u1030.svg $(SVG_DIR)/u103b_u103e_u102d_u102f.svg $(SVG_DIR)/u103b_u103e_u102f.svg $(SVG_DIR)/u103b_u103e_u1030.svg  $(SVG_DIR)/u103b_u103d_u103e_u102d_u102f.svg $(SVG_DIR)/u103b_u103d_u103e_u102f.svg $(SVG_DIR)/u103b_u103d_u103e_u1030.svg $(SVG_DIR)/u103b_u102f_u1036.svg $(SVG_DIR)/u103b_u103d_u102f_u1036.svg $(SVG_DIR)/u103b_u103e_u102f_u1036.svg $(SVG_DIR)/u103b_u103d_u103e_u102f_u1036.svg $(SVG_DIR)/u103b_u1036.svg $(SVG_DIR)/u103b_u103d_u1036.svg $(SVG_DIR)/u103b_u103e_u1036.svg $(SVG_DIR)/u103b_u103d_u103e_u1036.svg $(SVG_DIR)/u103b_u1036_u1037.svg $(SVG_DIR)/u103b_u102f_u1036_u1037.svg $(SVG_DIR)/u103b_u103e_u1036_u1037.svg $(SVG_DIR)/u103b_u103d_u103e_u1036_u1037.svg $(SVG_DIR)/u103b_u102f_u1036_u1037.svg $(SVG_DIR)/u103b_u103d_u102f_u1036_u1037.svg $(SVG_DIR)/u103b_u103e_u102f_u1036_u1037.svg $(SVG_DIR)/u103b_u103d_u103e_u102f_u1036_u1037.svg  $(SVG_DIR)/u103b_u102f_u1038.svg $(SVG_DIR)/u103b_u1030_u1038.svg
 
 define yapinVowel
 $(SVG_DIR)/$(1)_$(2).svg : xslt/$(1).xslt xslt/$(2)_tall.xslt xslt/yapinVowel.xslt Makefile $(PARAMS)
 	mkdir -p tmp
 	xsltproc -o tmp/$(1)_$(2).xslt --stringparam yapin $(1) --stringparam vowel $(2) --stringparam vowelTemplate $(2)_tall xslt/yapinVowel.xslt blank.svg
 	xsltproc -o $$@  tmp/$(1)_$(2).xslt blank.svg
+
+$(SVG_DIR)/$(1)_$(2)_u1038.svg : xslt/$(1).xslt xslt/$(2)_tall.xslt xslt/yapinVowel.xslt xslt/u1038.xslt Makefile $(PARAMS)
+	mkdir -p tmp
+	xsltproc -o tmp/$(1)_$(2)_u1038.xslt --stringparam yapin $(1) --stringparam vowel $(2) --stringparam vowelTemplate $(2)_tall --stringparam tone u1038 xslt/yapinVowel.xslt blank.svg
+	xsltproc -o $$@  tmp/$(1)_$(2)_u1038.xslt blank.svg
 endef
 
 $(foreach yapin,$(yapinVariants),$(eval $(call yapinVowel,$(yapin),u102f)))

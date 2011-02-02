@@ -11,6 +11,7 @@
 <xsl:param name="vowel"/>
 <xsl:param name="vowelTemplate" select="$vowel"/>
 <xsl:param name="augamyit" select="''"/>
+<xsl:param name="tone" select="''"/>
 
 <xsl:template match="/">
 <axsl:stylesheet version="1.0" >
@@ -24,6 +25,9 @@
 <xsl:if test="string-length($augamyit) &gt; 0">
 <axsl:import href="{concat('../xslt/',$augamyit,'.xslt')}"/>
 </xsl:if>
+<xsl:if test="string-length($tone) &gt; 0">
+<axsl:import href="{concat('../xslt/',$tone,'.xslt')}"/>
+</xsl:if>
 
 <axsl:variable name="overlap" select="0"/>
 <xsl:choose>
@@ -34,6 +38,9 @@
 <axsl:variable name="advance" select="4 * $thickness + $cornerOuterRadius + $postGuard"/>
 </xsl:when>
 <xsl:when test="$vowel = 'u1030' and $augamyit = 'u1037'">
+<axsl:variable name="advance" select="7 * $thickness + $cornerOuterRadius + $postGuard + 2 * $dotOuterRadius"/>
+</xsl:when>
+<xsl:when test="$vowel = 'u1030' and $tone = 'u1038'">
 <axsl:variable name="advance" select="7 * $thickness + $cornerOuterRadius + $postGuard + 2 * $dotOuterRadius"/>
 </xsl:when>
 <xsl:when test="$vowel = 'u1030'">
@@ -77,6 +84,22 @@
 	</xsl:if>
 	<xsl:if test="string-length($augamyit) &gt; 0">
 		<axsl:call-template name="{$augamyit}">
+		<xsl:choose>
+		<xsl:when test="$vowel = 'u102f'">
+		<axsl:with-param name="xOffset" select="$waXOuterRadius + $u102fTallAdvance - $postGuard"/>
+		</xsl:when>
+		<xsl:when test="$vowel = 'u1030'">
+		<axsl:with-param name="xOffset" select="$waXOuterRadius + $u1030TallAdvance - $postGuard"/>
+		</xsl:when>
+		<xsl:otherwise>
+		<axsl:with-param name="xOffset" select="$waXOuterRadius - $postGuard"/>
+		</xsl:otherwise>
+		</xsl:choose>
+		<axsl:with-param name="yOffset" select="0"/>
+	</axsl:call-template>
+	</xsl:if>
+	<xsl:if test="string-length($tone) &gt; 0">
+		<axsl:call-template name="{$tone}">
 		<xsl:choose>
 		<xsl:when test="$vowel = 'u102f'">
 		<axsl:with-param name="xOffset" select="$waXOuterRadius + $u102fTallAdvance - $postGuard"/>

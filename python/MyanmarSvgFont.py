@@ -110,7 +110,9 @@ class MyanmarSvgFont(SvgFont.SvgFont):
             self.addLigature("medialLigSub", ["u1039", glyphName, "u102f"])
             
             self.addLigature("medialLigSub", ["u1039", glyphName, "u102d", "u102f"])
-
+            
+            self.addLigature("medialLigSub", ["u1039", glyphName, "u102f", "u1036"])
+ 
             self.addLigature("medialLigSub", ["u1039", glyphName, "u1030"])
         
         self.addLigature("medialLigSub", ["u1039", "u1010", "u103d"])
@@ -162,6 +164,7 @@ class MyanmarSvgFont(SvgFont.SvgFont):
         for yayitVowel in ["u102f","u1030"]:
             self.addLigature("medialLigSub", ["u103b", yayitVowel])
             self.addLigature("medialLigSub", ["u103b", yayitVowel, "u1036"])
+            self.addLigature("medialLigSub", ["u103b", yayitVowel, "u1038"])
             self.addLigature("medialLigSub", ["u103b", yayitVowel, "u1036", "u1037"])
             for medial in ["u103d", "u103e"]:
                 self.addLigature("medialLigSub", ["u103b", medial, yayitVowel])
@@ -197,7 +200,8 @@ class MyanmarSvgFont(SvgFont.SvgFont):
             glyphName = "u{0:04x}".format(codePoint)
             
             self.addLigature("reorder", [glyphName, "u1031"])
-                
+            self.addLigature("reorder", [glyphName, "u1031", "u1037"])
+            
             # e vowel with medials
             
             for j in range(len(afterMedials)):
@@ -358,10 +362,12 @@ class MyanmarSvgFont(SvgFont.SvgFont):
             
         self.addLigature("reorder", ["u1004", "u103a", "u1039", "u104e"])
 
-        self.addLigature("medialLigSub", ["u101b", "u103d", "u1032", "u1037"])
-        self.addLigature("medialLigSub", ["u101b", "u103d", "u1036", "u1037"])
-        self.addLigature("medialLigSub", ["u101b", "u103d", "u103e", "u1032", "u1037"])
-        self.addLigature("medialLigSub", ["u101b", "u103d", "u103e", "u1036", "u1037"])
+        # self.addLigature("medialLigSub", ["u101b", "u103d", "u1032", "u1037"])
+        # self.addLigature("medialLigSub", ["u101b", "u103d", "u1036", "u1037"])
+        self.addLigature("reorder", ["u101b", "u103d", "u102f"])
+        self.addLigature("reorder", ["u101b", "u103d", "u102d", "u102f"])
+        self.addLigature("reorder", ["u101b", "u103d", "u103e", "u1032", "u1037"])
+        self.addLigature("reorder", ["u101b", "u103d", "u103e", "u1036", "u1037"])
     
         self.addLigature("medialLigSub", ["u1014","u1039","u1012"])
         self.addLigature("medialLigSub", ["u1014","u1039","u1013"])
