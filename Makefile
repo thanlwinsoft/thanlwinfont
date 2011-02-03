@@ -49,7 +49,7 @@ $(SVG_DIR)/%_u1031.svg : xslt/%.xslt xslt/u1031.xslt xslt/eVowelCons.xslt Makefi
 	xsltproc -o $(subst .xslt,_u1031.xslt,$(subst xslt/,tmp/, $<))  --stringparam base $(subst .xslt,,$(subst xslt/,,$<)) xslt/eVowelCons.xslt blank.svg
 	xsltproc -o $@  $(subst .xslt,_u1031.xslt,$(subst xslt/,tmp/, $<)) blank.svg
 
-$(SVG_DIR)/%_u1031_u1037.svg : xslt/%.xslt xslt/u1031.xslt xslt/u1037.xslt xslt/eVowelCons.xslt Makefile $(PARAMS) 
+$(SVG_DIR)/%_u1031_u1037.svg : xslt/%.xslt xslt/u1031.xslt xslt/u1037.xslt xslt/eVowelCons1037.xslt Makefile $(PARAMS) 
 	mkdir -p tmp
 	xsltproc -o $(subst .xslt,_u1031_u1037.xslt,$(subst xslt/,tmp/, $<))  --stringparam base $(subst .xslt,,$(subst xslt/,,$<)) xslt/eVowelCons1037.xslt blank.svg
 	xsltproc -o $@  $(subst .xslt,_u1031_u1037.xslt,$(subst xslt/,tmp/, $<)) blank.svg

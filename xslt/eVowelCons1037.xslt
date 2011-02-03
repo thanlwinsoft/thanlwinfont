@@ -26,6 +26,9 @@
 		<axsl:when test="'{$base}' = 'u1008'">
 			<axsl:value-of select="$narrowConsWidth + 2 * $thickness + $postGuard"/>
 		</axsl:when>
+		<axsl:when test="'{$base}' = 'u101b'">
+			<axsl:value-of select="$narrowConsWidth + 2 * $thickness + $postGuard"/>
+		</axsl:when>
 		<axsl:when test="$isWide"><axsl:value-of select="$wideConsWidth"/>
 		</axsl:when>
 		<axsl:otherwise><axsl:value-of select="$narrowConsWidth"/></axsl:otherwise>
@@ -54,10 +57,26 @@
 		<axsl:with-param name="xOffset" select="$narrowConsWidth"/>
 		<axsl:with-param name="yOffset" select="0"/>
 	</axsl:call-template>
+	<axsl:choose>
+	<axsl:when test="'{$base}' = 'u1014'">
+	<axsl:call-template name="u1037">
+		<axsl:with-param name="xOffset" select="$widthOffset + .5 * $narrowConsWidth + $thickness"/>
+		<axsl:with-param name="yOffset" select="0"/>
+	</axsl:call-template>
+	</axsl:when>
+	<axsl:when test="'{$base}' = 'u101b'">
+	<axsl:call-template name="u1037">
+		<axsl:with-param name="xOffset" select="2 * $narrowConsWidth"/>
+		<axsl:with-param name="yOffset" select="0"/>
+	</axsl:call-template>
+	</axsl:when>
+	<axsl:otherwise>
 	<axsl:call-template name="u1037">
 		<axsl:with-param name="xOffset" select="$widthOffset + .5 * $narrowConsWidth"/>
 		<axsl:with-param name="yOffset" select="0"/>
 	</axsl:call-template>
+	</axsl:otherwise>
+	</axsl:choose>
 </axsl:template>
 
 </axsl:stylesheet>

@@ -16,11 +16,11 @@
 <xsl:template match="svg:g">
 	<xsl:copy use-attribute-sets="gAttribs">
 	<xsl:call-template name="u102d">
-		<xsl:with-param name="xOffset" select="-$waXOuterRadius * $upperScale - .25 * $thickness"/>
+		<xsl:with-param name="xOffset" select="- .5 * $thickness"/>
 		<xsl:with-param name="yOffset" select="0"/>
 	</xsl:call-template>
 	<xsl:call-template name="u1036">
-		<xsl:with-param name="xOffset" select="$dotOuterRadius + .25 * $thickness"/>
+		<xsl:with-param name="xOffset" select="$waXOuterRadius * $upperScale + $dotOuterRadius"/>
 		<xsl:with-param name="yOffset" select="0"/>
 	</xsl:call-template>
 	</xsl:copy>

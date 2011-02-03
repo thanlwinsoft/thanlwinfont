@@ -45,7 +45,7 @@
 	<xsl:call-template name="end"/>
 	
 	<xsl:call-template name="move">
-        <xsl:with-param name="x" select="$thickness"/>
+        <xsl:with-param name="x" select="$lineSpacing"/>
         <xsl:with-param name="y" select="0"/>
     </xsl:call-template>
 	
@@ -56,26 +56,29 @@
 	<xsl:call-template name="end"/>
 	
 	<xsl:call-template name="move">
-        <xsl:with-param name="x" select="2 * $thickness"/>
+        <xsl:with-param name="x" select="$thickness+$lineSpacing"/>
         <xsl:with-param name="y" select="0"/>
     </xsl:call-template>
 
+    <xsl:text>l</xsl:text><xsl:value-of select="$thickness"/><xsl:text>,0</xsl:text>
 	<xsl:call-template name="corner">
 		<xsl:with-param name="x" select="0"/>
-        <xsl:with-param name="y" select="$medialPad - $descent"/>
-		<xsl:with-param name="r" select="$cornerOuterRadius"/>
-		<xsl:with-param name="nextX" select="$cornerOuterRadius+$thickness"/>
+        <xsl:with-param name="y" select="$medialPad - $descent + $thickness"/>
+		<xsl:with-param name="r" select="$cornerInnerRadius"/>
+		<xsl:with-param name="nextX" select="$cornerInnerRadius + $thickness"/>
         <xsl:with-param name="nextY" select="0"/>
 	</xsl:call-template>
-	<xsl:text>l0,</xsl:text><xsl:value-of select="$thickness"/>
+	
+	<xsl:text>l0,</xsl:text><xsl:value-of select="-$thickness"/>
+
 	<xsl:call-template name="corner">
-		<xsl:with-param name="x" select="-$cornerInnerRadius - $thickness"/>
+		<xsl:with-param name="x" select="-($cornerOuterRadius+$thickness)"/>
         <xsl:with-param name="y" select="0"/>
-		<xsl:with-param name="r" select="$cornerInnerRadius"/>
+		<xsl:with-param name="r" select="$cornerOuterRadius"/>
 		<xsl:with-param name="nextX" select="0"/>
-        <xsl:with-param name="nextY" select="- $medialPad + $descent - $thickness"/>
+        <xsl:with-param name="nextY" select="-$medialPad + $descent"/>
 	</xsl:call-template>
-	<xsl:text>l</xsl:text><xsl:value-of select="-$thickness"/><xsl:text>,0</xsl:text>
+
 	<xsl:call-template name="end"/>
 
     </xsl:attribute>
