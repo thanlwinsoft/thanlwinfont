@@ -45,7 +45,7 @@
 <xsl:param name="lcXInnerRadius" select="$lcXOuterRadius - $thickness"/>
 <xsl:param name="lcYOuterRadius" select="$waYOuterRadius"/>
 <xsl:param name="lcYInnerRadius" select="$lcYOuterRadius - $thickness"/>
-<xsl:param name="latinDotRadius" select=".75 * $thickness"/>
+<xsl:param name="latinDotRadius" select=".8 * $thickness"/>
 <xsl:param name="lcHeight" select="2 * $waYOuterRadius"/>
 <xsl:param name="lcWidth" select="2 * $waXOuterRadius"/>
 <xsl:param name="capitalYOuterRadius" select=".5 * $latinAscent"/>

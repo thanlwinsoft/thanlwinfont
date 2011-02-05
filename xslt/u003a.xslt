@@ -39,7 +39,7 @@
     
     <xsl:call-template name="Move">
         <xsl:with-param name="x" select="$xOffset + $preGuard + $latinDotRadius"/>
-        <xsl:with-param name="y" select="$yOffset + 2 * $waYOuterRadius - $latinDotRadius"/>
+        <xsl:with-param name="y" select="$yOffset + 2 * $waYOuterRadius - 2 * $latinDotRadius"/>
     </xsl:call-template>
 	<xsl:call-template name="arc">
         <xsl:with-param name="rx" select="$latinDotRadius"/>
