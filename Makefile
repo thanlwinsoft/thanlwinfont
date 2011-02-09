@@ -141,10 +141,14 @@ fixedbold:
 
 archive: medium bold light fixed fixedbold
 	zip $(FAMILY)fonts-$(VERSION).zip $(patsubst %,%.ttf,$(ALL_FONTS)) $(patsubst %,%.woff,$(ALL_FONTS)) OFL.txt
-	hg archive -p ttf-$(FAMILY)-$(VERSION) -ttbz2 $(FAMILY)fontsrc-$(VERSION).orig.tar.bz2
+	hg archive -p ttf-$(FAMILY)-$(VERSION) -ttbz2 $(FAMILY)fontsrc-$(VERSION).tar.bz2
 
 deb:
-	cp $(FAMILY)fontsrc-$(VERSION).tar.bz2 ttf-$(FAMILY)-$(VERSION).tar.bz2
+	hg archive -p ttf-$(FAMILY)-$(VERSION) -ttbz2 ttf-$(FAMILY)-$(VERSION).orig.tar.bz2 --exclude debian-src
+	tar -jxf ttf-$(FAMILY)-$(VERSION).orig.tar.bz2
+	cp -r debian-src ttf-$(FAMILY)-$(VERSION)/debian
+	cd ttf-$(FAMILY)-$(VERSION)
+	debuild
 
 install-user: medium bold light fixed fixedbold
 	cp $(patsubst %,%.ttf,$(ALL_FONTS)) ~/.fonts
