@@ -1,0 +1,56 @@
+category truetype
+begin /usr/share/fonts/truetype/ttf-thanlwin/thanlwinLight.ttf
+  Family = ThanLwin Light
+  FontName = ThanLwinLight-Light
+  Encoding = Unicode
+  GeneralFamily = SansSerif
+  Weight = Light
+  Width = Variable
+  Shape = Upright NoSerif
+  Foundry = ThanLwinSoft
+  Priority = 20
+end
+begin /usr/share/fonts/truetype/ttf-thanlwin/thanlwinMedium.ttf
+  Family = ThanLwin
+  FontName = ThanLwin-Medium
+  Encoding = Unicode
+  GeneralFamily = SansSerif
+  Weight = Medium
+  Width = Variable
+  Shape = Upright NoSerif
+  Foundry = ThanLwinSoft
+  Priority = 20
+end
+begin /usr/share/fonts/truetype/ttf-thanlwin/thanlwinBold.ttf
+  Family = ThanLwin
+  FontName = ThanLwin-Bold
+  Encoding = Unicode
+  GeneralFamily = SansSerif
+  Weight = Bold
+  Width = Variable
+  Shape = Upright NoSerif
+  Foundry = ThanLwinSoft
+  Priority = 20
+end
+begin /usr/share/fonts/truetype/ttf-thanlwin/thanlwinFixed.ttf
+  Family = ThanLwinFixed
+  FontName = ThanLwinFixed-Medium
+  Encoding = Unicode
+  GeneralFamily = Typewriter
+  Weight = Medium
+  Width = Fixed
+  Shape = Upright NoSerif
+  Foundry = ThanLwinSoft
+  Priority = 20
+end
+begin /usr/share/fonts/truetype/ttf-thanlwin/thanlwinFixedBold.ttf
+  Family = ThanLwinFixed
+  FontName = ThanLwinFixed-Bold
+  Encoding = Unicode
+  GeneralFamily = Typewriter
+  Weight = Bold
+  Width = Fixed
+  Shape = Upright NoSerif
+  Foundry = ThanLwinSoft
+  Priority = 20
+end
