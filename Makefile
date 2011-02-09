@@ -144,11 +144,10 @@ archive: medium bold light fixed fixedbold
 	hg archive -p ttf-$(FAMILY)-$(VERSION) -ttbz2 $(FAMILY)fontsrc-$(VERSION).tar.bz2
 
 deb:
-	hg archive -p ttf-$(FAMILY)-$(VERSION) -ttbz2 ttf-$(FAMILY)-$(VERSION).orig.tar.bz2 --exclude debian-src
-	tar -jxf ttf-$(FAMILY)-$(VERSION).orig.tar.bz2
+	hg archive -p ttf-$(FAMILY)-$(VERSION) -ttbz2 ttf-$(FAMILY)_$(VERSION).orig.tar.bz2 --exclude debian-src
+	tar -jxf ttf-$(FAMILY)_$(VERSION).orig.tar.bz2
 	cp -r debian-src ttf-$(FAMILY)-$(VERSION)/debian
-	cd ttf-$(FAMILY)-$(VERSION)
-	debuild
+	cd ttf-$(FAMILY)-$(VERSION) && debuild
 
 install-user: medium bold light fixed fixedbold
 	cp $(patsubst %,%.ttf,$(ALL_FONTS)) ~/.fonts
@@ -898,4 +897,6 @@ clean:
 	rm -rf svg/*/*.svg
 	rm -rf tmp
 	rm -f *.ini
+	rm -rf ttf-$(FAMILY)-*
+
 
