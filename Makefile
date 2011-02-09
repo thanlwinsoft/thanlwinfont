@@ -10,7 +10,7 @@ INI_FILE:=param$(VARIANT).ini
 SVG_DIR:=svg/$(VARIANT)
 SILENT:=-s
 VERSION:=$(shell xsltproc xslt/fontVersion.xslt blank.svg)
-DESTDIR:=/usr/local
+DESTDIR:=
 
 FAMILY:=thanlwin
 ALL_FONTS:=$(FAMILY)Medium $(FAMILY)Bold $(FAMILY)Light $(FAMILY)Fixed $(FAMILY)FixedBold
@@ -154,8 +154,8 @@ install-user: medium bold light fixed fixedbold
 	fc-cache
 
 install:
-	mkdir -p $(DESTDIR)/share/fonts/truetype/ttf-$(FAMILY)
-	cp $(patsubst %,%.ttf,$(ALL_FONTS)) $(DESTDIR)/share/fonts/truetype/ttf-$(FAMILY)
+	mkdir -p $(DESTDIR)/usr/share/fonts/truetype/ttf-$(FAMILY)
+	cp $(patsubst %,%.ttf,$(ALL_FONTS)) $(DESTDIR)/usr/share/fonts/truetype/ttf-$(FAMILY)
 	fc-cache
 
 $(FAMILY)$(VARIANT).sfd : svg $(wildcard python/*.py) $(wildcard $(SVG_DIR)/*.svg) $(FAMILY)-lookups.sfd $(INI_FILE)
