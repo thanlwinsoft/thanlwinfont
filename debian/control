@@ -1,0 +1,16 @@
+Source: ttf-thanlwin
+Section: fonts
+Priority: extra
+Maintainer: Keith Stribley <devel@thanlwinsoft.org>
+Build-Depends: debhelper (>= 7.0.50~)
+Standards-Version: 3.8.4
+Homepage: http://www.thanlwinsoft.org/
+#Vcs-Mercurial: http://thanlwinsoft.co.uk/cgi-bin/hgwebdir.cgi/thanlwinfont
+#Vcs-Browser: http://thanlwinsoft.co.uk/cgi-bin/hgwebdir.cgi/thanlwinfont
+
+Package: ttf-thanlwin
+Architecture: all
+Depends: ${misc:Depends}
+Description: Myanmar (Burmese) Unicode font
+ A Myanmar Unicode font which uses ligatures for speed. It includes a fixed
+ width version for use in text editors.

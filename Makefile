@@ -8,8 +8,9 @@ VARIANT:=
 PARAMS:=xslt/param$(VARIANT).xslt xslt/paramDefaults.xslt xslt/path.xslt
 INI_FILE:=param$(VARIANT).ini
 SVG_DIR:=svg/$(VARIANT)
-#SILENT:=-s
+SILENT:=-s
 VERSION:=$(shell xsltproc xslt/fontVersion.xslt blank.svg)
+DESTDIR:=/usr/local
 
 FAMILY:=thanlwin
 ALL_FONTS:=$(FAMILY)Medium $(FAMILY)Bold $(FAMILY)Light $(FAMILY)Fixed $(FAMILY)FixedBold
@@ -140,10 +141,18 @@ fixedbold:
 
 archive: medium bold light fixed fixedbold
 	zip $(FAMILY)fonts-$(VERSION).zip $(patsubst %,%.ttf,$(ALL_FONTS)) $(patsubst %,%.woff,$(ALL_FONTS)) OFL.txt
-	hg archive -ttbz2 $(FAMILY)fontsrc-$(VERSION).tar.bz2
+	hg archive -p ttf-$(FAMILY)-$(VERSION) -ttbz2 $(FAMILY)fontsrc-$(VERSION).orig.tar.bz2
 
-install: medium bold light fixed fixedbold
+deb:
+	cp $(FAMILY)fontsrc-$(VERSION).tar.bz2 ttf-$(FAMILY)-$(VERSION).tar.bz2
+
+install-user: medium bold light fixed fixedbold
 	cp $(patsubst %,%.ttf,$(ALL_FONTS)) ~/.fonts
+	fc-cache
+
+install:
+	mkdir -p $(DESTDIR)/share/fonts/truetype/ttf-$(FAMILY)
+	cp $(patsubst %,%.ttf,$(ALL_FONTS)) $(DESTDIR)/share/fonts/truetype/ttf-$(FAMILY)
 	fc-cache
 
 $(FAMILY)$(VARIANT).sfd : svg $(wildcard python/*.py) $(wildcard $(SVG_DIR)/*.svg) $(FAMILY)-lookups.sfd $(INI_FILE)
@@ -884,6 +893,5 @@ $(SVG_DIR)/u1014_u1039_u1013_u102d_u102f.svg :: xslt/u1014_alt.xslt xslt/u1013.x
 clean:
 	rm -rf svg/*/*.svg
 	rm -rf tmp
-	rm *.ini
-
+	rm -f *.ini
 

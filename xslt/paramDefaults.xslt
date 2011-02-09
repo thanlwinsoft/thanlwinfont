@@ -24,7 +24,7 @@
 <xsl:param name="lookupFont" select="'thanlwin-lookups.sfd'"/><!-- some lookups are cloned from this -->
 <xsl:param name="minCodePoint" select="32"/><!-- in decimal otherwise it won't parse -->
 <xsl:param name="maxCodePoint" select="9676"/>
-<xsl:param name="copyright" select="'Keith Stribley 2010 (ThanLwinSoft.org)'"/>
+<xsl:param name="copyright" select="'Keith Stribley 2011 (ThanLwinSoft.org)'"/>
 <xsl:param name="version" select="0.002"/>
 <xsl:param name="designer" select="'Keith Stribley'"/>
 <xsl:param name="vendor" select="'ThanLwinSoft.org'"/>
