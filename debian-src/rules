@@ -10,4 +10,12 @@
 #export DH_VERBOSE=1
 
 %:
-	dh $@ 
+	dh $@
+
+override_dh_auto_clean:
+	$(MAKE) clean
+
+override_dh_auto_install:
+	dh_auto_install
+	dh_installdefoma
+
