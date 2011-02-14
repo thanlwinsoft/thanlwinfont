@@ -25,7 +25,7 @@
 <xsl:param name="minCodePoint" select="32"/><!-- in decimal otherwise it won't parse -->
 <xsl:param name="maxCodePoint" select="9676"/>
 <xsl:param name="copyright" select="'Keith Stribley 2011 (ThanLwinSoft.org)'"/>
-<xsl:param name="version" select="0.002"/>
+<xsl:param name="version" select="0.003"/>
 <xsl:param name="designer" select="'Keith Stribley'"/>
 <xsl:param name="vendor" select="'ThanLwinSoft.org'"/>
 <xsl:param name="vendorUrl" select="'http://www.thanlwinsoft.org'"/>
@@ -34,7 +34,7 @@
 <xsl:param name="enFullName" select="'ThanLwin'"/>
 <xsl:param name="localizedLang" select="1109"/><!-- 0x455 -->
 <xsl:param name="localizedFamilyName" select="'သံလွင်'"/>
-<xsl:param name="localizedSubFamily" select="'ပိုမှန်'"/>
+<xsl:param name="localizedSubFamily" select="'ပုံမှန်'"/>
 <xsl:param name="localizedFullName" select="'သံလွင်'"/>
 <xsl:param name="familyClass" select="33"/>
 

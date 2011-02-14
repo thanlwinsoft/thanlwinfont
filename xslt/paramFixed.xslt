@@ -11,7 +11,7 @@
 <xsl:param name="enSubFamily" select="'Medium'"/>
 <xsl:param name="enFullName" select="'ThanLwin Fixed'"/>
 <xsl:param name="localizedFamilyName" select="'သံလွင်တစ်သမတ်အကျယ်'"/>
-<xsl:param name="localizedSubFamily" select="'ပိုမှန်'"/>
+<xsl:param name="localizedSubFamily" select="'ပုံမှန်'"/>
 <xsl:param name="localizedFullName" select="'သံလွင်တစ်သမတ်အကျယ်'"/>
 
 </xsl:stylesheet>
